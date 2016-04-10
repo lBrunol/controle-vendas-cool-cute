@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+
     <title>Cadastro de Pedidos - Cool & Cute - Vendas</title>
 	<meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -9,109 +10,412 @@
     <link rel="stylesheet" href="css/font-awesome.min.css.css" type="text/css" />
     <link rel="stylesheet" href="css/estilo-geral.css" type="text/css" />
 
-    <style>
-
-        .logo { padding: 15px 15px 15px 0; }
-        /*.barra-topo { min-height: 50px; margin-bottom: 20px; background-color: #f8f8f8; border: 1px solid #e7e7e7; border-radius: 4px; position: relative;   }*/
-        .nav > li > a { padding: 15px 10px; }
-        @media (min-width: 768px){
-            /*.side-nav { position: fixed; top: 51px; left: 225px; width: 225px; margin-left: -225px; border: none; border-radius: 0; overflow-y: auto; background-color: #f8f8f8; bottom: 0; overflow-x: hidden; padding-bottom: 40px; }*/
-            /*.side-nav li { width: 100%; }*/ 
-        }
-        .navbar-toggle { border-color: #ddd; }
-        .navbar-toggle .icon-bar { background: #27a199; }
-    </style>
-
 </head>
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="container">
-                <div class="row">                    
-                    <div class="navbar-header">
-                        <div class="logo">
-                            <a href="javascript:void(0);">
-                                <img src="imagens/logo.png" alt="Cool & Cute" />
-                            </a>
+    <!-- MENU -->
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-default">
+                <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <div class="logo">
+                                <a href="javascript:void(0);">
+                                    <img src="imagens/logo.png" alt="Cool & Cute" />
+                                </a>
+                            </div>
                         </div>
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse navbar-ex1-collapse">
-                        <ul class="nav navbar-nav side-nav">                            
-                            <li>
-                                <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav-pedidos"><i class="fa fa-fw fa-bar-chart-o"></i>Pedidos <i class="fa fa-fw fa-caret-down"></i></a>
-                                <ul class="sub-nav-pedidos collapse">
-                                    <li>
-                                        <a href="#" data-toggle="collapse" data-target=".sub-nav2-pedidos">Criar/Editar</a>
-                                        <ul class="sub-nav2-pedidos collapse">
-                                            <li><a href="javascript:void(0);">teste</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Consultar</a>
-                                    </li>
-                                </ul>
-                            </li>                            
-                            <li>
-                                <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Clientes</a>
-                            </li>
-                            <li>
-                                <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Entradas</a>
-                            </li>
-                            <li>
-                                <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Movimentações</a>
-                            </li>
-                            <li>
-                                <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav-outros"><i class="fa fa-fw fa-arrows-v"></i> Outros Itens <i class="fa fa-fw fa-caret-down"></i></a>
-                                <ul class="sub-nav-outros collapse">
-                                    <li>
-                                        <a href="#" data-toggle="collapse" data-target=".sub-nav2-pedidos">Criar/Editar</a>
-                                        <ul class="sub-nav2-pedidos collapse">
-                                            <li><a href="javascript:void(0);">teste</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Consultar</a>
-                                    </li>
-                                </ul>
-                            </li>                            
-                        </ul>
-                        <div class="usuario">
-                            <ul class="nav navbar-nav navbar-right">
+                        <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            <ul class="nav navbar-nav side-nav">
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-user"></i> Bruno Alves <b class="caret"></b></a>
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pedidos <i class="fa fa-fw fa-caret-down"></i></a>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <a href="#"><i class="fa fa-fw fa-user"></i>Perfil</a>
+                                            <a href="#"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a>
                                         </li>
-                                        <li class="divider"></li>
                                         <li>
-                                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                            <a href="#"><i class="fa fa-search-plus fa-fw"></i> Consultar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes <i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-search-plus fa-fw"></i> Consultar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Entradas <i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-search-plus fa-fw"></i> Consultar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimentações <i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"><i class="fa fa-search-plus fa-fw"></i> Consultar</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav-outros">Outros Itens <i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul class="sub-nav-outros collapse">
+                                        <li>
+                                            <a href="#" data-toggle="collapse" data-target=".sub-nav2-pedidos">Criar/Editar</a>
+                                            <ul class="sub-nav2-pedidos collapse">
+                                                <li><a href="javascript:void(0);">teste</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a href="#">Consultar</a>
                                         </li>
                                     </ul>
                                 </li>
                             </ul>
+                            <div class="usuario">
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-user"></i> Bruno Alves <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#"><i class="fa fa-fw fa-user"></i>Perfil</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>                                        
-                </div>                
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- CONTEÚDO -->
+    <div class="container content">
+        <!-- MODAIS -->
+        <!-- MODAL ANÚNCIO -->
+        <div class="modal fade" id="modal-anuncio" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        
+                        <div class="col-md-8">
+                            <h4 class="modal-title">Selecione o Anúncio</h4>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div class="col-md-4">
+
+                            <button type="button" class="btn btn-salvar pull-right" data-dismiss="modal">OK</button>
+                        </div>
+                        
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Anúncio</th>
+                                    <th>Preço</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mochila Azul</td>
+                                    <td>R$ 70,00</td>                                    
+                                </tr>
+                                <tr>
+                                    <td>Mochila Rosa</td>
+                                    <td>R$ 70,00</td>                                    
+                                </tr>
+                                <tr>
+                                    <td>Bolsa Tommy</td>
+                                    <td>R$ 120,00</td>                                    
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
-    <div class="container">
-        <form>
-            <div class="form-group">
-                <label for="txtDescricao">Descrição</label>
-                <input type="text" name="txtDescricao" class="form-control" />
+        <div class="modal fade" id="modal-cliente" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <div class="col-md-8">
+                            <h4 class="modal-title">Selecione o Cliente</h4>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div class="col-md-4">
+
+                            <button type="button" class="btn btn-salvar pull-right" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>E-mail</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Carlos da Silva</td>
+                                    <td>carlos-silva@hotmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Andrea de souza lemos ramos da costa</td>
+                                    <td>deia-lemos@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Carlos da Silva</td>
+                                    <td>carlos-silva@hotmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Andrea de souza lemos ramos da costa</td>
+                                    <td>deia-lemos@gmail.com</td>
+                                </tr>                                
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
             </div>
-        </form>
+        </div>
+        <div class="modal fade" id="modal-produto" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <div class="col-md-8">
+                            <h4 class="modal-title">Selecione os Produtos</h4>
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <div class="col-md-4">
+
+                            <button type="button" class="btn btn-salvar pull-right" data-dismiss="modal">OK</button>
+                        </div>
+
+                    </div>
+                    <div class="modal-body">
+                        <!--<table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Anúncio</th>
+                                    <th>Preço</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mochila Azul</td>
+                                    <td>R$ 70,00</td>
+                                </tr>
+                                <tr>
+                                    <td>Mochila Rosa</td>
+                                    <td>R$ 70,00</td>
+                                </tr>
+                                <tr>
+                                    <td>Bolsa Tommy</td>
+                                    <td>R$ 120,00</td>
+                                </tr>
+                            </tbody>
+                        </table>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>Cadastrar Pedidos</h2>
+        <hr />
+        <form method="post" action="javascript:void(0);">
+            <div class="row">
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="txtDescricao">Descrição</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="txtDescricao" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-anuncio">+</button>
+                        </span>
+                    </div>                    
+                </div>
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="txtCliente">Cliente</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="txtCliente" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-cliente">+</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="txtDataVenda">Data da Venda</label>
+                    <input type="date" class="form-control" name="txtDataVenda" />
+                </div>
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="txtValorFrete">Valor do Frete</label>
+                    <input type="text" class="form-control" name="txtValorFrete" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-right">
+                        <label class="padding-std-right">Itens do Pedido</label><button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-produto">+</button>
+                    </div>
+                    <div class="tabela-overflow">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Preço</th>
+                                    <th>Qtde.</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mochila Azul</td>
+                                    <td>R$ 70,00</td>
+                                    <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
+                                    <td>R$ 140,00</td>
+                                    <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>Mochila Rosa</td>
+                                    <td>R$ 70,00</td>
+                                    <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
+                                    <td>R$ 70,00</td>
+                                    <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
+                                </tr>
+                                <tr>
+                                    <td>Bolsa Tommy</td>
+                                    <td>R$ 120,00</td>
+                                    <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
+                                    <td>R$ 240,00</td>
+                                    <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4 col-xs-12">
+                    <label for="txtDataPostagem">Data da Postagem</label>
+                    <input type="date" class="form-control" name="txtDataPostagem" />
+                </div>
+                <div class="form-group col-md-4 col-xs-12">
+                    <label for="txtEntrega">Valor do Entrega</label>
+                    <input type="date" class="form-control" name="txtEntrega" />
+                </div>
+                <div class="form-group col-md-4 col-xs-12">
+                    <label for="txtCodigoPostagem">Código da Postagem</label>
+                    <input type="text" class="form-control" name="txtCodigoPostagem" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="slcStatus">Status</label>
+                    <select class="form-control">
+                        <option>À postar</option>
+                        <option>Em trânsito</option>
+                        <option>Entregue</option>
+                        <option>Concretizada</option>
+                        <option>Retirada</option>
+                        <option>Devolução</option>
+                        <option>Reclamação</option>
+                        <option>Defeito</option>
+                        <option>Cancelada</option>
+                        <option>Qualificada</option>
+                        <option>Extravio</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="slcAvaliacao">Avaliação</label>
+                    <select class="form-control">
+                        <option>Positiva</option>
+                        <option>Negativa</option>
+                        <option>Neutra</option>
+                    </select>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="txtObservacoes">Observações</label>
+                    <textarea class="form-control" name="txtObservacoes"></textarea>
+                </div>
+            </div>
+            <div class="row margin-std-bottom">
+                <div class="col-md-12">
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-salvar margin-std-right"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
+                    <button type="button" class="btn btn-vermelho"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                </div>
+            </div>
+        </form>        
     </div>
+    <!-- RODAPÉ -->
+    <div class="container-fluid">
+        <div class="row">
+            <footer class="rodape">
+                <div class="container">
+                    <div class="col-md-6 col-xs-8">
+                        <p>Controle de Vendas Cool & Cute</p>
+                    </div>
+                    <div class="col-md-6 col-xs-4">
+                        <img src="imagens/mercado-livre.png" class="pull-right" />
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
 
     <!-- JAVASCRIPT -->
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script>
+        $(function () {
+            $('.modal tr').click(function () {
+                $(this).siblings().removeClass('active-tr');
+                $(this).addClass('active-tr');
+            });
+        });        
+    </script>
 </body>
 </html>
