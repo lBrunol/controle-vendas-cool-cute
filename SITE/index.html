@@ -383,8 +383,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-salvar margin-std-right"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
-                    <button type="button" class="btn btn-vermelho"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                    <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
+                    <button type="submit" class="btn btn-warning margin-std-right margin-std-top""><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
+                    <button type="button" class="btn btn-vermelho margin-std-top""><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
                 </div>
             </div>
         </form>        
@@ -415,7 +416,13 @@
                 $(this).siblings().removeClass('active-tr');
                 $(this).addClass('active-tr');
             });
-        });        
+        });
+
+
+
+        function calculaValorTotal(quant, valor) {
+
+        }
     </script>
 </body>
 </html>
