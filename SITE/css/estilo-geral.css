@@ -1,7 +1,7 @@
-﻿@font-face { font-family: openSansLight; src: url('/fonts/OpenSans-Light.ttf'); }
-@font-face { font-family: openSansRegular; src: url('/fonts/OpenSans-Regular.ttf'); }
-@font-face { font-family: openSansItalic; src: url('/fonts/OpenSans-Italic.ttf'); }
-@font-face { font-family: openSansBold; src: url('/fonts/OpenSans-Bold.ttf'); }
+﻿@font-face { font-family: openSansLight; src: url('../fonts/OpenSans-Light.ttf'); }
+@font-face { font-family: openSansRegular; src: url('../fonts/OpenSans-Regular.ttf'); }
+@font-face { font-family: openSansItalic; src: url('../fonts/OpenSans-Italic.ttf'); }
+@font-face { font-family: openSansBold; src: url('../fonts/OpenSans-Bold.ttf'); }
 
 /* DEFINIÇÕES GERAIS */
 * {font-family: openSansRegular;}
