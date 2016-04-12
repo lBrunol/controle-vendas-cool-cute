@@ -293,7 +293,7 @@
                         <label class="padding-std-right">Itens do Pedido</label><button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-produto">+</button>
                     </div>
                     <div class="tabela-overflow">
-                        <table class="table">
+                        <table class="table tabela-itens-pedido">
                             <thead>
                                 <tr>
                                     <th>Item</th>
@@ -306,26 +306,30 @@
                             <tbody>
                                 <tr>
                                     <td>Mochila Azul</td>
-                                    <td>R$ 70,00</td>
+                                    <td class="preco">R$ 70,00</td>
                                     <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
-                                    <td>R$ 140,00</td>
+                                    <td class="valor-total"></td>
                                     <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
                                 </tr>
                                 <tr>
                                     <td>Mochila Rosa</td>
-                                    <td>R$ 70,00</td>
+                                    <td class="preco">R$ 70,00</td>
                                     <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
-                                    <td>R$ 70,00</td>
+                                    <td class="valor-total"></td>
                                     <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
                                 </tr>
                                 <tr>
                                     <td>Bolsa Tommy</td>
-                                    <td>R$ 120,00</td>
+                                    <td class="preco">R$ 120,13</td>
                                     <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
-                                    <td>R$ 240,00</td>
+                                    <td class="valor-total"></td>
                                     <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
                                 </tr>
                             </tbody>
+                            <tfoot>
+                                <td colspan="3"><strong>Valor Total: </strong></td>
+                                <td colspan="3"</td>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -410,19 +414,40 @@
     <!-- JAVASCRIPT -->
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/script-geral.js"></script>
     <script>
-        $(function () {
-            $('.modal tr').click(function () {
-                $(this).siblings().removeClass('active-tr');
-                $(this).addClass('active-tr');
-            });
-        });
+        
+        
 
+        /*function util() {}
+        util.prototype.calculaValorTotal = function (quant, valor) {
+            var valorTotal;
 
+            valorTotal = valor * quant;
 
-        function calculaValorTotal(quant, valor) {
-
+            if (typeof valorTotal != 'undefined' && !isNaN(valorTotal)) {
+                return valorTotal;
+            } else {
+                return 0;
+            }
         }
+
+        util.prototype.apenasNumeros = function (e) {
+            var tecla = e.keyCode ? e.keyCode : e.charCode
+            if ((tecla > 47 && tecla < 58)) { // numeros de 0 a 9
+                return true;
+            } else {
+                if (tecla != 8 && tecla != 9) { // backspace   e // tab
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        }
+
+        funcoesUteis = new util();
+        funcoesUteis.calculaValorTotal()*/
+        
     </script>
 </body>
 </html>
