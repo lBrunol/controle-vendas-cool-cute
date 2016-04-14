@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -425,7 +425,7 @@
                 $(this).toggleClass('active-tr');
             });
 
-            $('.input-qtde').blur(function () {
+            $('body').delegate('.input-qtde','blur', function () {
                 var index = $('.input-qtde').index(this);
                 var quantidade = $(this).val();
                 var valor = deVirgulaParaPonto(retiraReal($('.tabela-itens-pedido .preco').eq(index).text()));
