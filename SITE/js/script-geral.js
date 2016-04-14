@@ -1,20 +1,4 @@
-﻿$(function () {
-    $('.modal tr').click(function () {
-        $(this).siblings().removeClass('active-tr');
-        $(this).addClass('active-tr');
-    });
-
-    $('.input-qtde').blur(function () {
-        var index = $('.input-qtde').index(this);
-        var quantidade = $(this).val();
-        var valor = deVirgulaParaPonto(retiraReal($('.tabela-itens-pedido .preco').eq(index).text()));
-        var valorTotal = numeroParaMoeda(calculaValorTotal(quantidade, valor));
-
-        $('.valor-total').eq(index).text(valorTotal);
-    });
-});
-
-/* Função para calcular o valor total com base na quantidade e valor passados por parâmetro
+﻿/* Função para calcular o valor total com base na quantidade e valor passados por parâmetro
 * @param quant {int} passar a quantidade do item para ser calculado
 * @param valor {float, int, double} passar o valor para o calculo do valor total
 */

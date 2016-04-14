@@ -115,101 +115,100 @@
     <div class="container content">
         <!-- MODAIS -->
         <!-- MODAL ANÚNCIO -->
-        <div class="modal fade" id="modal-anuncio" tabindex="-1" role="dialog">
+        <div class="modal unique-selection fade" id="modal-anuncio" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        
+                    <div class="modal-header">                        
                         <div class="col-md-8">
                             <h4 class="modal-title">Selecione o Anúncio</h4>
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <div class="col-md-4">
-
-                            <button type="button" class="btn btn-salvar pull-right" data-dismiss="modal">OK</button>
-                        </div>
-                        
+                            <button type="button" class="btn btn-salvar pull-right data-modal" data-dismiss="modal" data-target="#input-anuncio">OK</button>
+                        </div>                        
                     </div>
                     <div class="modal-body">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Anúncio</th>
-                                    <th>Preço</th>
+                                    <th>Código</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Mochila Azul</td>
-                                    <td>R$ 70,00</td>                                    
+                                    <td class="data-value">Mochila Azul</td>
+                                    <td class="data-attr">1</td>                        
                                 </tr>
                                 <tr>
-                                    <td>Mochila Rosa</td>
-                                    <td>R$ 70,00</td>                                    
+                                    <td class="data-value">Mochila Rosa</td>
+                                    <td class="data-attr">2</td>
                                 </tr>
                                 <tr>
-                                    <td>Bolsa Tommy</td>
-                                    <td>R$ 120,00</td>                                    
+                                    <td class="data-value">Bolsa Tommy</td>
+                                    <td class="data-attr">3</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-salvar data-modal" data-dismiss="modal" data-target="#input-anuncio">OK</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modal-cliente" tabindex="-1" role="dialog">
+        <div class="modal unique-selection fade" id="modal-cliente" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-
                         <div class="col-md-8">
                             <h4 class="modal-title">Selecione o Cliente</h4>
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <div class="col-md-4">
-
-                            <button type="button" class="btn btn-salvar pull-right" data-dismiss="modal">OK</button>
+                            <button type="button" class="btn btn-salvar pull-right data-modal" data-dismiss="modal" data-target="#input-cliente">OK</button>
                         </div>
-
                     </div>
                     <div class="modal-body">
                         <table class="table">
                             <thead>
                                 <tr>
+                                    <th>Id</th>
                                     <th>Cliente</th>
                                     <th>E-mail</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Carlos da Silva</td>
+                                    <td class="data-attr">1</td>                                    
+                                    <td class="data-value">Carlos da Silva</td>
                                     <td>carlos-silva@hotmail.com</td>
                                 </tr>
                                 <tr>
-                                    <td>Andrea de souza lemos ramos da costa</td>
+                                    <td class="data-attr">2</td>                                    
+                                    <td class="data-value">Andrea de souza lemos ramos da costa</td>
                                     <td>deia-lemos@gmail.com</td>
                                 </tr>
                                 <tr>
-                                    <td>Carlos da Silva</td>
+                                    <td class="data-attr">3</td>                                    
+                                    <td class="data-value">Carlos da Silva</td>
                                     <td>carlos-silva@hotmail.com</td>
                                 </tr>
                                 <tr>
-                                    <td>Andrea de souza lemos ramos da costa</td>
+                                    <td class="data-attr">4</td>                                    
+                                    <td class="data-value">Andrea de souza lemos ramos da costa</td>
                                     <td>deia-lemos@gmail.com</td>
                                 </tr>                                
                             </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-salvar data-modal" data-dismiss="modal" data-target="#input-cliente">OK</button>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="modal-produto" tabindex="-1" role="dialog">
+        <div class="modal multi-selection fade" id="modal-produto" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -225,7 +224,7 @@
 
                     </div>
                     <div class="modal-body">
-                        <!--<table class="table">
+                        <table class="table">
                             <thead>
                                 <tr>
                                     <th>Anúncio</th>
@@ -246,7 +245,7 @@
                                     <td>R$ 120,00</td>
                                 </tr>
                             </tbody>
-                        </table>-->
+                        </table>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
@@ -261,7 +260,7 @@
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="txtDescricao">Descrição</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="txtDescricao" />
+                        <input type="text" id="input-anuncio" class="form-control" name="txtDescricao" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-anuncio">+</button>
                         </span>
@@ -270,7 +269,7 @@
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="txtCliente">Cliente</label>
                     <div class="input-group">
-                        <input type="text" class="form-control" name="txtCliente" />
+                        <input type="text" id="input-cliente" class="form-control" name="txtCliente" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-cliente">+</button>
                         </span>
@@ -304,7 +303,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!--<tr>
                                     <td>Mochila Azul</td>
                                     <td class="preco">R$ 70,00</td>
                                     <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
@@ -325,7 +324,7 @@
                                     <td class="valor-total"></td>
                                     <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
                                 </tr>
-                            </tbody>
+                            </tbody>-->
                             <tfoot>
                                 <td colspan="3"><strong>Valor Total: </strong></td>
                                 <td colspan="3"</td>
@@ -415,39 +414,60 @@
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/script-geral.js"></script>
-    <script>
-        
-        
+    <script type="text/javascript">
+        $(function () {
+            $('.unique-selection tr').click(function () {
+                $(this).siblings().removeClass('active-tr');
+                $(this).addClass('active-tr');
+            });
+            
+            $('.multi-selection tr').click(function(){
+                $(this).toggleClass('active-tr');
+            });
 
-        /*function util() {}
-        util.prototype.calculaValorTotal = function (quant, valor) {
-            var valorTotal;
+            $('.input-qtde').blur(function () {
+                var index = $('.input-qtde').index(this);
+                var quantidade = $(this).val();
+                var valor = deVirgulaParaPonto(retiraReal($('.tabela-itens-pedido .preco').eq(index).text()));
+                var valorTotal = numeroParaMoeda(calculaValorTotal(quantidade, valor));
 
-            valorTotal = valor * quant;
+                $('.valor-total').eq(index).text(valorTotal);
+            });
+            
+            $('.data-modal').click(function (){
+                var dataTarget;
+                var table;
 
-            if (typeof valorTotal != 'undefined' && !isNaN(valorTotal)) {
-                return valorTotal;
-            } else {
-                return 0;
-            }
-        }
-
-        util.prototype.apenasNumeros = function (e) {
-            var tecla = e.keyCode ? e.keyCode : e.charCode
-            if ((tecla > 47 && tecla < 58)) { // numeros de 0 a 9
-                return true;
-            } else {
-                if (tecla != 8 && tecla != 9) { // backspace   e // tab
-                    return false;
-                } else {
-                    return true;
-                }
-            }
-        }
-
-        funcoesUteis = new util();
-        funcoesUteis.calculaValorTotal()*/
-        
+                dataTarget = $(this).attr('data-target');
+                
+                table = $(this).closest('.modal').find('table');
+                if($(table).find('tr').hasClass('active-tr')){
+                    var activeTr;
+                    var value;
+                    var data;
+                    
+                    activeTr = $(table).find('.active-tr');
+                    value = $(activeTr).find('.data-value').text();
+                    data = $(activeTr).find('.data-attr').text();
+                    
+                    $(dataTarget).attr('data-id', data).val(value);                    
+                }                   
+            });
+            
+            $('#modal-produto button').click(function (){
+                if($(this).closest('.modal').find('tr').hasClass('active-tr')){
+                    $(this).closest('.modal').find('.active-tr').each(function(index){
+                            $('.tabela-itens-pedido tbody').append('<tr></tr>');
+                            $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td class="preco">' + $(this).find('td').eq(1).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td><td class="valor-total"></td><td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
+                        });
+                    }               
+            });
+            
+            $('.modal').on('hidden.bs.modal', function (e) {
+               $(this).find('tr').removeClass();
+            })
+            
+        });
     </script>
 </body>
 </html>
