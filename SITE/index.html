@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 
@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="css/font-awesome.min.css.css" type="text/css" />
     <link rel="stylesheet" href="css/estilo-geral.css" type="text/css" />
-
+    
 </head>
 <body>
     <!-- MENU -->
@@ -255,12 +255,13 @@
         </div>
         <h2>Cadastrar Pedidos</h2>
         <hr />
-        <form method="post" action="javascript:void(0);">
+        <form method="post" action="javascript:void(0);" id="form-anuncios">
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="txtDescricao">Descrição</label>
+                    <label for="txtDescricao">Anúncio</label>
                     <div class="input-group">
                         <input type="text" id="input-anuncio" class="form-control" name="txtDescricao" />
+                        <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-anuncio">+</button>
                         </span>
@@ -270,6 +271,7 @@
                     <label for="txtCliente">Cliente</label>
                     <div class="input-group">
                         <input type="text" id="input-cliente" class="form-control" name="txtCliente" />
+                        <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-cliente">+</button>
                         </span>
@@ -283,7 +285,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="txtValorFrete">Valor do Frete</label>
-                    <input type="text" class="form-control" name="txtValorFrete" />
+                    <input type="text" class="form-control" name="txtValorFrete" onkeypress="return(apenasNumeros(event))" onblur="numeroParaMoeda(document.getElementsByName(this.name)[0].value)" />
                 </div>
             </div>
             <div class="row">
@@ -303,31 +305,15 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--<tr>
-                                    <td>Mochila Azul</td>
-                                    <td class="preco">R$ 70,00</td>
-                                    <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
-                                    <td class="valor-total"></td>
-                                    <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
+                                <tr class="no-itens">
+                                    <td colspan="6" data-toggle="modal" data-target="#modal-produto" style="color:#27a199; cursor:pointer;"><strong>Adicione itens ao pedido.</strong></td>
                                 </tr>
-                                <tr>
-                                    <td>Mochila Rosa</td>
-                                    <td class="preco">R$ 70,00</td>
-                                    <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
-                                    <td class="valor-total"></td>
-                                    <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>Bolsa Tommy</td>
-                                    <td class="preco">R$ 120,13</td>
-                                    <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" /></td>
-                                    <td class="valor-total"></td>
-                                    <td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
-                                </tr>
-                            </tbody>-->
+                            </tbody>
                             <tfoot>
-                                <td colspan="3"><strong>Valor Total: </strong></td>
-                                <td colspan="3"</td>
+                                <tr>
+                                    <td colspan="3"><strong>Valor Total: </strong></td>
+                                    <td colspan="3"></td>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -387,8 +373,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
-                    <button type="submit" class="btn btn-warning margin-std-right margin-std-top""><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
-                    <button type="button" class="btn btn-vermelho margin-std-top""><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                    <button type="submit" class="btn btn-warning margin-std-right margin-std-top"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
+                    <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
                 </div>
             </div>
         </form>        
@@ -413,18 +399,35 @@
     <!-- JAVASCRIPT -->
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/script-geral.js"></script>
     <script type="text/javascript">
-        $(function () {
-            $('.unique-selection tr').click(function () {
-                $(this).siblings().removeClass('active-tr');
-                $(this).addClass('active-tr');
-            });
+        $(function () {   
             
-            $('.multi-selection tr').click(function(){
-                $(this).toggleClass('active-tr');
+            $("#form-anuncios").validate({
+                errorPlacement: function(error, element) {
+                $( element )
+                    .closest( "form" )
+                        .find( "label[for='" + element.attr( "name" ) + "']" )
+                            .append( error );                
+                },
+                errorElement: "span",
+                rules: {
+                    txtDescricao: "required",
+                    txtCliente: "required",
+                    txtDataVenda: "required",
+                    txtValorFrete: "required",
+                    
+                },
+                messages: {
+                    txtDescricao: "Por favor, selecione o anúncio",
+                    txtCliente: "Por favor, selecione o cliente",
+                    txtDataVenda: "Por favor, selecione a data da venda",
+                    txtValorFrete: "Por favor, selecione o valor do frete",                    
+                }
             });
 
+            /* Delega o evento blur ao adicionar itens do pedido */
             $('body').delegate('.input-qtde','blur', function () {
                 var index = $('.input-qtde').index(this);
                 var quantidade = $(this).val();
@@ -434,6 +437,21 @@
                 $('.valor-total').eq(index).text(valorTotal);
             });
             
+            /* Delega o evento click ao adicionar itens do pedido */
+            $('body').delegate('.btn-excluir', 'click', function () {
+                var dataIndex;
+
+                dataIndex = $(this).parent().parent().attr('data-index');
+                $(this).parent().parent().remove();
+
+                $('#modal-produto tr').eq(dataIndex).find('td').eq(0).removeClass('selecionada');
+                
+                if ($('.tabela-itens-pedido tbody tr').length <= 1) {
+                    $('.tabela-itens-pedido .no-itens').show();
+                }
+            });
+            
+            /* Delega o evento blur ao adicionar itens do pedido */
             $('.data-modal').click(function (){
                 var dataTarget;
                 var table;
@@ -455,18 +473,22 @@
             });
             
             $('#modal-produto button').click(function (){
-                if($(this).closest('.modal').find('tr').hasClass('active-tr')){
-                    $(this).closest('.modal').find('.active-tr').each(function(index){
-                            $('.tabela-itens-pedido tbody').append('<tr></tr>');
-                            $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td class="preco">' + $(this).find('td').eq(1).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td><td class="valor-total"></td><td><button class="btn btn-pequeno btn-vermelho" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
-                        });
-                    }               
+                if ($(this).closest('.modal').find('tr').hasClass('active-tr')) {
+                    if ($('.modal .active-tr td:eq(0)').hasClass('selecionada') == false) { 
+                    $(this).closest('.modal').find('.active-tr').each(function (index) {                            
+                        $('.tabela-itens-pedido tbody').append('<tr data-index=' + this.rowIndex + '></tr>');
+                        $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td class="preco">' + $(this).find('td').eq(1).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td><td class="valor-total"></td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
+                        $(this).find('td').eq(0).addClass('selecionada');
+                    });
+
+                    $('.tabela-itens-pedido').find('.no-itens').hide();
+                    }
+                }               
             });
             
             $('.modal').on('hidden.bs.modal', function (e) {
-               $(this).find('tr').removeClass();
-            })
-            
+                $(this).find('tr').removeClass('active-tr');
+            });            
         });
     </script>
 </body>

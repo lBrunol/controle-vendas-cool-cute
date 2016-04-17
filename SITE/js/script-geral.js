@@ -1,4 +1,20 @@
-﻿/* Função para calcular o valor total com base na quantidade e valor passados por parâmetro
+﻿$(function(){
+    /* Seleção única nas tabelas dentro dos modais */
+    $('.unique-selection tr').click(function () {
+        $(this).siblings().removeClass('active-tr');
+        $(this).addClass('active-tr');
+    });
+    
+    /* Seleção múltipla nas tabelas dentro dos modais */
+    $('.multi-selection tr').click(function(){
+        $(this).toggleClass('active-tr');
+    });
+    
+});
+
+/******************************FUNÇÕES*****************************/
+
+/* Função para calcular o valor total com base na quantidade e valor passados por parâmetro
 * @param quant {int} passar a quantidade do item para ser calculado
 * @param valor {float, int, double} passar o valor para o calculo do valor total
 */
@@ -78,7 +94,9 @@ function retiraReal(num) {
     return num;
 }
 
-
+/* Função que substitui a virgula por ponto
+* @param num {String} 
+*/
 function deVirgulaParaPonto(num) {
     num = num.replace(",", ".");
     return num;
