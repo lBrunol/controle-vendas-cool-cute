@@ -31,6 +31,15 @@ function calculaValorTotal(quant, valor) {
     }
 }
 
+function somaValoresTotais (el){
+    var valorTotal = 0;
+    $(el).find('.valor-total').each(function(){
+        valorTotal = valorTotal + moedaParaNumero(retiraReal($(this).text()));
+    });
+    
+    return numeroParaMoeda(valorTotal);
+}
+
 /* Função que restringe a digitação para apenas números. Chamar a função em algum evento do teclado como keypress, keydown.
 * @param e {event} 
 */
@@ -47,17 +56,29 @@ function apenasNumeros(e) {
     }
 }
 
+/* Valida se há texto inválido nos campos preenchidos através dos modais */
+function validaTextoInvalido (el){
+    if(typeof $(el).attr('data-id') == 'undefined'){
+        $(el).val('');
+        return;
+    }
+}  
+
+/* Função que desativa a digitação no campo
+* @param e {event} 
+*/
+function travaDigitacao(e) {    
+    return false;       
+}
+
 /* Função que converte um número para o formato de moeda.
 * @param num {float} 
 */
 function numeroParaMoeda(num) {
     x = 0;
 
-    console.log(num);
     num = num + "";
     num = num.replace(",", ".");
-
-    console.log(num);
 
     if (num < 0) { num = Math.abs(num); x = 1; }
 
@@ -110,4 +131,8 @@ function moedaParaNumero(num) {
     num = num.replace(",", ".");
     num = Number.parseFloat(num);
     return num;
+}
+
+function atribuiTexto (el, val){
+    $(el).val(val);
 }
