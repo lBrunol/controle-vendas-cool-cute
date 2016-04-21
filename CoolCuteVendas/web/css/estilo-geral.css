@@ -1,4 +1,4 @@
-﻿@font-face { font-family: openSansLight; src: url('../fonts/OpenSans-Light.ttf'); }
+@font-face { font-family: openSansLight; src: url('../fonts/OpenSans-Light.ttf'); }
 @font-face { font-family: openSansRegular; src: url('../fonts/OpenSans-Regular.ttf'); }
 @font-face { font-family: openSansItalic; src: url('../fonts/OpenSans-Italic.ttf'); }
 @font-face { font-family: openSansBold; src: url('../fonts/OpenSans-Bold.ttf'); }
@@ -6,6 +6,7 @@
 /* DEFINIÇÕES GERAIS */
 * {font-family: openSansRegular;}
 h2 { font-family: openSansLight; font-size:24px; color:#3fcdc4;  }
+h3 { font-size: 20px; }
 hr { margin: 15px 0; border-color: #ccc; }
 button,
 input,
@@ -36,6 +37,25 @@ textarea { resize: none; }
 input.error ,
 input.error:focus { border: 1px solid #a94442; box-shadow: none; }
 span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94442; }
+
+/* PANELS */
+.panel-filtro { margin-bottom: 25px; background-color: #f8f8f8; border-color: #ccc; }
+
+/* PAGINAÇÃO */
+.pagination-cool >li > a, 
+.pagination-cool >li > span { color: #666; font-weight: bold;}
+
+.pagination-cool >.active > a, 
+.pagination-cool >.active > a:focus, 
+.pagination-cool >.active > a:hover, 
+.pagination-cool >.active > span, 
+.pagination-cool >.active > span:focus, 
+.pagination-cool >.active > span:hover { background-color: #fff; border: 1px solid #ddd; color: #3fcdc4; }
+
+.pagination >li >a:focus, 
+.pagination >li >a:hover, 
+.pagination >li >span:focus, 
+.pagination >li >span:hover { color: #666; }
 
 /* MODAIS */
 .modal h4 { font-family: openSansLight; font-size:18px; color:#3fcdc4; }
@@ -73,4 +93,8 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 
 @media screen and (min-width: 783px){
     .logo { padding-left: 0; }
+}
+
+@media screen and (max-width: 600px){
+    .table { width: 600px; }
 }
