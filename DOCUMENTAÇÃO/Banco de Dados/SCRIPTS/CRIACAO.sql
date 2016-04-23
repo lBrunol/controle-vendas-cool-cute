@@ -42,7 +42,6 @@ CREATE TABLE Cliente (
 );
 CREATE TABLE TipoMovimentacao (
   timCodigo INTEGER AUTO_INCREMENT,
-  movCodigo INTEGER NOT NULL,
   timDescricao VARCHAR(255) NOT NULL,
   timOperacao BOOL NOT NULL,
   PRIMARY KEY(timCodigo)

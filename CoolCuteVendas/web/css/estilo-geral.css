@@ -15,6 +15,7 @@ button:focus,
 input:focus,
 a:focus { outline: 0 !important; }
 textarea { resize: none; }
+input[type="date"] { -webkit-appearance: textfield; -moz-appearance: field; }
 
 .logo { padding: 15px; }
 
@@ -31,6 +32,11 @@ textarea { resize: none; }
 
 /* DIVS CONTAINER */
 .content { min-height: 970px; margin-bottom: 30px; }
+
+/* MENU */
+/* SUBMENU */
+.sub-nav-outros ul { padding-left: 20px; list-style: none; }
+.sub-nav-outros > li {  }
 
 /* FORMULÁRIOS */
 .input-qtde { width: 70px; height: 24px; padding: 2px 6px  }
@@ -59,9 +65,9 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 
 /* MODAIS */
 .modal h4 { font-family: openSansLight; font-size:18px; color:#3fcdc4; }
-.modal tr { cursor: pointer; }
-.modal .active-tr,
-.modal tr:hover { background-color: #27a199; color:#fff; }
+.modal tbody tr { cursor: pointer; }
+.modal tbody .active-tr,
+.modal tbody tr:hover { background-color: #27a199; color:#fff; }
 
 /* TABELAS */
 .tabela-overflow { width: 100%; overflow: auto; }

@@ -9,7 +9,7 @@
 <body>
     <%-- INCLUDE DO MENU --%>
     <%@include file="/includes/menu.jsp" %>
-    <!-- CONTEÚDO -->
+    <!-- CONTEÃDO -->
     <div class="container content">
         <!-- MODAIS -->
         <!-- MODAL ANÚNCIO -->
@@ -155,6 +155,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h2>Deseja realmente cancelar o pedido?</h2>
                     </div>
                     <div class="modal-body">
@@ -170,12 +171,12 @@
         </div>
         <h2>Cadastrar Pedidos</h2>
         <hr />
-        <form method="post" action="javascript:void(0);" id="form-anuncios">
+        <form method="post" action="javascript:void(0);" id="formAnuncio">
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="txtDescricao">Anúncio</label>
+                    <label for="txtAnuncio">Anúncio</label>
                     <div class="input-group">
-                        <input type="text" id="input-anuncio" class="form-control" name="txtDescricao" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
+                        <input type="text" id="input-anuncio" class="form-control" name="txtAnuncio" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
                         <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-anuncio">+</button>
@@ -294,13 +295,13 @@
             </div>
         </form>        
     </div>
-    <%-- INCLUDE DO RODAPÉ --%>
+    <%-- INCLUDE DO RODAPÃ --%>
     <%@include file="/includes/rodape.jsp" %>
     <script type="text/javascript">
         $(function () {   
             
             /* Validação dos campos do formulário */
-            $("#form-anuncios").validate({
+            $("#formAnuncio").validate({
                 errorPlacement: function(error, element) {
                 $( element )
                     .closest( "form" )
@@ -309,10 +310,11 @@
                 },
                 errorElement: "span",
                 rules: {
-                    txtDescricao: "required",
+                    txtAnuncio: "required",
                     txtCliente: "required",
                     txtDataVenda: "required",
                     txtValorFrete: "required",
+                    txtQtdePedido: "required",
                     txtDataPostagem: {
                         required: {
                             depends: function(element) {                                
@@ -353,13 +355,14 @@
                     }
                 },
                 messages: {
-                    txtDescricao: "Por favor, selecione o anúncio",
+                    txtAnuncio: "Por favor, selecione o anúncio",
                     txtCliente: "Por favor, selecione o cliente",
                     txtDataVenda: "Por favor, preencha a data da venda",
                     txtValorFrete: "Por favor, preencha o valor do frete",
                     txtDataPostagem: "Por favor, preencha a data da postagem",
                     txtDataEntrega: "Por favor, preencha a data de entrega",
-                    txtCodigoPostagem: "Por favor, preencha o código da postagem"
+                    txtCodigoPostagem: "Por favor, preencha o código da postagem",
+                    txtQtdePedido: "Por favor, preenche a quantidade"
                                     
                 },
                 submitHandler: function () {                    
@@ -413,6 +416,7 @@
                 if ($('.tabela-itens-pedido tbody tr').length <= 1) {
                     $('.tabela-itens-pedido .no-itens').show();
                 }
+                $('.valor-total-pedido').text(somaValoresTotais($('.tabela-itens-pedido')));
             });
             
             /* Delega o evento blur (perder foco) ao adicionar itens do pedido */

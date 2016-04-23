@@ -1,12 +1,12 @@
 ﻿$(function(){
     /* Seleção única nas tabelas dentro dos modais */
-    $('.unique-selection tr').click(function () {
+    $('.unique-selection tbody tr').click(function () {
         $(this).siblings().removeClass('active-tr');
         $(this).addClass('active-tr');
     });
     
     /* Seleção múltipla nas tabelas dentro dos modais */
-    $('.multi-selection tr').click(function(){
+    $('.multi-selection tbody tr').click(function(){
         $(this).toggleClass('active-tr');
     });
     
@@ -48,7 +48,7 @@ function apenasNumeros(e) {
     if ((tecla > 47 && tecla < 58)) { // numeros de 0 a 9
         return true;
     } else {
-        if (tecla != 8 && tecla != 9) { // backspace   e // tab
+        if (tecla != 8 && tecla != 9 && tecla != 44) { // backspace , // tab e // vírgula
             return false;
         } else {
             return true;
@@ -132,7 +132,10 @@ function moedaParaNumero(num) {
     num = Number.parseFloat(num);
     return num;
 }
-
+/* Função que atribui texto a um elemento passado por parâmetro
+* @param el {object} elemento a ser alterado
+* @param val {string} valor que será atribuido ao elemento
+*/
 function atribuiTexto (el, val){
     $(el).val(val);
 }

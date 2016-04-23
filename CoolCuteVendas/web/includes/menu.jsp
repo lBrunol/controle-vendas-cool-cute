@@ -61,49 +61,49 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav-outros">Outros Itens <i class="fa fa-fw fa-caret-down"></i></a>
-                                    <ul class="sub-nav-outros collapse">
+                                <li class="dropdown">
+                                    <a href="javascript:;" data-toggle="dropdown" data-target=".sub-nav-outros">Outros Itens <i class="fa fa-fw fa-caret-down"></i></a>
+                                    <ul class="sub-nav-outros collapse dropdown-menu">
                                         <li>
-                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-anuncio">Anúncios</a>
+                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-anuncio">Anúncios <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="sub-nav2-anuncio collapse">
-                                                <li><a href="/anuncio/criar/">Criar/Editar</a></li>
-                                                <li><a href="/anuncio/consultar/">Consultar</a></li>
+                                                <li><i class="fa fa-pencil-square-o fa-fw"></i> <a href="/anuncio/criar/">Criar/Editar</a></li>
+                                                <li><i class="fa fa-search-plus fa-fw"></i> <a href="/anuncio/consultar/">Consultar</a></li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-sta-anuncio">Status do Anúncios</a>
+                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-sta-anuncio">Status do Anúncios <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="sub-nav2-sta-anuncio collapse">
-                                                <li><a href="/status-anuncio/criar/">Criar/Editar</a></li>
-                                                <li><a href="/status-anuncio/consultar/">Consultar</a></li>
+                                                <li><i class="fa fa-pencil-square-o fa-fw"></i> <a href="/status-anuncio/criar/">Criar/Editar</a></li>
+                                                <li><i class="fa fa-search-plus fa-fw"></i> <a href="/status-anuncio/consultar/">Consultar</a></li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-tip-anuncio">Tipos de Anúncios</a>
+                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-tip-anuncio">Tipos de Anúncios <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="sub-nav2-tip-anuncio collapse">
-                                                <li><a href="/tipo-anuncio/criar/">Criar/Editar</a></li>
-                                                <li><a href="/tipo-anuncio/consultar/">Consultar</a></li>
+                                                <li><i class="fa fa-pencil-square-o fa-fw"></i> <a href="/tipo-anuncio/criar/">Criar/Editar</a></li>
+                                                <li><i class="fa fa-search-plus fa-fw"></i> <a href="/tipo-anuncio/consultar/">Consultar</a></li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-tip-avaliacao">Tipos de Avaliação</a>
+                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-tip-avaliacao">Tipos de Avaliação <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="sub-nav2-tip-avaliacao collapse">
-                                                <li><a href="/tipo-avaliacao/criar/">Criar/Editar</a></li>
-                                                <li><a href="/tipo-avaliacao/consultar/">Consultar</a></li>
+                                                <li><i class="fa fa-pencil-square-o fa-fw"></i> <a href="/tipo-avaliacao/criar/">Criar/Editar</a></li>
+                                                <li><i class="fa fa-search-plus fa-fw"></i> <a href="/tipo-avaliacao/consultar/">Consultar</a></li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-sta-pedido">Status Pedido</a>
+                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-sta-pedido">Status Pedido <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="sub-nav2-sta-pedido collapse">
-                                                <li><a href="/status-pedido/criar/">Criar/Editar</a></li>
-                                                <li><a href="/status-pedido/consultar/">Consultar</a></li>
+                                                <li><i class="fa fa-pencil-square-o fa-fw"></i> <a href="/status-pedido/criar/">Criar/Editar</a></li>
+                                                <li><i class="fa fa-search-plus fa-fw"></i> <a href="/status-pedido/consultar/">Consultar</a></li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-tip-movimentacao">Tipos Movimentação</a>
+                                            <a href="javascript:;" data-toggle="collapse" data-target=".sub-nav2-tip-movimentacao">Tipos Movimentação <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="sub-nav2-tip-movimentacao collapse">
-                                                <li><a href="/tipo-movimentacao/criar/">Criar/Editar</a></li>
-                                                <li><a href="/tipo-movimentacao/consultar/">Consultar</a></li>
+                                                <li><i class="fa fa-pencil-square-o fa-fw"></i> <a href="/tipo-movimentacao/criar/">Criar/Editar</a></li>
+                                                <li><i class="fa fa-search-plus fa-fw"></i> <a href="/tipo-movimentacao/consultar/">Consultar</a></li>
                                             </ul>
                                         </li>                                        
                                     </ul>
