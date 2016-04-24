@@ -1,4 +1,15 @@
 ﻿$(function(){
+    //Extensão do dropdown do menu para suportar um terceiro nível
+    $('ul.dropdown-menu [data-toggle=dropdown]').on('click', function(event) {
+        // Tira a âncora do link 
+        event.preventDefault(); 
+        // Evita que o evento se propague para os pais do elemento atual
+        event.stopPropagation(); 
+        // Adiciona as classes open no segundo nível
+        $(this).parent().siblings().removeClass('open');
+        $(this).parent().toggleClass('open');
+    });
+    
     /* Seleção única nas tabelas dentro dos modais */
     $('.unique-selection tbody tr').click(function () {
         $(this).siblings().removeClass('active-tr');

@@ -36,7 +36,8 @@ input[type="date"] { -webkit-appearance: textfield; -moz-appearance: field; }
 /* MENU */
 /* SUBMENU */
 .sub-nav-outros ul { padding-left: 20px; list-style: none; }
-.sub-nav-outros > li {  }
+.sub-menu { left: 50%; }
+.sub-menu li a { padding: 3px; }
 
 /* FORMULÁRIOS */
 .input-qtde { width: 70px; height: 24px; padding: 2px 6px  }
@@ -96,6 +97,10 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 /* RODAPÉ */
 .rodape { padding: 15px 0; background-color:#f8f8f8; border-top: 1px solid #e7e7e7; }
 .rodape p { font-family: openSansBold; font-size: 12px; color: #666; }
+
+@media (max-width: 767px) {
+    .navbar-nav .open .dropdown-menu .sub-menu > li > a { padding-left: 35px; }
+}
 
 @media screen and (min-width: 783px){
     .logo { padding-left: 0; }
