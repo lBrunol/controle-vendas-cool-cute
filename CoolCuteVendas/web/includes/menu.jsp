@@ -72,6 +72,13 @@
                                             </ul>
                                         </li>
                                         <li class="dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos <i class="fa fa-fw fa-caret-down"></i></a>
+                                            <ul class="dropdown-menu sub-menu">
+                                                <li><a href="/produto/criar/"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a></li>
+                                                <li><a href="/produto/consultar/"><i class="fa fa-search fa-fw"></i> Consultar</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Status do Anúncios <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="dropdown-menu sub-menu">
                                                 <li><a href="/status-anuncio/criar/"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a></li>
@@ -117,6 +124,8 @@
                                             <li>
                                                 <a href="#"><i class="fa fa-fw fa-user"></i>Perfil</a>
                                             </li>
+                                            <li><a href="/usuario/criar/"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a></li>
+                                            <li><a href="/usuario/consultar/"><i class="fa fa-search fa-fw"></i> Consultar</a></li>
                                             <li class="divider"></li>
                                             <li>
                                                 <a href="#"><i class="fa fa-fw fa-power-off"></i> Sair</a>

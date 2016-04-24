@@ -17,11 +17,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">                        
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-sm-8">
                             <h4 class="modal-title">Selecione o Anúncio</h4>
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-4">
                             <button type="button" class="btn btn-salvar pull-right data-modal" data-dismiss="modal" data-target="#input-anuncio">OK</button>
                         </div>                        
                     </div>
@@ -59,11 +59,11 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-sm-8">
                             <h4 class="modal-title">Selecione o Cliente</h4>
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-4">
                             <button type="button" class="btn btn-salvar pull-right data-modal" data-dismiss="modal" data-target="#input-cliente">OK</button>
                         </div>
                     </div>
@@ -111,11 +111,11 @@
                 <div class="modal-content">
                     <div class="modal-header">
 
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-sm-8">
                             <h4 class="modal-title">Selecione os Produtos</h4>
                         </div>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-4">
 
                             <button type="button" class="btn btn-salvar pull-right" data-dismiss="modal">OK</button>
                         </div>

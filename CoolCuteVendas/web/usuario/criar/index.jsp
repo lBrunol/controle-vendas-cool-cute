@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cadastro de Movimentações - Cool & Cute - Vendas</title>
+    <title>Cadastro de Usuário - Cool & Cute - Vendas</title>
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
 </head>
@@ -11,32 +11,31 @@
     <%@include file="/includes/menu.jsp" %>
     <!-- CONTEÚDO -->
     <div class="container content">
-        <h2>Cadastro de Movimentações</h2>
+        <h2>Cadastro de Usuário</h2>
         <hr>
-        <form method="post" action="javascript:void(0);" id="formMovimentacoes">
+        <form method="post" action="javascript:void(0);" id="formUsuario">
             <div class="row">
                 <div class="form-group col-md-6 col-sm-6">
-                    <label for="txtDescricao">Descrição</label>
-                    <input type="text" class="form-control" name="txtDescricao" />
-                </div>
-                <div class="form-group col-md-6 col-sm-6">
-                    <label for="txtData">Data</label>
-                    <input type="date" class="form-control" name="txtData" />
+                    <label for="txtLogin">Login</label>
+                    <input type="text" class="form-control" name="txtLogin" />
                 </div>                
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-sm-6">
-                    <label for="txtValor">Valor</label>
-                    <input type="text" class="form-control" name="txtValor" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
-                </div>
+                    <label for="txtSenha">Senha</label>
+                    <input type="password" class="form-control" name="txtSenha" id="txtSenha" />
+                </div> 
                 <div class="form-group col-md-6 col-sm-6">
-                    <label for="slcMovimentacao">Tipo de Movimentação</label>
-                    <select class="form-control">
-                        <option value="2">Outros Gastos</option>
-                        <option value="6">Reembolso</option>
-                    </select>
+                    <label for="txtConfirmeSenha">Confirme a Senha</label>
+                    <input type="password" class="form-control" name="txtConfirmeSenha" />
                 </div>
-            </div>            
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4 col-sm-6">
+                    <label for="chkAdministrador" class="radio-check">Administrador</label>
+                    <input type="checkbox" name="chkAdministrador" />
+                </div>
+            </div>
             <div class="row margin-std-bottom">
                 <div class="col-md-12">
                     <hr />
@@ -54,7 +53,7 @@
     <%@include file="/includes/rodape.jsp" %>
     <script type="text/javascript">
         /* Validação dos campos do formulário */
-        $("#formMovimentacoes").validate({
+        $("#formUsuario").validate({
             errorPlacement: function(error, element) {
             $( element )
                 .closest( "form" )
@@ -63,16 +62,22 @@
             },
             errorElement: "span",
             rules: {
-                txtDescricao: "required",
-                txtData: "required",
-                txtValor: "required"
+                txtLogin: "required",
+                txtSenha: "required",
+                txtConfirmeSenha: {
+                    equalTo: "#txtSenha",
+                    required: true
+                }
             },
             messages: {
-                txtDescricao: "Por favor, preencha a descrição",
-                txtData: "Por favor, preencha a data",
-                txtValor: "Por favor, preencha o valor"
+                txtLogin: "Por favor, preencha a descrição",
+                txtSenha: "Por favor, preencha a senha",
+                txtConfirmeSenha: {
+                    required: "Por favor, confirme a senha",
+                    equalTo: "A senha digitada nos dois campos devem ser iguais"
+                }
             }     
         });
-    </script>    
+    </script>
 </body>
 </html>
