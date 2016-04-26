@@ -13,7 +13,7 @@
     <div class="container content">
         <h2>Cadastro de Tipos de Anúncios</h2>
         <hr>
-        <form method="post" action="javascript:void(0);" id="formTipoAnuncio">
+        <form method="post" action="/TipoAnuncioController" id="formTipoAnuncio">
             <div class="row">
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="txtDescricao">Descrição</label>
