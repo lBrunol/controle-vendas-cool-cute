@@ -8,6 +8,7 @@ package controller;
 import bean.TipoAnuncio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,12 +42,14 @@ public class TipoAnuncioController extends HttpServlet {
             tia.setPercentual(Float.parseFloat(request.getParameter("txtPercentual")));
                 TipoAnuncioModel tiaModel = new TipoAnuncioModel();
                 tiaModel.adiciona(tia);
-                pagina += "?sucess=true";            
+                pagina += "?sucess=true"; 
         } catch (Exception ex) {
             pagina += "?msg=Erro: " + ex.getMessage();
         } finally {
-            request.getRequestDispatcher(pagina).forward(request, response);
-            out.close();
+            response.sendRedirect(pagina);
+            /*RequestDispatcher rd = request.getRequestDispatcher(pagina);
+            rd.forward(request, response);            
+            out.close();*/
         }
     }
 

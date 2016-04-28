@@ -11,6 +11,10 @@
     <%@include file="/includes/menu.jsp" %>
     <!-- CONTEÚDO -->
     <div class="container content">
+        <div class="alert alert-success alert-dismissible fade in" role="alert"> 
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+            <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.        
+        </div>
         <h2>Cadastro de Tipos de Anúncios</h2>
         <hr>
         <form method="post" action="/TipoAnuncioController" id="formTipoAnuncio">

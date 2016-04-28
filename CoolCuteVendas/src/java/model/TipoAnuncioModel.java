@@ -17,7 +17,7 @@ public class TipoAnuncioModel {
     private PreparedStatement stmt;
     private Connection c;
     
-    public boolean adiciona(TipoAnuncio tipoAnuncio){
+    public boolean adiciona(TipoAnuncio tipoAnuncio) throws SQLException{
         query = "insert into tipoanuncio( tiaDescricao, tiaPercentual) VALUES (?,?)";
         ConexaoBanco conn = new ConexaoBanco();
         
@@ -32,7 +32,6 @@ public class TipoAnuncioModel {
             stmt.execute();
             stmt.close();
             
-            conn.desconectar();
             c.close();
             
             return true;
@@ -43,5 +42,32 @@ public class TipoAnuncioModel {
         
         return false;
         
-    }    
+    }
+
+    public boolean altera(TipoAnuncio tipoAnuncio) throws SQLException{
+        query = "insert into tipoanuncio( tiaDescricao, tiaPercentual) VALUES (?,?)";
+        ConexaoBanco conn = new ConexaoBanco();
+        
+        try{
+            c = conn.conectar();
+            stmt = c.prepareStatement(query);
+            
+            //seta os valores
+            stmt.setString(1, tipoAnuncio.getDescricao());
+            stmt.setFloat(2, tipoAnuncio.getPercentual());
+            
+            stmt.execute();
+            stmt.close();
+            
+            c.close();
+            
+            return true;
+            
+        } catch (SQLException e) {
+            e.getCause();
+        }        
+        
+        return false;
+        
+    }
 }
