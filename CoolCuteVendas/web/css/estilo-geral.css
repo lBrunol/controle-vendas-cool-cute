@@ -77,13 +77,13 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 .btn-pequeno { padding: 2px 9px; font-size: 12px; }
 .btn-vermelho { background-color: #e54147; color:#fff; }
 .btn-vermelho:hover,
-.btn-vermelho:focus { background-color:#e77f83; color:#fff;}
+.btn-vermelho:focus { background-color:#e77f83; color:#fff; transition: all linear 0.2s; }
 .btn-mais,
-.btn-salvar { background-color: #27a199; font-size:14px; color: #fff; }
+.btn-salvar { background-color: #27a199; font-size:14px; color: #fff; transition: all linear 0.2s; }
 .btn-mais:hover,
 .btn-mais:focus,
 .btn-salvar:hover,
-.btn-salvar:focus { background-color: #46efe4; color:#fff; }
+.btn-salvar:focus { background-color: #46efe4; color:#fff; transition: all linear 0.2s; }
  
 /* ALTERAÇÕES NO BOOTSTRAP */
 .nav > li > a { padding: 15px 10px; }

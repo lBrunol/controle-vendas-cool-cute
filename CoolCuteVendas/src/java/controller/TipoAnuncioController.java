@@ -8,6 +8,7 @@ package controller;
 import bean.TipoAnuncio;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +22,9 @@ import model.TipoAnuncioModel;
  */
 public class TipoAnuncioController extends HttpServlet {
 
+    
+    private boolean retorno;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -34,22 +38,26 @@ public class TipoAnuncioController extends HttpServlet {
             throws ServletException, IOException {
         String pagina = "/tipo-anuncio/criar/index.jsp";
         response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         
         try {
             TipoAnuncio tia = new TipoAnuncio();
+            
             tia.setDescricao(request.getParameter("txtDescricao"));
             tia.setPercentual(Float.parseFloat(request.getParameter("txtPercentual")));
-                TipoAnuncioModel tiaModel = new TipoAnuncioModel();
-                tiaModel.adiciona(tia);
-                pagina += "?sucess=true"; 
-        } catch (Exception ex) {
-            pagina += "?msg=Erro: " + ex.getMessage();
+            
+            TipoAnuncioModel tiaModel = new TipoAnuncioModel();
+            tiaModel.adiciona(tia);  
+            
+            retorno = true;            
+            request.setAttribute("msg", "Cadastro realizado com sucesso");
+            
+        } catch (SQLException ex) {
+            retorno = false;
+            request.setAttribute("msg", "Erro ao cadastrar o registro. " + ex.getMessage());
         } finally {
-            response.sendRedirect(pagina);
-            /*RequestDispatcher rd = request.getRequestDispatcher(pagina);
-            rd.forward(request, response);            
-            out.close();*/
+            request.setAttribute("retorno", retorno);
+            RequestDispatcher rd = request.getRequestDispatcher(pagina);
+            rd.include(request, response);
         }
     }
 

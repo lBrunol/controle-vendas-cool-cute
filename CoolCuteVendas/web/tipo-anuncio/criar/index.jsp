@@ -11,10 +11,20 @@
     <%@include file="/includes/menu.jsp" %>
     <!-- CONTEÚDO -->
     <div class="container content">
-        <div class="alert alert-success alert-dismissible fade in" role="alert"> 
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
-            <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.        
-        </div>
+        <%if (request.getAttribute("retorno") != null) {
+            if(Boolean.parseBoolean(request.getAttribute("retorno").toString()) == true){%>
+                <div class="alert alert-success alert-dismissible fade in" role="alert"> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+                    <i class="fa fa-fw fa-check"></i> <%=request.getAttribute("msg")%>
+                </div>
+            <%} else if(Boolean.parseBoolean(request.getAttribute("retorno").toString()) == false) {%>
+                <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+                    <i class="fa fa-fw fa-times"></i> <%=request.getAttribute("msg")%>
+                </div>
+            <%}
+        }%>
+        
         <h2>Cadastro de Tipos de Anúncios</h2>
         <hr>
         <form method="post" action="/TipoAnuncioController" id="formTipoAnuncio">
