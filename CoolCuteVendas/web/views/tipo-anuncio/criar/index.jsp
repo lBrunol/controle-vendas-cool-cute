@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,31 +12,31 @@
     <%@include file="/includes/menu.jsp" %>
     <!-- CONTEÚDO -->
     <div class="container content">
-        <%if (request.getAttribute("retorno") != null) {
-            if(Boolean.parseBoolean(request.getAttribute("retorno").toString()) == true){%>
+        <c:if test="${retorno != null }">
+            <c:if test="${retorno == true }">
                 <div class="alert alert-success alert-dismissible fade in" role="alert"> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
-                    <i class="fa fa-fw fa-check"></i> <%=request.getAttribute("msg")%>
+                    <i class="fa fa-fw fa-check"></i> ${msg}
                 </div>
-            <%} else if(Boolean.parseBoolean(request.getAttribute("retorno").toString()) == false) {%>
+            </c:if>
+            <c:if test="${retorno == false }">
                 <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
-                    <i class="fa fa-fw fa-times"></i> <%=request.getAttribute("msg")%>
+                    <i class="fa fa-fw fa-times"></i> ${msg}
                 </div>
-            <%}
-        }%>
-        
+            </c:if>
+        </c:if>        
         <h2>Cadastro de Tipos de Anúncios</h2>
-        <hr>
-        <form method="post" action="/TipoAnuncioController" id="formTipoAnuncio">
+        <hr>        
+        <form method="post" action="criarTipoAnuncio" id="formTipoAnuncio">
             <div class="row">
                 <div class="form-group col-md-6 col-sm-6">
-                    <label for="txtDescricao">Descrição</label>
-                    <input type="text" class="form-control" name="txtDescricao" />
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" name="descricao" />
                 </div>            
                 <div class="form-group col-md-6 col-sm-6">
-                    <label for="txtPercentual">Percentual</label>
-                    <input type="number" class="form-control" name="txtPercentual" onkeypress="return(apenasNumeros(event))" />
+                    <label for="percentual">Percentual</label>
+                    <input type="number" class="form-control" name="percentual" onkeypress="return(apenasNumeros(event))" />
                 </div>
             </div>
             <div class="row margin-std-bottom">
@@ -64,15 +65,15 @@
             },
             errorElement: "span",
             rules: {
-                txtDescricao: "required",
-                txtPercentual: {
+                descricao: "required",
+                percentual: {
                     required: true,
                     number: true
                 }
             },
             messages: {
-                txtDescricao: "Por favor, preencha a descrição",
-                txtPercentual: "Por favor, preencha o percentual"
+                descricao: "Por favor, preencha a descrição",
+                percentual: "Por favor, preencha o percentual"
             }     
         });
     </script>    

@@ -1,4 +1,4 @@
-package util;
+package br.com.coolcute.util;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;

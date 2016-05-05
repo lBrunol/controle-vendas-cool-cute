@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model;
+package br.com.coolcute.model.dao;
 
-import bean.TipoAnuncio;
+import br.com.coolcute.bean.TipoAnuncio;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import util.ConexaoBanco;
+import br.com.coolcute.util.ConexaoBanco;
+import org.springframework.stereotype.Repository;
 
-public class TipoAnuncioModel {
+@Repository
+public class TipoAnuncioDao {
     
     private String query;
     private PreparedStatement stmt;

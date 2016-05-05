@@ -16,6 +16,7 @@
                             </div>
                         </div>
                         <div class="collapse navbar-collapse navbar-ex1-collapse">
+                            <a href="#" class="close-menu collapsed" title="Fechar" data-toggle="collapse" data-target=".navbar-ex1-collapse" aria-expanded="true" aria-controls="navbar" class="">×</a>
                             <ul class="nav navbar-nav side-nav">
                                 <li class="dropdown">
                                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pedidos <i class="fa fa-fw fa-caret-down"></i></a>
