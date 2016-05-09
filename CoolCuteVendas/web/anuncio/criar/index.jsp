@@ -154,14 +154,12 @@
             </div>
         </div>
 
-
-
  <!--________________________________________________________________________________________________-->
                       
  
 
  <!--BreadCrumbs-->
-                    <ol class="breadcrumb">
+     <ol class="breadcrumb">
       <li><a href="#">Início</a></li>
       <li><a href="#">Anúncios</a></li>
       <li class="active">Criar Anúncio</li>
@@ -174,17 +172,13 @@
         
             <h2>Cadastrar Anúncio</h2>
             <hr />
-
+<form method="post" action="javascript:void(0);" id="formCadastroAnuncio">
               <div class="row">
                         <div class="form-group col-md-6 col-xs-12">
-                            <label for="txtCodAnuncio">Código do Anúncio</label>
-                            <input type="text" id="input-codigo-anuncio"class="form-control" name="txtCodAnuncio" />
-                        </div> 
-            </div>
+          <label for="txtDescricaoAnuncio">Descrição</label>
+          <input type="text" id="input-descricao-anuncio"class="form-control" name="txtDescricaoAnuncio" />
+</div>
 
-
-
-<div class="row">
 <div class="form-group col-md-6 col-xs-12">
    <label for="slcStatusAnuncio">Status do Anúncio</label>
      <select class="form-control">
@@ -192,8 +186,6 @@
              <option>Inativo</option>
       </select>
 
-       <label for="txtEmailCliente">teste</label>
-          <input type="text" id="input-email-cliente"class="form-control" name="txtEmailCliente" />
    
 
 </div>
@@ -203,11 +195,80 @@
 
 <div class="row">
 <div class="form-group col-md-6 col-xs-12">
-          <label for="txtEmailCliente">Email</label>
-          <input type="text" id="input-email-cliente"class="form-control" name="txtEmailCliente" />
+          <label for="txtTipoAnuncio">Tipo </label>
+          <select class="form-control">
+             <option>Grátis</option>
+             <option>Premium</option>
+             <option>Clássica</option>
+      </select>
+         
 </div>
+
+<div class="form-group col-md-6 col-xs-12">
+                    <label for="txtValorAnuncio">Preço</label>
+                    <input type="text" class="form-control" name="txtValorAnuncio" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))"/>
+                </div>
    </div>
+
+            <div class="row">
+                <div class="form-group col-md-6 col-xs-12">
+                    <label for="txtStatusAnuncio">Status</label>
+                    <select class="form-control">
+                        <option>Grátis</option>
+                        <option>Premium</option>
+                        <option>Clássica</option>
+                     </select>    
+                </div>
+            </div>
+</form>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
+                    <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                </div>
+            </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
     <%-- INCLUDE DO RODAPÉ --%>
-    <%@include file="/includes/rodape.jsp" %>    
+    <%@include file="/includes/rodape.jsp" %>  
+
+
+
+
+
+
+    <!-- ________________________________________________________________________________________-->
+
+ <script type="text/javascript">
+        /* Validação dos campos do formulário */
+        $("#formCadastroAnuncio").validate({
+            errorPlacement: function(error, element) {
+            $( element )
+                .closest( "form" )
+                    .find( "label[for='" + element.attr( "name" ) + "']" )
+                        .append( error );                
+            },
+            errorElement: "span",
+            rules: {
+                txtDescricaoAnuncio: "required",
+                txtValorAnuncio: "required",
+            },
+            messages: {
+                txtDescricaoAnuncio: "Por favor, preencha a descrição",
+                txtValorAnuncio: "Por favor, insira um valor para o Anúncio",
+            }    
+        });
+    </script>
 </body>
 </html>

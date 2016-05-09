@@ -39,9 +39,6 @@
             <li><a href="#">Clientes</a></li>
             <li class="active">Consultar</li>
         </ol>
-        <style>
-
-        </style>
         <h2>Consultar Cliente</h2>
         <hr />
         <h3>Selecione o Filtro:</h3>
@@ -51,17 +48,20 @@
                     <div class="panel panel-filtro">
                         <div class="panel-body">                                
                             <div class="col-md-6 col-xs-12">
+                               
                                 <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="nome" name="rdbFiltro" id="rdbNome" />
+                                    <input type="radio" value="nome" class="radioFiltro" name="rdbFiltro[]" id="rdbNome" />
                                     Nome
                                 </label>
                             </div>
                             <div class="col-md-6 col-xs-12">
                                 <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="email" name="rdbFiltro" id="rdbEmail" />
+                                    <input type="radio" value="email" class="radioFiltro" name="rdbFiltro[]" id="rdbEmail" />
                                     Email
                                 </label>
-                            </div>                                
+                            </div> 
+                            
+                        
                         </div>
                     </div>
                 </div>
@@ -174,6 +174,50 @@
         </form>
     </div>
     <%-- INCLUDE DO RODAPÉ --%>
-    <%@include file="/includes/rodape.jsp" %>    
+    <%@include file="/includes/rodape.jsp" %>   
+    
+    
+    <!-- <!-- _____________javaScript___________________ -->
+    
+    <script type="text/javascript">
+        $(function () {   
+            
+            /* Validação dos campos do formulário */
+            $("#formConsultarClientes").validate({
+                errorPlacement: function(error, element) {
+                $( element )
+                    .closest( "form" )
+                        .find( "label[for='" + element.attr( "name" ) + "']" )
+                            .append( error );                
+                },
+                errorElement: "span",
+                rules: {
+                    
+                    depends: function(element) {                                
+                                if ($().val() == 'À postar')
+                                    return false;
+                                else if ($('select[name*="slcStatus"]').val() == 'Cancelada')
+                                    return false;
+                                else
+                                    return true;
+                            }
+                }
+                    rdbNome: "required",
+                    txtEmailCliente: "required"
+                   
+                              },
+                   
+                  
+ 
+                messages: {
+                    txtNomeCliente: "Por favor, insira um nome válido",
+                    txtEmailCliente: "Por favor, insira um email válido"
+                  
+                                    
+                }
+                
+
+     </script>              
+            
 </body>
 </html>

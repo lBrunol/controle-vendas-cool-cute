@@ -5,6 +5,7 @@
     <title>Cadastro de Pedidos - Cool & Cute - Vendas</title>
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
+    
 </head>
 <body>
     <%-- INCLUDE DO MENU --%>

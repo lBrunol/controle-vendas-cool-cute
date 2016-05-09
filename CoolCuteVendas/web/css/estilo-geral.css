@@ -118,3 +118,39 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 @media screen and (max-width: 600px){
     .table { width: 600px; }
 }
+
+.divContaineres{ width: 900px; height: 600px; top: 0; position: absolute; margin-left: 224px; margin-top: 30px; z-index: 2;}
+.container-home{ background-color: #f8f8f8;
+width: 300px;
+height: 250px;
+background-color :rgba(23, 43, 41, 0.8);
+border-radius: 30px;
+top:0; 
+text-align: center;
+position: absolute;
+} 	
+
+.container-home h3{ color: rgb(36 , 206 ,195); } 
+.container-home p{ color: #B0CDCB; font-size: 14px; text-align:left; margin-left: 30px; text-shadow: 2px 2px #070707;} 		
+
+/*#containerSaldo{margin-left:800px;}*/
+
+#containerMaisVendidas{top:0;margin-left: 100px;}
+#containerSaldo{top:0; margin-left: -400px;}
+#containerUltimasMovimentacoes{top:0; margin-left: 500px;}
+#containerVendas{top:0; margin-left:500px; margin-top: 300px; }
+
+#jumbotron1{ top: 0; position: absolute; }
+
+.logo_icone{ background-image: url(..\Users\ThieBia\Users\ThieBia\Desktop\Projeto da Faculdade\Projeto Cool & Cute\trunk\CoolCuteVendas\web\imagens);  
+ position: absolute;
+ top: 0;
+ width: 120px;
+ height: 120px;
+ background-size: 100%;
+ cursor: pointer;
+ border: 0px solid black;
+ padding: 0px;
+margin: auto;
+float: left; 
+z-index: 3;}
