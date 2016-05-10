@@ -24,8 +24,8 @@
                     <div class="modal-body">
                         <p class="modal-id"><strong>Id: </strong><span></span></p>
                         <p class="modal-descricao"><strong>Descrição: </strong><span></span></p>
-                        <button type="button" class="btn btn-salvar margin-std-right margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-check"></i> Confirmar</button>
-                        <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                        <a role="button" href="javascript:void(0);" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</a>
+                        <button type="button" class="btn btn-vermelho margin-std-top btn-confirma-excluir" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
                     </div>
                     <div class="modal-footer">
 
@@ -56,14 +56,14 @@
                         <div class="panel-body">                                
                             <div class="col-md-6 col-xs-12">
                                 <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="descricao" name="rdbFiltro" id="rdbDescricao" />
-                                    Descrição
+                                    <input type="radio" value="codigo" name="rdbFiltro" id="rdbCodigo" />
+                                    Código
                                 </label>
                             </div>
                             <div class="col-md-6 col-xs-12">
                                 <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="percentual" name="rdbFiltro" id="rdbPercentual" />
-                                    Percentual
+                                    <input type="radio" value="descricao" name="rdbFiltro" id="rdbDescricao" />
+                                    Descrição
                                 </label>
                             </div>                                
                         </div>
@@ -74,7 +74,7 @@
                 <div class="col-md-12">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Filtro por: Descrição" aria-describedby="basic-addon2" id="txtPesquisa" />
-                        <span class="input-group-btn"><button type="button" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></button></span>
+                        <span class="input-group-btn"><a role="button" href="/consultarTipoAnuncio" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></a></span>
                     </div>
                 </div>
             </div>             
@@ -97,7 +97,7 @@
                                         <td data-descricao="${tipoAnuncio.descricao}">${tipoAnuncio.descricao}</td>
                                         <td>${tipoAnuncio.percentual}</td>
                                         <td>
-                                            <a class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
+                                            <a href="/consultarTipoAnuncioItem/${tipoAnuncio.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
                                             <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
                                         </td>
                                     </tr>
@@ -141,9 +141,9 @@
         $('.btn-excluir').click(function(){
            var id = $(this).closest('tr').find('td[data-id]').attr('data-id');
            var descricao = $(this).closest('tr').find('td[data-descricao]').attr('data-descricao');
-           console.log(id + " " + descricao);
            $('.modal-excluir .modal-id span').html(id);
            $('.modal-excluir .modal-descricao span').html(descricao);
+           $('.modal-excluir .btn-salvar').attr('href', '/tipo-anuncio/excluir/' + id);
         });
     </script>
 </body>

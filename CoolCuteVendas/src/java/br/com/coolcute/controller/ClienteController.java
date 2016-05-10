@@ -1,52 +1,50 @@
 package br.com.coolcute.controller;
 
-import br.com.coolcute.bean.TipoAnuncio;
-import br.com.coolcute.model.dao.TipoAnuncioDao;
+import br.com.coolcute.bean.Cliente;
+import br.com.coolcute.model.dao.ClienteDao;
 import java.sql.SQLException;
-import javax.validation.Valid;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class TipoAnuncioController {
+public class ClienteController {
     
     @Autowired
-    private TipoAnuncioDao daoTipoAnuncio;
+    private ClienteDao daoCliente;
     private boolean retorno;
     private String msg;
     
-    @RequestMapping("tipo-anuncio/criar/index")
+    @RequestMapping("cliente/criar/index")
     public String form() {
-        return "tipo-anuncio/criar/index";
+        return "cliente/criar/index";
     }
     
-    @RequestMapping("adicionaAltera")
-    public ModelAndView adicionaAltera (TipoAnuncio tipoAnuncio){
+    @RequestMapping("adicionaAlteraCliente")
+    public ModelAndView adicionaAltera (Cliente cliente){
         
-        if(tipoAnuncio.getCodigo() != 0){        
-            return altera(tipoAnuncio);
+        if(cliente.getCodigo() != 0){        
+            return altera(cliente);
         } else {
-            return adiciona(tipoAnuncio);
+            return adiciona(cliente);
         }
         
     }
     
-    @RequestMapping("/tipo-anuncio/consultar/index")
+    @RequestMapping("/cliente/consultar/index")
     public String consulta(){        
-        return "/tipo-anuncio/consultar/index";
+        return "/cliente/consultar/index";
     }
 	
-    @RequestMapping("criarTipoAnuncio")
-        public ModelAndView adiciona(@Valid TipoAnuncio tipoAnuncio){
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/index");
+    @RequestMapping("criarCliente")
+        public ModelAndView adiciona(@Valid Cliente cliente){
+        ModelAndView modelAndView = new ModelAndView("cliente/criar/index");
         
         try {
-            daoTipoAnuncio.adiciona(tipoAnuncio);
+            daoCliente.adiciona(cliente);
             retorno = true;
             msg = "Cadastrado com sucesso";
         } catch (SQLException e) {
@@ -61,13 +59,13 @@ public class TipoAnuncioController {
         return modelAndView;		
     }
     
-    @RequestMapping("consultarTipoAnuncio")
+    @RequestMapping("consultarCliente")
     public ModelAndView lista(){
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/consultar/index");
+        ModelAndView modelAndView = new ModelAndView("cliente/consultar/index");
         
         try {            
-            modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncio());
+            modelAndView.addObject("cliente", daoCliente.getCliente());
         } catch (SQLException e) {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -75,13 +73,27 @@ public class TipoAnuncioController {
         return modelAndView;
     }
     
-    @RequestMapping("consultarTipoAnuncioItem/{id}")
-    public ModelAndView listaItem(@PathVariable("id") Long id){
+    @RequestMapping("servicoConsultarCliente")
+    public ModelAndView servicoListaCliente(){
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/index");
+        ModelAndView modelAndView = new ModelAndView("cliente/consultar/index");
         
         try {            
-            modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncioItem(id));
+            modelAndView.addObject("cliente", daoCliente.getCliente());
+        } catch (SQLException e) {
+            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
+            modelAndView.addObject("msg", msg);
+        }
+        return modelAndView;
+    }
+    
+    @RequestMapping("consultarClienteItem/{id}")
+    public ModelAndView listaItem(@PathVariable("id") Long id){
+        
+        ModelAndView modelAndView = new ModelAndView("cliente/criar/index");
+        
+        try {            
+            modelAndView.addObject("cliente", daoCliente.getClienteItem(id));
         } catch (SQLException e) {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -89,9 +101,9 @@ public class TipoAnuncioController {
         return modelAndView;
     }
 	
-    @RequestMapping("/tipo-anuncio/excluir/{id}") 
+    @RequestMapping("/cliente/excluir/{id}") 
     public ModelAndView remove(@PathVariable("id") Long id) {
-        TipoAnuncioDao dao = new TipoAnuncioDao();
+        ClienteDao dao = new ClienteDao();
         try {
            dao.exclui(id); 
         } catch (SQLException e) {
@@ -101,13 +113,13 @@ public class TipoAnuncioController {
         return lista();
     }
 	
-    @RequestMapping("alteraTarefa")
-    public ModelAndView altera(TipoAnuncio tipoAnuncio) {
+    @RequestMapping("alteraCliente")
+    public ModelAndView altera(Cliente cliente) {
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/index");
+        ModelAndView modelAndView = new ModelAndView("cliente/criar/index");
         
         try {
-            daoTipoAnuncio.altera(tipoAnuncio);
+            daoCliente.altera(cliente);
             retorno = true;
             msg = "Registro alterado com sucesso";
         } catch (SQLException e) {

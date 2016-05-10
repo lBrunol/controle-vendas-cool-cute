@@ -27,16 +27,26 @@
             </c:if>
         </c:if>        
         <h2>Cadastro de Tipos de Anúncios</h2>
-        <hr>        
-        <form method="post" action="criarTipoAnuncio" id="formTipoAnuncio">
+        <hr>
+        <form method="post" action="/adicionaAltera" id="formTipoAnuncio">      
             <div class="row">
+                <div class="hidden">
+                    <c:choose>
+                        <c:when test="${not empty tipo.codigo}">
+                          <input type="hidden" name="codigo" value="${tipo.codigo}" />
+                        </c:when>
+                        <c:otherwise>
+                          <input type="hidden" name="codigo" value="0" />
+                        </c:otherwise>
+                    </c:choose>                    
+                </div>
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" name="descricao" />
+                    <input type="text" class="form-control" name="descricao" value="${tipoAnuncio.getDescricao()}" />
                 </div>            
                 <div class="form-group col-md-6 col-sm-6">
                     <label for="percentual">Percentual</label>
-                    <input type="number" class="form-control" name="percentual" onkeypress="return(apenasNumeros(event))" />
+                    <input type="number" class="form-control" name="percentual" value="${tipoAnuncio.getPercentual()}" onkeypress="return(apenasNumeros(event))" />
                 </div>
             </div>
             <div class="row margin-std-bottom">

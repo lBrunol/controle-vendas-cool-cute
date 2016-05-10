@@ -299,7 +299,16 @@
     <%-- INCLUDE DO RODAPÃ --%>
     <%@include file="/includes/rodape.jsp" %>
     <script type="text/javascript">
-        $(function () {   
+        $(function () {
+            
+            $.ajax({
+                type: 'get',
+                url: '/consultarCliente',
+                success: function(data){
+                    console.log(data);  
+                }                
+            });
+            
             
             /* Validação dos campos do formulário */
             $("#formAnuncio").validate({

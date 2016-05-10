@@ -5,7 +5,7 @@
  */
 package br.com.coolcute.model.dao;
 
-import br.com.coolcute.bean.TipoAnuncio;
+import br.com.coolcute.bean.Pedido;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,21 +16,21 @@ import br.com.coolcute.util.ConexaoBanco;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TipoAnuncioDao {
+public class PedidoDao {
     
     private String query;
     private PreparedStatement stmt;
     private Connection c;
     
-    public void adiciona(TipoAnuncio tipoAnuncio) throws SQLException{
-        query = "INSERT INTO tipoanuncio( tiaDescricao, tiaPercentual) VALUES (?,?)";
+    public void adiciona(Pedido tipoAnuncio) throws SQLException{
+        query = "INSERT INTO pedido( pedDescricao, pedPercentual) VALUES (?,?)";
         ConexaoBanco conn = new ConexaoBanco();
         
         c = conn.conectar();
         stmt = c.prepareStatement(query);
 
-        stmt.setString(1, tipoAnuncio.getDescricao());
-        stmt.setFloat(2, tipoAnuncio.getPercentual());
+        //stmt.setString(1, tipoAnuncio.getDescricao());
+        //stmt.setFloat(2, tipoAnuncio.getPercentual());
 
         stmt.execute();
         stmt.close();
@@ -38,16 +38,16 @@ public class TipoAnuncioDao {
         c.close();
     }
 
-    public void altera(TipoAnuncio tipoAnuncio) throws SQLException{
-        query = "UPDATE tipoanuncio SET tiaDescricao = ? , tiaPercentual = ? WHERE tiaCodigo = ?";
+    public void altera(Pedido tipoAnuncio) throws SQLException{
+        query = "UPDATE pedido SET pedDescricao = ? , pedPercentual = ? WHERE pedCodigo = ?";
         ConexaoBanco conn = new ConexaoBanco();
 
         c = conn.conectar();
         stmt = c.prepareStatement(query);
 
-        stmt.setString(1, tipoAnuncio.getDescricao());
-        stmt.setFloat(2, tipoAnuncio.getPercentual());
-        stmt.setInt(3, tipoAnuncio.getCodigo());
+        //stmt.setString(1, tipoAnuncio.getDescricao());
+        //stmt.setFloat(2, tipoAnuncio.getPercentual());
+        //stmt.setInt(3, tipoAnuncio.getCodigo());
 
         stmt.execute();
         stmt.close();
@@ -56,7 +56,7 @@ public class TipoAnuncioDao {
     }
     
     public void exclui(Long id) throws SQLException{
-        query = "DELETE FROM tipoanuncio WHERE tiaCodigo = ?";
+        query = "DELETE FROM pedido WHERE pedCodigo = ?";
         ConexaoBanco conn = new ConexaoBanco();
 
         c = conn.conectar();
@@ -70,55 +70,55 @@ public class TipoAnuncioDao {
         c.close();
     }
     
-    public List<TipoAnuncio> getTipoAnuncio() throws SQLException {
+    public List<Pedido> getPedido() throws SQLException {
         
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM tipoanuncio");
+        stmt = c.prepareStatement("SELECT * FROM pedido");
         ResultSet rs = stmt.executeQuery();
-        List<TipoAnuncio> lstTipoAnuncio = new ArrayList<>();
+        List<Pedido> lstPedido = new ArrayList<>();
         
         while (rs.next()) {
-            TipoAnuncio tia = new TipoAnuncio();
+            Pedido ped = new Pedido();
             
-            tia.setCodigo(rs.getInt(1));
-            tia.setDescricao(rs.getString(2));
-            tia.setPercentual(rs.getFloat(3));
+            //ped.setCodigo(rs.getInt(1));
+            //ped.setDescricao(rs.getString(2));
+            //ped.setPercentual(rs.getFloat(3));
             
-            lstTipoAnuncio.add(tia);
+            lstPedido.add(ped);
         }
         
         rs.close();
         stmt.close();
         c.close();
         
-        return lstTipoAnuncio;
+        return lstPedido;
     }
     
-    public TipoAnuncio getTipoAnuncioItem(Long id) throws SQLException{        
+    public Pedido getPedidoItem(Long id) throws SQLException{        
         
         ConexaoBanco cnn = new ConexaoBanco();
-        TipoAnuncio itemTipoAnuncio = new TipoAnuncio();
+        Pedido itemPedido = new Pedido();
         
         c = cnn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM tipoAnuncio WHERE tiaCodigo = ?" );
+        stmt = c.prepareStatement("SELECT * FROM tipoAnuncio WHERE pedCodigo = ?" );
         
         stmt.setLong(1, id);
         
         ResultSet rs = stmt.executeQuery();
         
         while(rs.next()){
-            itemTipoAnuncio.setCodigo(rs.getInt(1));
-            itemTipoAnuncio.setDescricao(rs.getString(2));
-            itemTipoAnuncio.setPercentual(rs.getFloat(3));            
+            //itemPedido.setCodigo(rs.getInt(1));
+            //itemPedido.setDescricao(rs.getString(2));
+            //itemPedido.setPercentual(rs.getFloat(3));            
         }
         
         rs.close();
         stmt.close();
         c.close();
         
-        return itemTipoAnuncio;        
+        return itemPedido;        
     }
 }
