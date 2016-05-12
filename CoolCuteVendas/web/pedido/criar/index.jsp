@@ -303,7 +303,7 @@
             
             $.ajax({
                 type: 'get',
-                url: '/consultarCliente',
+                url: '/servicoConsultarCliente',
                 success: function(data){
                     console.log(data);  
                 }                

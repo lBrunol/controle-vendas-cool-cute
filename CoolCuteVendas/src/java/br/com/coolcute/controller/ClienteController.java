@@ -3,11 +3,13 @@ package br.com.coolcute.controller;
 import br.com.coolcute.bean.Cliente;
 import br.com.coolcute.model.dao.ClienteDao;
 import java.sql.SQLException;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -74,17 +76,15 @@ public class ClienteController {
     }
     
     @RequestMapping("servicoConsultarCliente")
-    public ModelAndView servicoListaCliente(){
+    public @ResponseBody List<Cliente> servicoListaCliente(){
         
-        ModelAndView modelAndView = new ModelAndView("cliente/consultar/index");
-        
+        List<Cliente> lstCli = null;
         try {            
-            modelAndView.addObject("cliente", daoCliente.getCliente());
+            lstCli = daoCliente.getCliente();
         } catch (SQLException e) {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
-            modelAndView.addObject("msg", msg);
         }
-        return modelAndView;
+        return lstCli;
     }
     
     @RequestMapping("consultarClienteItem/{id}")
