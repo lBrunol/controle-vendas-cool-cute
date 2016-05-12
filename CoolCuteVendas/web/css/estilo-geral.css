@@ -85,6 +85,9 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 .btn-mais:focus,
 .btn-salvar:hover,
 .btn-salvar:focus { background-color: #46efe4; color:#fff; transition: all linear 0.2s; }
+
+/* AJAX */
+.loader-ajax {text-align: center; }
  
 /* ALTERAÇÕES NO BOOTSTRAP */
 .nav > li > a { padding: 15px 10px; }
@@ -92,9 +95,6 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 .navbar-toggle .icon-bar { background: #27a199; }
 .modal-header .close { top: 5px; right: 10px; position: absolute; }
 .alert { transition: all linear 0.5s; }
-
-/* ALTERAÇÕES NO FONT AWESOME */
-/*.fa-fw { margin-right: 3px; }*/
 
 /* RODAPÉ */
 .rodape { padding: 15px 0; background-color:#f8f8f8; border-top: 1px solid #e7e7e7; }

@@ -11,13 +11,13 @@
     });
     
     /* Seleção única nas tabelas dentro dos modais */
-    $('.unique-selection tbody tr').click(function () {
+    $('body').delegate('.unique-selection tbody tr', 'click', function () {
         $(this).siblings().removeClass('active-tr');
         $(this).addClass('active-tr');
     });
     
     /* Seleção múltipla nas tabelas dentro dos modais */
-    $('.multi-selection tbody tr').click(function(){
+    $('body').delegate('.multi-selection tbody tr' , 'click' , function(){
         $(this).toggleClass('active-tr');
     });
     

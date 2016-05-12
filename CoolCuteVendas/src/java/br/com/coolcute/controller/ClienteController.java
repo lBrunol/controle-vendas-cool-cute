@@ -2,6 +2,10 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Cliente;
 import br.com.coolcute.model.dao.ClienteDao;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
 import java.util.List;
 import javax.validation.Valid;
@@ -76,15 +80,18 @@ public class ClienteController {
     }
     
     @RequestMapping("servicoConsultarCliente")
-    public @ResponseBody List<Cliente> servicoListaCliente(){
-        
+    @ResponseBody
+    public String servicoListaCliente() {
+        ObjectMapper mapper = new ObjectMapper();
         List<Cliente> lstCli = null;
+        String jsonValue = null;
         try {            
             lstCli = daoCliente.getCliente();
-        } catch (SQLException e) {
+            jsonValue = mapper.writeValueAsString(lstCli);
+        } catch (SQLException | JsonProcessingException e) {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
-        return lstCli;
+        return jsonValue;
     }
     
     @RequestMapping("consultarClienteItem/{id}")

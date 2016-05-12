@@ -78,28 +78,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="data-attr">1</td>                                    
-                                    <td class="data-value">Carlos da Silva</td>
-                                    <td>carlos-silva@hotmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td class="data-attr">2</td>                                    
-                                    <td class="data-value">Andrea de souza lemos ramos da costa</td>
-                                    <td>deia-lemos@gmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td class="data-attr">3</td>                                    
-                                    <td class="data-value">Carlos da Silva</td>
-                                    <td>carlos-silva@hotmail.com</td>
-                                </tr>
-                                <tr>
-                                    <td class="data-attr">4</td>                                    
-                                    <td class="data-value">Andrea de souza lemos ramos da costa</td>
-                                    <td>deia-lemos@gmail.com</td>
-                                </tr>                                
+                                
                             </tbody>
                         </table>
+                        <div class="loader-ajax">
+                            <img src="/imagens/loader.gif" />
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-salvar data-modal" data-dismiss="modal" data-target="#input-cliente">OK</button>
@@ -190,7 +174,7 @@
                         <input type="text" id="input-cliente" class="form-control" name="txtCliente" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
                         <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-cliente">+</button>
+                            <button type="button" class="btn btn-mais" id="btn-modal-cliente" data-toggle="modal" data-target="#modal-cliente">+</button>
                         </span>
                     </div>
                 </div>
@@ -301,13 +285,57 @@
     <script type="text/javascript">
         $(function () {
             
-            $.ajax({
-                type: 'get',
-                url: '/servicoConsultarCliente',
-                success: function(data){
-                    console.log(data);  
-                }                
-            });
+            $('#btn-modal-cliente').on('click', function (){
+                $.ajax({
+                    type: 'get',
+                    headers: {
+                        Accept: 'application/json; charset=utf-8',
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    url: '/servicoConsultarCliente',
+                    beforeSend: function(){
+                        document.getElementById('modal-cliente').querySelector('.loader-ajax').style.display = 'block';
+                        document.getElementById('modal-cliente').getElementsByTagName('table')[0].style.display = 'none';
+                    },
+                    complete: function (){
+                        document.getElementById('modal-cliente').querySelector('.loader-ajax').style.display = 'none';
+                        document.getElementById('modal-cliente').getElementsByTagName('table')[0].style.display = 'table';
+                    },
+                    success: function(data){
+                        jsonToHtmlCliente(data);  
+                    }                
+                });
+            });            
+            
+            function jsonToHtmlCliente(data){
+                
+                var tr, td, tdText, parentEl;
+                parentEl = document.getElementById('modal-cliente').getElementsByTagName('tbody')[0];
+              
+                for (i = 0; i < data.length; i++){                    
+                    tr = document.createElement('tr');                    
+                    
+                    td = document.createElement('td');
+                    td.setAttribute('class', 'data-attr');
+                    tdText = document.createTextNode(data[i].codigo);
+                    td.appendChild(tdText);                    
+                    tr.appendChild(td);
+                    
+                    td = document.createElement('td');
+                    td.setAttribute('class', 'data-value');
+                    tdText = document.createTextNode(data[i].nome);
+                    td.appendChild(tdText);                    
+                    tr.appendChild(td);
+                    
+                    td = document.createElement('td');
+                    tdText = document.createTextNode(data[i].email);
+                    td.appendChild(tdText);                    
+                    tr.appendChild(td);
+                    
+                    parentEl.appendChild(tr);
+                }
+                
+            }
             
             
             /* Validação dos campos do formulário */
@@ -430,7 +458,7 @@
             });
             
             /* Delega o evento blur (perder foco) ao adicionar itens do pedido */
-            $('.data-modal').click(function (){
+            $('body').delegate('.data-modal', 'click', function (){
                 var dataTarget;
                 var table;
 
@@ -451,7 +479,7 @@
             });
             
             /* Inclui os item(s) selecionados no modal para a tabela de itens do pedido */ 
-            $('#modal-produto button').click(function (){
+            $('body').delegate('#modal-produto button', 'click', function (){
                 if ($(this).closest('.modal').find('tr').hasClass('active-tr')) {
                     if ($('.modal .active-tr td:eq(0)').hasClass('selecionada') == false) { 
                     $(this).closest('.modal').find('.active-tr').each(function (index) {                            
@@ -468,6 +496,7 @@
             /* Desmarca a classe active-tr ao sair do modal */
             $('.modal').on('hidden.bs.modal', function (e) {
                 $(this).find('tr').removeClass('active-tr');
+                $('.modal table tbody').find('tr').remove();
             });            
         });
     </script>
