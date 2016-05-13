@@ -294,16 +294,14 @@
                     },
                     url: '/servicoConsultarCliente',
                     beforeSend: function(){
-                        document.getElementById('modal-cliente').querySelector('.loader-ajax').style.display = 'block';
-                        document.getElementById('modal-cliente').getElementsByTagName('table')[0].style.display = 'none';
+                        showLoader('modal-cliente');
                     },
                     complete: function (){
-                        document.getElementById('modal-cliente').querySelector('.loader-ajax').style.display = 'none';
-                        document.getElementById('modal-cliente').getElementsByTagName('table')[0].style.display = 'table';
+                        hideLoader('modal-cliente');
                     },
                     success: function(data){
                         jsonToHtmlCliente(data);  
-                    }                
+                    }
                 });
             });            
             

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,10 +40,16 @@
             <li><a href="#">Clientes</a></li>
             <li class="active">Consultar</li>
         </ol>
+        <c:if test="${msg != null }">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+                <i class="fa fa-fw fa-times"></i> ${msg}
+            </div>
+        </c:if> 
         <h2>Consultar Cliente</h2>
         <hr />
         <h3>Selecione o Filtro:</h3>
-        <form method="post" action="javascript:void(0);" id="form-consultar-clientes">
+        <form method="post" action="/filtraCliente" id="form-consultar-clientes">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-filtro">
@@ -59,9 +66,7 @@
                                     <input type="radio" value="email" class="radioFiltro" name="rdbFiltro[]" id="rdbEmail" />
                                     Email
                                 </label>
-                            </div> 
-                            
-                        
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,8 +74,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Filtro por: Nome" aria-describedby="basic-addon2" id="txtPesquisa" />
-                        <span class="input-group-btn"><button type="button" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></button></span>
+                        <input type="text" class="form-control" placeholder="Filtro por: Nome" name="nome" aria-describedby="basic-addon2" id="txtPesquisa" />
+                        <span class="input-group-btn"><button type="submit" href="/filtraCliente" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></button></span>
                     </div>
                 </div>
             </div>             
@@ -87,60 +92,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="codigo-consulta">1</td>
-                                    <td>Carlos de Souza Silva</td>
-                                    <td>carlos-souza@gmail.com</td>
-                                    <td>
-                                        <button class="btn btn-pequeno btn-warning" type="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</button>
-                                        <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="codigo-consulta">2</td>
-                                    <td>Jaine da Costa</td>
-                                    <td>costa.jaine@bol.com.br</td>
-                                    <td>
-                                        <button class="btn btn-pequeno btn-warning" type="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</button>
-                                        <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="codigo-consulta">3</td>
-                                    <td>Miriam Autino Cruz</td>
-                                    <td>mautino-cruz@bol.com.br</td>
-                                    <td>
-                                        <button class="btn btn-pequeno btn-warning" type="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</button>
-                                        <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="codigo-consulta">4</td>
-                                    <td>Camila Soares de Souza</td>
-                                    <td>mila.soares@hotmail.com</td>
-                                    <td>
-                                        <button class="btn btn-pequeno btn-warning" type="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</button>
-                                        <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="codigo-consulta">5</td>
-                                    <td>José Santos da Penha</td>
-                                    <td>jose-penha@gmail.com</td>
-                                    <td>
-                                        <button class="btn btn-pequeno btn-warning" type="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</button>
-                                        <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="codigo-consulta">6</td>
-                                    <td>Magda Cipriano</td>
-                                    <td>cip-magda@bol.com.br</td>
-                                    <td>
-                                        <button class="btn btn-pequeno btn-warning" type="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</button>
-                                        <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                    </td>
-                                </tr>                                    
+                                <c:forEach items="${cliente}" var="cliente">
+                                    <tr>
+                                        <td data-id="${cliente.codigo}">${cliente.codigo}</td>
+                                        <td data-descricao="${cliente.nome}">${cliente.nome}</td>
+                                        <td>${cliente.email}</td>
+                                        <td>
+                                            <a href="/consultarTipoAnuncioItem/${cliente.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
+                                            <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
+                                        </td>
+                                    </tr>
+                                </c:forEach>                                    
                             </tbody>                               
                         </table>
                     </div>
@@ -176,9 +138,6 @@
     <%-- INCLUDE DO RODAPÉ --%>
     <%@include file="/includes/rodape.jsp" %>   
     
-    
-    <!-- <!-- _____________javaScript___________________ -->
-    
     <script type="text/javascript">
         $(function () {   
             
@@ -192,32 +151,20 @@
                 },
                 errorElement: "span",
                 rules: {
-                    
-                    depends: function(element) {                                
-                                if ($().val() == 'À postar')
-                                    return false;
-                                else if ($('select[name*="slcStatus"]').val() == 'Cancelada')
-                                    return false;
-                                else
-                                    return true;
-                            }
-                }
-                    rdbNome: "required",
-                    txtEmailCliente: "required"
+                    nome: "required",
+                    email: "required"
                    
-                              },
-                   
-                  
- 
+                }, 
                 messages: {
-                    txtNomeCliente: "Por favor, insira um nome válido",
-                    txtEmailCliente: "Por favor, insira um email válido"
-                  
-                                    
+                    nome: "Por favor, insira um nome válido",
+                    email: "Por favor, insira um email válido"                                    
                 }
-                
-
-     </script>              
+            });
             
+            $('input[type="radio"]').on('change', function() {
+                $('#txtPesquisa').attr('name',$('input[type="radio"]:checked').val());
+             });
+        });
+    </script>            
 </body>
 </html>

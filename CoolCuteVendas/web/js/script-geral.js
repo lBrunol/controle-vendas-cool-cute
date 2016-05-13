@@ -25,6 +25,23 @@
 
 /******************************FUNÇÕES*****************************/
 
+/* Função para mostrar loader ajax em modais
+ * 
+ * @param {string} modal passar o nome do modal onde o loader está
+ */
+function showLoader(modal){
+    document.getElementById(modal).querySelector('.loader-ajax').style.display = 'block';
+    document.getElementById(modal).getElementsByTagName('table')[0].style.display = 'none';
+}
+/*Função para esconder o loader ajax em modais
+ * 
+ * @param {string} modal passar o nome do modal onde o loader está
+ */
+function hideLoader(modal){
+    document.getElementById(modal).querySelector('.loader-ajax').style.display = 'none';
+    document.getElementById(modal).getElementsByTagName('table')[0].style.display = 'table';
+}
+
 /* Função para calcular o valor total com base na quantidade e valor passados por parâmetro
 * @param quant {int} passar a quantidade do item para ser calculado
 * @param valor {float, int, double} passar o valor para o calculo do valor total

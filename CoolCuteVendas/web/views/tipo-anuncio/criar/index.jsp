@@ -57,7 +57,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
-                    <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                    <a href="/tipo-anuncio/consultar/index" role="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</a>
                 </div>
             </div>
         </form>

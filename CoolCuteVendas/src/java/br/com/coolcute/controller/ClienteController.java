@@ -94,6 +94,20 @@ public class ClienteController {
         return jsonValue;
     }
     
+    @RequestMapping("filtraCliente")
+    public ModelAndView filterCliente(Cliente cliente){
+        
+        ModelAndView modelAndView = new ModelAndView("cliente/consultar/index");
+        
+        try {            
+            modelAndView.addObject("cliente", daoCliente.filterCliente(cliente));
+        } catch (SQLException e) {
+            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
+            modelAndView.addObject("msg", msg);
+        }
+        return modelAndView;
+    }
+    
     @RequestMapping("consultarClienteItem/{id}")
     public ModelAndView listaItem(@PathVariable("id") Long id){
         
