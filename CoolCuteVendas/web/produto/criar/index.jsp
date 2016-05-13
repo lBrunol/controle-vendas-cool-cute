@@ -34,23 +34,23 @@
                         <input type="text" class="form-control" name="txtNomeProduto" />
                     </div>
 
-</div>
 
-<div class="row">
-<div class="form-group col-md-6 col-xs-12">
+
+
+<div class="form-group col-md-3 col-xs-12">
    <label for="slcStatus">Status</label>
                     <select class="form-control">
                         <option>Ativo</option>
                         <option>Inativo</option>
                    </select>
 </div>
-</div>
-<div class="row">
-<div class="form-group col-md-6 col-xs-12">
-     <label for="txtEstoqueMinimo">Estoque Mínimo</label><input type="number" class="form-control input-qtde" name="txtEstoqueMinimo" />
-</div>
+
+
+<div class="form-group col-md-3 col-xs-12">
+     <label for="txtEstoqueMinimo">Estoque Mínimo</label><input type="number" min ="0" id="numEstoque" class="form-control input-qtde" name="txtEstoqueMinimo" />
 </div>
 
+</div>
 
 
  
@@ -71,6 +71,6 @@
             </form>
    </div>
     <%-- INCLUDE DO RODAPÉ --%>
-    <%@include file="/includes/rodape.jsp" %>    
+    <%@include file="/includes/rodape.jsp" %>   
 </body>
 </html>
