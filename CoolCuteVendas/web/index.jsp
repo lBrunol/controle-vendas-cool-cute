@@ -10,6 +10,7 @@
           margin-bottom: 0px!important;
 
         }
+        .logoHome{ position: absolute; top: 0; }
 
       </style>
     </head>
@@ -128,9 +129,13 @@
 
       <div class="item">
 
-        <img src="imagens/wp3.jpg" class="img-responsive" alt="" width="1349" height="1100"/>
+        <img src="imagens/wp3.jpg" class="img-responsive" alt="" width="1349" height="1100" id="wp2"/>
 
-        <div class="logo_icone"> </div>
+        <div id="principal">
+<div class="logoHome">
+<img src="imagens/logoHome.png">
+</div>
+</div>
         
       </div>
 
@@ -143,7 +148,7 @@
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" id="btnProximaImagem">
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
@@ -155,20 +160,26 @@
 
 
 
-  <!--______________________________________________-->
-
-
-
-  <!--________________________________________________-->
-
-
-
-
-
-
-
   <%-- INCLUDE DO RODAPÉ --%>
   <%@include file="/includes/rodape.jsp" %>   
+
+  <script type="text/javascript">
+    
+
+$('#wp2').load(function(){
+
+      $('.logoHome')
+        .css("color","#f33")
+        .hide()
+        .delay('1000')
+        .fadeIn("slow")
+        .delay('10')
+        $('.logoHome').animate({"left":"260px"}, "slow")
+        $('.logoHome').animate({"top":"200px"}, "slow");
+
+      })
+
+  </script>
 
 
   </body>
