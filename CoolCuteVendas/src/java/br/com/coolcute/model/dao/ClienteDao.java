@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.coolcute.model.dao;
 
 import br.com.coolcute.bean.Cliente;
@@ -56,14 +51,14 @@ public class ClienteDao {
         c.close();
     }
     
-    public void exclui(Long id) throws SQLException{
+    public void exclui(int id) throws SQLException{
         query = "DELETE FROM cliente WHERE cliCodigo = ?";
         ConexaoBanco conn = new ConexaoBanco();
 
         c = conn.conectar();
         stmt = c.prepareStatement(query);
 
-        stmt.setLong(1, id);
+        stmt.setInt(1, id);
 
         stmt.execute();
         stmt.close();
@@ -103,15 +98,15 @@ public class ClienteDao {
         c = conn.conectar();
         
         if( StringUtil.isNullOrEmpty(cliente.getEmail()) && !StringUtil.isNullOrEmpty(cliente.getNome()) ){
-            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliNome = ?");
-            stmt.setString(1, cliente.getNome());
+            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliNome LIKE ?");
+            stmt.setString(1, "%" + cliente.getNome() + "%");
         } else if( !StringUtil.isNullOrEmpty(cliente.getEmail()) && StringUtil.isNullOrEmpty(cliente.getNome()) ){
-            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliEmail = ?");
-            stmt.setString(1, cliente.getEmail());
+            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliEmail LIKE ?");
+            stmt.setString(1, "%" + cliente.getEmail() + "%");
         } else if( !StringUtil.isNullOrEmpty(cliente.getEmail()) && !StringUtil.isNullOrEmpty(cliente.getNome()) ){
-            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliEmail = ? AND cliNome = ?");
-            stmt.setString(1, cliente.getEmail());
-            stmt.setString(1, cliente.getNome());
+            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliEmail LIKE ? AND cliNome LIKE ?");
+            stmt.setString(1, "%" + cliente.getEmail() + "%");
+            stmt.setString(2, "%" + cliente.getNome()) + "%";
         } else {
             stmt = c.prepareStatement("SELECT * FROM cliente");
         }        

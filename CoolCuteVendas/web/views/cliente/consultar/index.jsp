@@ -22,10 +22,13 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <p><strong>Id: </strong>1</p>
-                        <p><strong>Nome: </strong>Carlos de Souza Silva</p>
-                        <button type="button" class="btn btn-salvar margin-std-right margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-check"></i> Confirmar</button>
-                        <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                        <p class="modal-id"><strong>Id: </strong><span></span></p>                        
+                        <p class="modal-descricao"><strong>Nome: </strong><span></span></p>
+                        <form action="/excluirCliente" method="POST">
+                            <input type="hidden" name="codigo" id="hdnCodigo" value="" />
+                            <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</button>
+                            <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                        </form>
                     </div>
                     <div class="modal-footer">
 
@@ -36,8 +39,8 @@
 
         <!--BreadCrumbs-->
         <ol class="breadcrumb">
-            <li><a href="#">Início</a></li>
-            <li><a href="#">Clientes</a></li>
+            <li><a href="/">Início</a></li>
+            <li><a href="javascript:;">Clientes</a></li>
             <li class="active">Consultar</li>
         </ol>
         <c:if test="${msg != null }">
@@ -48,22 +51,26 @@
         </c:if> 
         <h2>Consultar Cliente</h2>
         <hr />
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a role="button" href="/cliente/criar/" class="btn btn-mais">Adicionar Cliente +</a>
+            </div>
+        </div>
         <h3>Selecione o Filtro:</h3>
-        <form method="post" action="/filtraCliente" id="form-consultar-clientes">
+        <form method="post" action="/filtrarCliente" id="form-consultar-clientes">
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-filtro">
                         <div class="panel-body">                                
-                            <div class="col-md-6 col-xs-12">
-                               
+                            <div class="col-md-6 col-xs-12">                               
                                 <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="nome" class="radioFiltro" name="rdbFiltro[]" id="rdbNome" />
+                                    <input type="radio" checked value="Nome" class="radioFiltro" name="rdbFiltro" id="rdbNome" />
                                     Nome
                                 </label>
                             </div>
                             <div class="col-md-6 col-xs-12">
                                 <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="email" class="radioFiltro" name="rdbFiltro[]" id="rdbEmail" />
+                                    <input type="radio" value="Email" class="radioFiltro" name="rdbFiltro" id="rdbEmail" />
                                     Email
                                 </label>
                             </div>
@@ -74,8 +81,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Filtro por: Nome" name="nome" aria-describedby="basic-addon2" id="txtPesquisa" />
-                        <span class="input-group-btn"><button type="submit" href="/filtraCliente" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></button></span>
+                        <input type="text" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon2" id="txtPesquisa" />
+                        <span class="input-group-btn"><button type="submit" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></button></span>
                     </div>
                 </div>
             </div>             
@@ -98,7 +105,7 @@
                                         <td data-descricao="${cliente.nome}">${cliente.nome}</td>
                                         <td>${cliente.email}</td>
                                         <td>
-                                            <a href="/consultarTipoAnuncioItem/${cliente.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
+                                            <a href="/consultarClienteItem/${cliente.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
                                             <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
                                         </td>
                                     </tr>
@@ -139,30 +146,24 @@
     <%@include file="/includes/rodape.jsp" %>   
     
     <script type="text/javascript">
-        $(function () {   
+        $(function () {           
             
-            /* Validação dos campos do formulário */
-            $("#formConsultarClientes").validate({
-                errorPlacement: function(error, element) {
-                $( element )
-                    .closest( "form" )
-                        .find( "label[for='" + element.attr( "name" ) + "']" )
-                            .append( error );                
-                },
-                errorElement: "span",
-                rules: {
-                    nome: "required",
-                    email: "required"
-                   
-                }, 
-                messages: {
-                    nome: "Por favor, insira um nome válido",
-                    email: "Por favor, insira um email válido"                                    
-                }
+            //Ação de exclusão
+            $('.btn-excluir').click(function(){
+                var id = $(this).closest('tr').find('td[data-id]').attr('data-id');
+                var descricao = $(this).closest('tr').find('td[data-descricao]').attr('data-descricao');
+                
+                $('.modal-excluir .modal-id span').html(id);
+                $('.modal-excluir .modal-descricao span').html(descricao);
+                $('.modal-excluir #hdnCodigo').val(id);
             });
             
+            
             $('input[type="radio"]').on('change', function() {
-                $('#txtPesquisa').attr('name',$('input[type="radio"]:checked').val());
+                $('#txtPesquisa').attr({
+                    name: $('input[type="radio"]:checked').val().toLowerCase(),
+                    placeholder: $('input[type="radio"]:checked').val()
+                }).focus();
              });
         });
     </script>            

@@ -22,6 +22,6 @@
    
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/views/"/>
-        <property name="suffix" value=".jsp"/>
+        <property name="suffix" value="index.jsp"/>
     </bean>    
 </beans>
