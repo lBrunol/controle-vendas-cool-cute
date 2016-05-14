@@ -2,15 +2,14 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Cliente;
 import br.com.coolcute.model.dao.ClienteDao;
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,17 +36,23 @@ public class ClienteController {
     
     //No request verifica se é alteração ou criação
     @RequestMapping("adicionarAlterarCliente")
-    public ModelAndView adicionarAlterarCliente (Cliente cliente){        
+    public ModelAndView adicionarAlterarCliente (@Valid Cliente cliente, BindingResult result){
         if(cliente.getCodigo() != 0){        
             return alterarCliente(cliente);
         } else {
-            return adicionarCliente(cliente);
+            return adicionarCliente(cliente, result);
         }        
     }	
     
     @RequestMapping("adicionarCliente")
-        public ModelAndView adicionarCliente(@Valid Cliente cliente){
+        public ModelAndView adicionarCliente(@Valid Cliente cliente, BindingResult result){
         ModelAndView modelAndView = new ModelAndView("cliente/criar/");
+        
+        if(result.hasErrors()){
+            retorno = false;
+            modelAndView.addObject("retorno", retorno);
+            return modelAndView;
+        }
         
         try {
             daoCliente.adiciona(cliente);

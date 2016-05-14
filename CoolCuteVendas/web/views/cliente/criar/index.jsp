@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,9 +29,10 @@
                 <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
                     <i class="fa fa-fw fa-times"></i> ${msg}
+                    <form:errors path="cliente.*" />
                 </div>
             </c:if>
-        </c:if> 
+        </c:if>
         <h2>Cadastrar Clientes</h2>
         <hr />
         <form method="post" action="/adicionarAlterarCliente" id="formClientes">
@@ -47,7 +49,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="nome">Nome do Cliente</label>
-                    <input type="text" id="input-cliente" class="form-control" name="nome" value="${cliente.getNome()}" />
+                    <input type="text" id="input-cliente" class="form-control" name="nome" value="${cliente.getNome()}" />                    
                 </div> 
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="email">Email</label>

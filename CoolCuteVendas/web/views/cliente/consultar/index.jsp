@@ -120,7 +120,7 @@
                     <div class="text-center">
                         <nav>
                             <ul class="pagination pagination-cool">
-                                <li>
+                                <!--<li>
                                     <a href="#" aria-label="Previous">
                                         <span aria-hidden="true">&laquo;</span>
                                     </a>
@@ -134,7 +134,7 @@
                                     <a href="#" aria-label="Next">
                                         <span aria-hidden="true">&raquo;</span>
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </nav>
                     </div>
@@ -165,6 +165,107 @@
                     placeholder: $('input[type="radio"]:checked').val()
                 }).focus();
              });
+             
+            
+             
+             var paginacao = function(itens, elPaginacao, numPorPagina){
+                 
+                if(typeof itens === 'undefined'){
+                    itens = '.table';
+                }
+                if(typeof elPaginacao === 'undefined'){
+                    elPaginacao = '.pagination';
+                }
+                if(typeof numPorPagina === 'undefined'){
+                    numPorPagina = 10;
+                }
+                
+                var qtdeItens = $(itens + ' tbody tr').length;
+                var paginacaoAtual = 0;
+                var inicioPaginacao = 0;  
+                var ultimoIndicePaginacao = 0;
+
+                var init = function (){
+                    
+                    if($(itens + ' tbody tr').length > 0){
+                        $(itens + ' tbody tr').hide();
+                         paginar();
+                    } else {
+                        $(elPaginacao).hide();
+                    }
+                    
+                };
+                var paginar = function (){
+                    criarItens();
+                    mostrarItens();
+                };
+                var mostrarItens = function () {
+                    
+                    $(itens + ' tbody tr').hide();
+                    $(itens + ' tbody tr').each(function (index) {
+                        if(index >= inicioPaginacao && index < (inicioPaginacao + numPorPagina)){
+                            $(this).show();
+                        } else {
+                            return;
+                        }
+                    });                            
+                };
+                var criarItens = function (){
+                    
+                    var indiceItensPaginacao = 1;
+                    var htmlItensPaginacao = '<li><a href="javascript:;" class="pagination-anterior"><span aria-hidden="true">«</span></a></li>';
+                    $(elPaginacao).append(htmlItensPaginacao);
+                    
+                    for (i = 0; i < qtdeItens; i += numPorPagina ){
+                        if(i < numPorPagina){
+                            htmlItensPaginacao = '<li class="active"><a href="javascript:;" class="pagination-num">' + indiceItensPaginacao + '</a></li>'; 
+                        } else {
+                            htmlItensPaginacao = '<li><a href="javascript:;" class="pagination-num">' + indiceItensPaginacao + '</a></li>';
+                        }
+                        $(elPaginacao).append(htmlItensPaginacao);
+                        ultimoIndicePaginacao = indiceItensPaginacao;
+                        indiceItensPaginacao++;                        
+                    }
+                    
+                    htmlItensPaginacao = '<li><a href="javascript:;" class="pagination-proximo"><span aria-hidden="true">»</span></a></li>';
+                    $(elPaginacao).append(htmlItensPaginacao);
+                };
+                $('body').delegate('.pagination-num', 'click', function (){
+                    paginacaoAtual = parseInt($(this).text());
+                    $(this).parent().siblings().removeClass('active');
+                    $(this).parent().addClass('active');
+                    inicioPaginacao = (paginacaoAtual * numPorPagina) - numPorPagina;
+                    mostrarItens();
+                });
+                
+                $('body').delegate('.pagination-anterior', 'click', function (){
+                    
+                    if(paginacaoAtual !== 0 && paginacaoAtual !== 1){
+                        paginacaoAtual--;
+                        $(this).parent().siblings().removeClass('active');
+                        $(elPaginacao).children('li').eq(paginacaoAtual).addClass('active');
+                    inicioPaginacao = (paginacaoAtual * numPorPagina) - numPorPagina;
+                    mostrarItens();
+                    }
+                    
+                });
+                $('body').delegate('.pagination-proximo', 'click', function (){
+                    debugger
+                    if(paginacaoAtual !== ultimoIndicePaginacao){
+                        
+                        paginacaoAtual === 0 ? paginacaoAtual+=2 : paginacaoAtual++;
+                        
+                        $(this).parent().siblings().removeClass('active');
+                        $(elPaginacao).children('li').eq(paginacaoAtual).addClass('active');
+                        inicioPaginacao = (paginacaoAtual * numPorPagina) - numPorPagina;
+                        mostrarItens();
+                    }
+                    
+                });
+                init();
+            };
+            paginacao();
+             
         });
     </script>            
 </body>

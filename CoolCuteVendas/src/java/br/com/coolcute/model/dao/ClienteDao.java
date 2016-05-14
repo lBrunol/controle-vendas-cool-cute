@@ -106,7 +106,7 @@ public class ClienteDao {
         } else if( !StringUtil.isNullOrEmpty(cliente.getEmail()) && !StringUtil.isNullOrEmpty(cliente.getNome()) ){
             stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliEmail LIKE ? AND cliNome LIKE ?");
             stmt.setString(1, "%" + cliente.getEmail() + "%");
-            stmt.setString(2, "%" + cliente.getNome()) + "%";
+            stmt.setString(2, "%" + cliente.getNome() + "%");
         } else {
             stmt = c.prepareStatement("SELECT * FROM cliente");
         }        
