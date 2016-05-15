@@ -10,8 +10,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -38,14 +41,14 @@ public class ClienteController {
     @RequestMapping("adicionarAlterarCliente")
     public ModelAndView adicionarAlterarCliente (@Valid Cliente cliente, BindingResult result){
         if(cliente.getCodigo() != 0){        
-            return alterarCliente(cliente);
+            return alterarCliente(cliente, result);
         } else {
             return adicionarCliente(cliente, result);
         }        
     }	
     
     @RequestMapping("adicionarCliente")
-        public ModelAndView adicionarCliente(@Valid Cliente cliente, BindingResult result){
+    public ModelAndView adicionarCliente(@Valid Cliente cliente, BindingResult result){
         ModelAndView modelAndView = new ModelAndView("cliente/criar/");
         
         if(result.hasErrors()){
@@ -107,9 +110,15 @@ public class ClienteController {
     }
     
     @RequestMapping("alterarCliente")
-    public ModelAndView alterarCliente(Cliente cliente) {
+    public ModelAndView alterarCliente(@Valid Cliente cliente, BindingResult result) {
         
         ModelAndView modelAndView = new ModelAndView("cliente/criar/");
+        
+        if(result.hasErrors()){
+            retorno = false;
+            modelAndView.addObject("retorno", retorno);
+            return modelAndView;
+        }
         
         try {
             daoCliente.altera(cliente);
@@ -142,8 +151,8 @@ public class ClienteController {
         return lista();
     }
 	
-    @RequestMapping("filtrarCliente")
-    public ModelAndView filtrarCliente(Cliente cliente){
+    @RequestMapping("filtrarCliente")    
+    public ModelAndView filtrarCliente(@ModelAttribute("cliente") Cliente cliente, BindingResult result){
         
         ModelAndView modelAndView = new ModelAndView("cliente/consultar/");
         

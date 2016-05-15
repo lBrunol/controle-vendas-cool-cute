@@ -56,9 +56,9 @@
                 <a role="button" href="/cliente/criar/" class="btn btn-mais">Adicionar Cliente +</a>
             </div>
         </div>
-        <h3>Selecione o Filtro:</h3>
-        <form method="post" action="/filtrarCliente" id="form-consultar-clientes">
-            <div class="row">
+        <!--<h3>Você pode buscar por:</h3>-->
+        <form method="GET" action="/filtrarCliente" id="form-consultar-clientes">
+            <!--<div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-filtro">
                         <div class="panel-body">                                
@@ -77,15 +77,26 @@
                         </div>
                     </div>
                 </div>
+            </div>-->
+            <div class="row">
+                <div class="col-md-2 col-sm-12 form-group">
+                    <label for="codigo">Código</label>
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="email">E-mail</label>
+                    <input type="text" class="form-control" placeholder="Email" name="email" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>  
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon2" id="txtPesquisa" />
-                        <span class="input-group-btn"><button type="submit" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></button></span>
-                    </div>
+                <div class="col-md-2 col-sm-2 form-group">
+                    <button type="submit" id="btnPesquisar" class="btn btn-salvar">Buscar <i class="fa fa-fw fa-search"></i></button>
                 </div>
-            </div>             
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="tabela-overflow">
@@ -99,17 +110,24 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${cliente}" var="cliente">
-                                    <tr>
-                                        <td data-id="${cliente.codigo}">${cliente.codigo}</td>
-                                        <td data-descricao="${cliente.nome}">${cliente.nome}</td>
-                                        <td>${cliente.email}</td>
-                                        <td>
-                                            <a href="/consultarClienteItem/${cliente.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
-                                            <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                        </td>
+                                <c:if test="${cliente != null}">
+                                    <c:forEach items="${cliente}" var="cliente">
+                                        <tr>
+                                            <td data-id="${cliente.codigo}">${cliente.codigo}</td>
+                                            <td data-descricao="${cliente.nome}">${cliente.nome}</td>
+                                            <td>${cliente.email}</td>
+                                            <td>
+                                                <a href="/consultarClienteItem/${cliente.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
+                                                <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${cliente == null}">
+                                    <tr class="no-paginate">
+                                        <td colspan="4">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
                                     </tr>
-                                </c:forEach>                                    
+                                </c:if>
                             </tbody>                               
                         </table>
                     </div>
@@ -144,7 +162,7 @@
     </div>
     <%-- INCLUDE DO RODAPÉ --%>
     <%@include file="/includes/rodape.jsp" %>   
-    
+    <script type="text/javascript" src="/js/paginacao.js"></script>
     <script type="text/javascript">
         $(function () {           
             
@@ -166,104 +184,6 @@
                 }).focus();
              });
              
-            
-             
-             var paginacao = function(itens, elPaginacao, numPorPagina){
-                 
-                if(typeof itens === 'undefined'){
-                    itens = '.table';
-                }
-                if(typeof elPaginacao === 'undefined'){
-                    elPaginacao = '.pagination';
-                }
-                if(typeof numPorPagina === 'undefined'){
-                    numPorPagina = 10;
-                }
-                
-                var qtdeItens = $(itens + ' tbody tr').length;
-                var paginacaoAtual = 0;
-                var inicioPaginacao = 0;  
-                var ultimoIndicePaginacao = 0;
-
-                var init = function (){
-                    
-                    if($(itens + ' tbody tr').length > 0){
-                        $(itens + ' tbody tr').hide();
-                         paginar();
-                    } else {
-                        $(elPaginacao).hide();
-                    }
-                    
-                };
-                var paginar = function (){
-                    criarItens();
-                    mostrarItens();
-                };
-                var mostrarItens = function () {
-                    
-                    $(itens + ' tbody tr').hide();
-                    $(itens + ' tbody tr').each(function (index) {
-                        if(index >= inicioPaginacao && index < (inicioPaginacao + numPorPagina)){
-                            $(this).show();
-                        } else {
-                            return;
-                        }
-                    });                            
-                };
-                var criarItens = function (){
-                    
-                    var indiceItensPaginacao = 1;
-                    var htmlItensPaginacao = '<li><a href="javascript:;" class="pagination-anterior"><span aria-hidden="true">«</span></a></li>';
-                    $(elPaginacao).append(htmlItensPaginacao);
-                    
-                    for (i = 0; i < qtdeItens; i += numPorPagina ){
-                        if(i < numPorPagina){
-                            htmlItensPaginacao = '<li class="active"><a href="javascript:;" class="pagination-num">' + indiceItensPaginacao + '</a></li>'; 
-                        } else {
-                            htmlItensPaginacao = '<li><a href="javascript:;" class="pagination-num">' + indiceItensPaginacao + '</a></li>';
-                        }
-                        $(elPaginacao).append(htmlItensPaginacao);
-                        ultimoIndicePaginacao = indiceItensPaginacao;
-                        indiceItensPaginacao++;                        
-                    }
-                    
-                    htmlItensPaginacao = '<li><a href="javascript:;" class="pagination-proximo"><span aria-hidden="true">»</span></a></li>';
-                    $(elPaginacao).append(htmlItensPaginacao);
-                };
-                $('body').delegate('.pagination-num', 'click', function (){
-                    paginacaoAtual = parseInt($(this).text());
-                    $(this).parent().siblings().removeClass('active');
-                    $(this).parent().addClass('active');
-                    inicioPaginacao = (paginacaoAtual * numPorPagina) - numPorPagina;
-                    mostrarItens();
-                });
-                
-                $('body').delegate('.pagination-anterior', 'click', function (){
-                    
-                    if(paginacaoAtual !== 0 && paginacaoAtual !== 1){
-                        paginacaoAtual--;
-                        $(this).parent().siblings().removeClass('active');
-                        $(elPaginacao).children('li').eq(paginacaoAtual).addClass('active');
-                    inicioPaginacao = (paginacaoAtual * numPorPagina) - numPorPagina;
-                    mostrarItens();
-                    }
-                    
-                });
-                $('body').delegate('.pagination-proximo', 'click', function (){
-                    debugger
-                    if(paginacaoAtual !== ultimoIndicePaginacao){
-                        
-                        paginacaoAtual === 0 ? paginacaoAtual+=2 : paginacaoAtual++;
-                        
-                        $(this).parent().siblings().removeClass('active');
-                        $(elPaginacao).children('li').eq(paginacaoAtual).addClass('active');
-                        inicioPaginacao = (paginacaoAtual * numPorPagina) - numPorPagina;
-                        mostrarItens();
-                    }
-                    
-                });
-                init();
-            };
             paginacao();
              
         });

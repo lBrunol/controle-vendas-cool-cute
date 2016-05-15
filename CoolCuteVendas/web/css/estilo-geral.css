@@ -6,7 +6,7 @@
 /* DEFINIÇÕES GERAIS */
 * {font-family: openSansRegular;}
 h2 { font-family: openSansLight; font-size:24px; color:#3fcdc4;  }
-h3 { font-size: 20px; }
+h3 { font-size: 20px; margin-bottom: 20px; }
 hr { margin: 15px 0; border-color: #ccc; }
 button,
 input,

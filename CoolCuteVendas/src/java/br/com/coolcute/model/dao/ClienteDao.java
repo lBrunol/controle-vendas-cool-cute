@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.coolcute.util.ConexaoBanco;
-import br.com.coolcute.util.StringUtil;
+import java.sql.CallableStatement;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -97,21 +97,15 @@ public class ClienteDao {
         ConexaoBanco conn = new ConexaoBanco();
         c = conn.conectar();
         
-        if( StringUtil.isNullOrEmpty(cliente.getEmail()) && !StringUtil.isNullOrEmpty(cliente.getNome()) ){
-            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliNome LIKE ?");
-            stmt.setString(1, "%" + cliente.getNome() + "%");
-        } else if( !StringUtil.isNullOrEmpty(cliente.getEmail()) && StringUtil.isNullOrEmpty(cliente.getNome()) ){
-            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliEmail LIKE ?");
-            stmt.setString(1, "%" + cliente.getEmail() + "%");
-        } else if( !StringUtil.isNullOrEmpty(cliente.getEmail()) && !StringUtil.isNullOrEmpty(cliente.getNome()) ){
-            stmt = c.prepareStatement("SELECT * FROM cliente WHERE cliEmail LIKE ? AND cliNome LIKE ?");
-            stmt.setString(1, "%" + cliente.getEmail() + "%");
-            stmt.setString(2, "%" + cliente.getNome() + "%");
-        } else {
-            stmt = c.prepareStatement("SELECT * FROM cliente");
-        }        
+        CallableStatement cs = c.prepareCall("{CALL CLIENTE_SELECT (?,?,?)}");
+            
+        cs.setInt(1, cliente.getCodigo());
+        cs.setString(2, cliente.getNome());
+        cs.setString(3, cliente.getEmail());
+        cs.execute();
+
+        ResultSet rs = cs.executeQuery();
         
-        ResultSet rs = stmt.executeQuery();
         List<Cliente> lstCliente = new ArrayList<>();
         
         while (rs.next()) {
@@ -125,11 +119,10 @@ public class ClienteDao {
         }
         
         rs.close();
-        stmt.close();
+        cs.close();
         c.close();
         
-        return lstCliente;
-        
+        return lstCliente;        
     }
     
     public Cliente getClienteItem(Long id) throws SQLException{        
