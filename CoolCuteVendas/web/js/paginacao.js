@@ -43,7 +43,7 @@ var paginacao = function(itens, elPaginacao, numPorPagina){
         $(itens + ' tbody tr').hide();
         $(itens + ' tbody tr').each(function (index) {
             if(index >= inicioPaginacao && index < (inicioPaginacao + numPorPagina)){
-                $(this).show();
+                $(this).fadeIn();
             } else {
                 return;
             }

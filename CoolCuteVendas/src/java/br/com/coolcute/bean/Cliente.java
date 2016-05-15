@@ -2,10 +2,7 @@ package br.com.coolcute.bean;
 
 import javax.validation.constraints.*;
 import org.hibernate.validator.constraints.NotEmpty;
-/**
- *
- * @author Casa
- */
+
 public class Cliente {
     
     private int codigo;

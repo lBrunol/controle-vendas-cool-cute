@@ -5,7 +5,9 @@
 
 /* DEFINIÇÕES GERAIS */
 * {font-family: openSansRegular;}
-h2 { font-family: openSansLight; font-size:24px; color:#3fcdc4;  }
+h1 { font-weight: normal; }
+h2 { font-size:24px; }
+h1, h2 { font-family: openSansLight; color:#3fcdc4; }
 h3 { font-size: 20px; margin-bottom: 20px; }
 hr { margin: 15px 0; border-color: #ccc; }
 button,
@@ -73,6 +75,9 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 
 /* TABELAS */
 .tabela-overflow { width: 100%; overflow: auto; }
+/* TABELA PAGINAÇÃO */
+.table-pagination tbody tr { display: none; }
+.table-pagination tbody tr.no-paginate { display: block; }
 
 /* BOTÕES */
 .btn-pequeno { padding: 2px 9px; font-size: 12px; }
@@ -88,6 +93,9 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 
 /* AJAX */
 .loader-ajax {text-align: center; }
+
+/* LOGIN */
+.container-login { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; width: 400px; height: 220px; overflow: hidden; }
  
 /* ALTERAÇÕES NO BOOTSTRAP */
 .nav > li > a { padding: 15px 10px; }

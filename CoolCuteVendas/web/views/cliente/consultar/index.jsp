@@ -56,28 +56,7 @@
                 <a role="button" href="/cliente/criar/" class="btn btn-mais">Adicionar Cliente +</a>
             </div>
         </div>
-        <!--<h3>Você pode buscar por:</h3>-->
         <form method="GET" action="/filtrarCliente" id="form-consultar-clientes">
-            <!--<div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-filtro">
-                        <div class="panel-body">                                
-                            <div class="col-md-6 col-xs-12">                               
-                                <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" checked value="Nome" class="radioFiltro" name="rdbFiltro" id="rdbNome" />
-                                    Nome
-                                </label>
-                            </div>
-                            <div class="col-md-6 col-xs-12">
-                                <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="Email" class="radioFiltro" name="rdbFiltro" id="rdbEmail" />
-                                    Email
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
             <div class="row">
                 <div class="col-md-2 col-sm-12 form-group">
                     <label for="codigo">Código</label>
@@ -100,7 +79,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="tabela-overflow">
-                        <table class="table margin-std-top">
+                        <table class="table table-pagination margin-std-top">
                             <thead>
                                 <tr>
                                     <th>Código</th>
@@ -138,21 +117,7 @@
                     <div class="text-center">
                         <nav>
                             <ul class="pagination pagination-cool">
-                                <!--<li>
-                                    <a href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>-->
+                                
                             </ul>
                         </nav>
                     </div>
@@ -184,7 +149,7 @@
                 }).focus();
              });
              
-            paginacao();
+            paginacao('.table-pagination', '.pagination', 5);
              
         });
     </script>            
