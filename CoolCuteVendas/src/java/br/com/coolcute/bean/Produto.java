@@ -18,10 +18,8 @@ public class Produto {
     
     @NotNull(message="Por favor, insira um nome válido")
     @NotEmpty(message="Por favor, insira um nome válido")
-    private String nome;
-    
+    private String nome;    
     @NotNull(message="Por favor, um número válido")
-    @NotEmpty(message="Por favor, um número válido")
     private int estoqueMinimo;
 
     /**

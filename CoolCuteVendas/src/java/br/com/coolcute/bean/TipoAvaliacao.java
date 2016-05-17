@@ -3,7 +3,7 @@ package br.com.coolcute.bean;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class TipoAvaliações {
+public class TipoAvaliacao {
     
     private int codigo;
     @NotNull(message="Por favor, insira uma descrição válido")

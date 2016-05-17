@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.coolcute.model.dao;
 
 import br.com.coolcute.bean.TipoAnuncio;
@@ -13,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.coolcute.util.ConexaoBanco;
+import java.sql.CallableStatement;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -23,7 +19,7 @@ public class TipoAnuncioDao {
     private Connection c;
     
     public void adiciona(TipoAnuncio tipoAnuncio) throws SQLException{
-        query = "INSERT INTO tipoanuncio( tiaDescricao, tiaPercentual) VALUES (?,?)";
+        query = "INSERT INTO tipoAnuncio( tiaDescricao, tiaPercentual) VALUES (?,?)";
         ConexaoBanco conn = new ConexaoBanco();
         
         c = conn.conectar();
@@ -39,7 +35,7 @@ public class TipoAnuncioDao {
     }
 
     public void altera(TipoAnuncio tipoAnuncio) throws SQLException{
-        query = "UPDATE tipoanuncio SET tiaDescricao = ? , tiaPercentual = ? WHERE tiaCodigo = ?";
+        query = "UPDATE tipoAnuncio SET tiaDescricao = ? , tiaPercentual = ? WHERE tiaCodigo = ?";
         ConexaoBanco conn = new ConexaoBanco();
 
         c = conn.conectar();
@@ -55,14 +51,14 @@ public class TipoAnuncioDao {
         c.close();
     }
     
-    public void exclui(Long id) throws SQLException{
-        query = "DELETE FROM tipoanuncio WHERE tiaCodigo = ?";
+    public void exclui(int id) throws SQLException{
+        query = "DELETE FROM tipoAnuncio WHERE tiaCodigo = ?";
         ConexaoBanco conn = new ConexaoBanco();
 
         c = conn.conectar();
         stmt = c.prepareStatement(query);
 
-        stmt.setLong(1, id);
+        stmt.setInt(1, id);
 
         stmt.execute();
         stmt.close();
@@ -75,7 +71,7 @@ public class TipoAnuncioDao {
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM tipoanuncio");
+        stmt = c.prepareStatement("SELECT * FROM tipoAnuncio");
         ResultSet rs = stmt.executeQuery();
         List<TipoAnuncio> lstTipoAnuncio = new ArrayList<>();
         
@@ -94,6 +90,38 @@ public class TipoAnuncioDao {
         c.close();
         
         return lstTipoAnuncio;
+    }
+    
+    public List<TipoAnuncio> filterTipoAnuncio(TipoAnuncio tipoAnuncio) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
+        c = conn.conectar();
+        
+        CallableStatement cs = c.prepareCall("{CALL TIPOANUNCIO_SELECT (?,?)}");
+            
+        cs.setInt(1, tipoAnuncio.getCodigo());
+        cs.setString(2, tipoAnuncio.getDescricao());
+        cs.execute();
+
+        ResultSet rs = cs.executeQuery();
+        
+        List<TipoAnuncio> lstTipoAnuncio = new ArrayList<>();
+        
+        while (rs.next()) {
+            TipoAnuncio tia = new TipoAnuncio();
+            
+            tia.setCodigo(rs.getInt(1));
+            tia.setDescricao(rs.getString(2));
+            tia.setPercentual(rs.getFloat(3));
+            
+            lstTipoAnuncio.add(tia);
+        }
+        
+        rs.close();
+        cs.close();
+        c.close();
+        
+        return lstTipoAnuncio;        
     }
     
     public TipoAnuncio getTipoAnuncioItem(Long id) throws SQLException{        
