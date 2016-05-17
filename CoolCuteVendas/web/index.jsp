@@ -34,10 +34,10 @@
 
 
 
-          <div class="item active">  
+          <div class="item">  
 
-            <img src="imagens/wp1.jpg" class="img-responsive" alt="" width="1349" height="1100"/  
-            <!-- __________________________________________________________________________________-->
+              <img src="imagens/wp1.jpg" class="img-responsive" alt="" width="1349" height="1100"/>
+          
             <div class="divContaineres">
 
               <!-- div class container Vendas -->
@@ -127,7 +127,7 @@
       </div>
 
 
-      <div class="item">
+      <div class="item active">
 
         <img src="imagens/wp3.jpg" class="img-responsive" alt="" width="1349" height="1100" id="wp2"/>
 
@@ -156,8 +156,7 @@
 
 
   </div>
-  </div>
-
+ 
 
 
   <%-- INCLUDE DO RODAPÉ --%>
@@ -166,9 +165,22 @@
   <script type="text/javascript">
     
 
-$('#wp2').load(function(){
+$(window).load(function(){
 
-      $('.logoHome')
+    logoAnimate();
+      })
+
+
+//$('#btnProximaImagem').load(function(){
+
+    //logoAnimate();
+     // })
+
+
+
+
+function logoAnimate(){
+ $('.logoHome')
         .css("color","#f33")
         .hide()
         .delay('1000')
@@ -177,7 +189,11 @@ $('#wp2').load(function(){
         $('.logoHome').animate({"left":"260px"}, "slow")
         $('.logoHome').animate({"top":"200px"}, "slow");
 
-      })
+
+}
+
+
+
 
   </script>
 
