@@ -24,3 +24,23 @@ BEGIN
 		END;    
 END
 &&
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `TIPOANUNCIO_SELECT`(
+        IN codigo INT(11),
+        IN descricao VARCHAR(150)
+)
+BEGIN
+    SELECT * FROM   TIPOANUNCIO 
+    WHERE tiaCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN tiaCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END
+	AND tiaDescricao LIKE
+		CASE	
+			WHEN descricao = '' OR descricao IS NULL THEN tiaDescricao
+			WHEN descricao <> '' THEN CONCAT('%', descricao, '%')
+		END;    
+END$$
+DELIMITER ;
