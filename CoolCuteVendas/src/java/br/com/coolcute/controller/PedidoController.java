@@ -2,6 +2,9 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Pedido;
 import br.com.coolcute.model.dao.PedidoDao;
+import br.com.coolcute.model.dao.StatusAnuncioDao;
+import br.com.coolcute.model.dao.StatusPedidoDao;
+import br.com.coolcute.model.dao.TipoAvaliacaoDao;
 import java.sql.SQLException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +18,29 @@ public class PedidoController {
     
     @Autowired
     private PedidoDao daoPedido;
+    @Autowired
+    private StatusPedidoDao daoStatusPedido;
+    @Autowired
+    private TipoAvaliacaoDao daoTipoAvaliacao;
     private boolean retorno;
     private String msg;
     
-    @RequestMapping("pedido/criar/index")
-    public String form() {
-        return "pedido/criar/index";
+    @RequestMapping("pedido/criar/")
+    public ModelAndView form() {
+        
+        ModelAndView modelAndView = new ModelAndView("pedido/criar/");
+        
+        try {
+            modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido());
+            modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao());
+        } catch (SQLException e) {
+            retorno = false;
+            msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
+        } catch (Exception e){
+            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
+        }
+        
+        return modelAndView;
     }
     
     @RequestMapping("adicionaAlteraPedido")

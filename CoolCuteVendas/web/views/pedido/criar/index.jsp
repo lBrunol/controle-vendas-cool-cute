@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,26 @@
     <%@include file="/includes/menu.jsp" %>
     <!-- CONTEÃDO -->
     <div class="container content">
+        <ol class="breadcrumb">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Pedidos</a></li>
+            <li class="active">Criar/Editar</li>
+        </ol>
+        <c:if test="${retorno != null }">
+            <c:if test="${retorno == true }">
+                <div class="alert alert-success alert-dismissible fade in" role="alert"> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+                    <i class="fa fa-fw fa-check"></i> ${msg}
+                </div>
+            </c:if>
+            <c:if test="${retorno == false }">
+                <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+                    <i class="fa fa-fw fa-times"></i> ${msg}
+                    <form:errors path="pedido.*" />
+                </div>
+            </c:if>
+        </c:if>
         <!-- MODAIS -->
         <!-- MODAL ANÚNCIO -->
         <div class="modal unique-selection fade" id="modal-anuncio" tabindex="-1" role="dialog">
@@ -35,20 +56,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="data-value">Mochila Azul</td>
-                                    <td class="data-attr">1</td>                        
-                                </tr>
-                                <tr>
-                                    <td class="data-value">Mochila Rosa</td>
-                                    <td class="data-attr">2</td>
-                                </tr>
-                                <tr>
-                                    <td class="data-value">Bolsa Tommy</td>
-                                    <td class="data-attr">3</td>
-                                </tr>
+                                
                             </tbody>
                         </table>
+                        <div class="loader-ajax">
+                            <img src="/imagens/loader.gif" />
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-salvar data-modal" data-dismiss="modal" data-target="#input-anuncio">OK</button>
@@ -164,7 +177,7 @@
                         <input type="text" id="input-anuncio" class="form-control" name="txtAnuncio" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
                         <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-anuncio">+</button>
+                            <button type="button" class="btn btn-mais" id="btn-modal-anuncio" data-toggle="modal" data-target="#modal-anuncio">+</button>
                         </span>
                     </div>                    
                 </div>
@@ -238,25 +251,17 @@
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="slcStatus">Status</label>
                     <select class="form-control" name="slcStatus">
-                        <option>À postar</option>
-                        <option>Em trânsito</option>
-                        <option>Entregue</option>
-                        <option>Concretizada</option>
-                        <option>Retirada</option>
-                        <option>Devolução</option>
-                        <option>Reclamação</option>
-                        <option>Defeito</option>
-                        <option>Cancelada</option>
-                        <option>Qualificada</option>
-                        <option>Extravio</option>
+                        <c:forEach items="${statusPedido}" var="statusPedido">
+                            <option value="${statusPedido.getCodigo()}">${statusPedido.getDescricao()}</option>
+                        </c:forEach>
                     </select>
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="slcAvaliacao">Avaliação</label>
                     <select class="form-control">
-                        <option>Positiva</option>
-                        <option>Negativa</option>
-                        <option>Neutra</option>
+                        <c:forEach items="${tipoAvaliacao}" var="tipoAvaliacao">
+                            <option value="${tipoAvaliacao.getCodigo()}">${tipoAvaliacao.getDescricao()}</option>
+                        </c:forEach>
                     </select>
                 </div>                
             </div>
@@ -303,7 +308,52 @@
                         jsonToHtmlCliente(data);  
                     }
                 });
-            });            
+            });
+            
+            $('#btn-modal-anuncio').on('click', function (){
+                $.ajax({
+                    type: 'get',
+                    headers: {
+                        Accept: 'application/json; charset=utf-8',
+                        'Content-Type': 'application/json; charset=utf-8'
+                    },
+                    url: '/servicoConsultarAnuncio',
+                    beforeSend: function(){
+                        showLoader('modal-anuncio');
+                    },
+                    complete: function (){
+                        hideLoader('modal-anuncio');
+                    },
+                    success: function(data){
+                        jsonToHtmlAnuncio(data);  
+                    }
+                });
+            });
+            
+            function jsonToHtmlAnuncio(data){
+                
+                var tr, td, tdText, parentEl;
+                parentEl = document.getElementById('modal-anuncio').getElementsByTagName('tbody')[0];
+              
+                for (i = 0; i < data.length; i++){                    
+                    tr = document.createElement('tr');                    
+                    
+                    td = document.createElement('td');
+                    td.setAttribute('class', 'data-attr');
+                    tdText = document.createTextNode(data[i].codigo);
+                    td.appendChild(tdText);                    
+                    tr.appendChild(td);
+                    
+                    td = document.createElement('td');
+                    td.setAttribute('class', 'data-value');
+                    tdText = document.createTextNode(data[i].descricao);
+                    td.appendChild(tdText);                    
+                    tr.appendChild(td);
+                    
+                    parentEl.appendChild(tr);
+                }
+                
+            }
             
             function jsonToHtmlCliente(data){
                 

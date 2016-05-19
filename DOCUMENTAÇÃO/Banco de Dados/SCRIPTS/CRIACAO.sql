@@ -25,7 +25,7 @@ CREATE TABLE Usuario (
 );
 CREATE TABLE TipoAvaliacoes (
   tivCodigo INTEGER AUTO_INCREMENT,
-  tivDescricao INTEGER UNSIGNED NOT NULL,
+  tivDescricao VARCHAR(50) NOT NULL,
   PRIMARY KEY(tivCodigo)
 );
 CREATE TABLE TipoAnuncio (
