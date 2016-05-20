@@ -547,6 +547,24 @@
                 $('.modal table tbody').find('tr').remove();
             });            
         });
+        
+        var produto = function (id, nome){
+          this.id = id;
+          this.nome = nome;
+          
+          var setId = function (idSetter){
+              id = idSetter;
+          };
+          var setNome = function (nomeSetter) {
+              nome = nomeSetter;   
+          };      
+        };
+        
+        var prod = new produto(2,'Sabão');
+        
+        console.log(prod);
+        console.log(JSON.stringify(prod));
+        
     </script>
 </body>
 </html>

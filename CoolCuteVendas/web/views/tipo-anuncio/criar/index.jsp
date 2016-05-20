@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,6 +13,11 @@
     <%@include file="/includes/menu.jsp" %>
     <!-- CONTEÚDO -->
     <div class="container content">
+        <ol class="breadcrumb">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Tipos de Anúncio</a></li>
+            <li class="active">Criar/Editar</li>
+        </ol>
         <c:if test="${retorno != null }">
             <c:if test="${retorno == true }">
                 <div class="alert alert-success alert-dismissible fade in" role="alert"> 
@@ -23,6 +29,7 @@
                 <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
                     <i class="fa fa-fw fa-times"></i> ${msg}
+                    <form:errors path="tipoAnuncio.*" />
                 </div>
             </c:if>
         </c:if>        
