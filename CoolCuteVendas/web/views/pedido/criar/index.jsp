@@ -48,17 +48,19 @@
                         </div>                        
                     </div>
                     <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Anúncio</th>
-                                    <th>Código</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
+                        <div class="tabela-overflow tabela-modal">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Anúncio</th>
+                                        <th>Código</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="loader-ajax">
                             <img src="/imagens/loader.gif" />
                         </div>
@@ -82,18 +84,20 @@
                         </div>
                     </div>
                     <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Cliente</th>
-                                    <th>E-mail</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                
-                            </tbody>
-                        </table>
+                        <div class="tabela-overflow tabela-modal">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Cliente</th>
+                                        <th>E-mail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="loader-ajax">
                             <img src="/imagens/loader.gif" />
                         </div>
@@ -120,28 +124,22 @@
 
                     </div>
                     <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Anúncio</th>
-                                    <th>Preço</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Mochila Azul</td>
-                                    <td>R$ 70,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Mochila Rosa</td>
-                                    <td>R$ 70,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Bolsa Tommy</td>
-                                    <td>R$ 120,00</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="tabela-overflow tabela-modal">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nome</th>
+                                        <th>Preço Compra</th>
+                                        <th>Preço Venda</th>
+                                        <th>Taxa</th>                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
@@ -205,28 +203,30 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
-                        <label class="padding-std-right">Itens do Pedido</label><button type="button" class="btn btn-mais" data-toggle="modal" data-target="#modal-produto">+</button>
+                        <label class="padding-std-right">Itens do Pedido</label><button type="button" class="btn btn-mais btn-itens-pedido">+</button>
                     </div>
                     <div class="tabela-overflow">
                         <table class="table tabela-itens-pedido">
                             <thead>
                                 <tr>
-                                    <th>Item</th>
-                                    <th>Preço</th>
+                                    <th>Código</th>
+                                    <th>Nome</th>
+                                    <th>Preço Compra</th>
+                                    <th>Preço Venda</th>
                                     <th>Qtde.</th>
+                                    <th>Taxa</th>
                                     <th>Total</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="no-itens">
-                                    <td colspan="6" data-toggle="modal" data-target="#modal-produto" style="color:#27a199; cursor:pointer;"><strong>Adicione itens ao pedido.</strong></td>
+                                    <td colspan="6" class="btn-itens-pedido" style="color:#27a199; cursor:pointer;"><strong>Adicione itens ao pedido.</strong></td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="3"><strong>Valor Total: </strong></td>
-                                    <td colspan="3" class="valor-total-pedido"></td>
+                                    <td colspan="4"><strong>Valor Total: </strong></td>
+                                    <td colspan="4" class="valor-total-pedido"></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -281,6 +281,9 @@
                     <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
                     <button type="button" class="btn btn-warning margin-std-right margin-std-top" data-toggle="modal" data-target="#modal-cancelar-pedido"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
                     <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                    <button type="button" class="btn btn-vermelho margin-std-top btn-teste"><i class="fa fa-fw fa-chevron-left"></i> teste</button>
+                    <a href="/pedido/teste" role="button" class="btn btn-vermelho margin-std-top btn-teste"><i class="fa fa-fw fa-chevron-left"></i> ir</a>
+                    <input type="hidden" id="jsonValue" name="teste" />
                 </div>
             </div>
         </form>        
@@ -288,8 +291,10 @@
     <%-- INCLUDE DO RODAPÃ --%>
     <%@include file="/includes/rodape.jsp" %>
     <script type="text/javascript">
-        $(function () {
-            
+        $(function () {            
+           
+           var lstCodigosProdutos = new Array();
+
             $('#btn-modal-cliente').on('click', function (){
                 $.ajax({
                     type: 'get',
@@ -385,6 +390,43 @@
                 
             }
             
+            function jsonToHtmlItensAnuncioProduto(data){
+                
+                var tr, td, tdText, parentEl;
+                parentEl = document.getElementById('modal-produto').getElementsByTagName('tbody')[0];
+              
+                for (i = 0; i < data.length; i++){                    
+                    tr = document.createElement('tr');                    
+                    
+                    td = document.createElement('td');
+                    tdText = document.createTextNode(data[i].codigo);
+                    td.appendChild(tdText);
+                    tr.appendChild(td);
+                    
+                    td = document.createElement('td');
+                    tdText = document.createTextNode(data[i].nome);
+                    td.appendChild(tdText);
+                    tr.appendChild(td);
+                    
+                    td = document.createElement('td');
+                    tdText = document.createTextNode(data[i].precoCompra);
+                    td.appendChild(tdText);
+                    tr.appendChild(td);
+                    
+                    td = document.createElement('td');
+                    tdText = document.createTextNode(data[i].precoVenda);
+                    td.appendChild(tdText);
+                    tr.appendChild(td);
+                    
+                    td = document.createElement('td');
+                    tdText = document.createTextNode(data[i].taxa);
+                    td.appendChild(tdText);                    
+                    tr.appendChild(td);
+                    
+                    parentEl.appendChild(tr);
+                }
+                
+            }            
             
             /* Validação dos campos do formulário */
             $("#formAnuncio").validate({
@@ -492,26 +534,30 @@
             
             /* Delega o evento click ao adicionar itens do pedido */
             $('body').delegate('.btn-excluir', 'click', function () {
-                var dataIndex;
-
-                dataIndex = $(this).parent().parent().attr('data-index');
-                $(this).parent().parent().remove();
-
-                $('#modal-produto tr').eq(dataIndex).find('td').eq(0).removeClass('selecionada');
                 
+                //Remove o código atual do array de controle dos produtos
+                lstCodigosProdutos.splice(lstCodigosProdutos.indexOf(parseInt($(this).parent().siblings().eq(0).text()),0));
+
+                //Remove a linha atual
+                $(this).parent().parent().remove();                    
+                
+                //Caso a linha com valores de produtos seja a última, ele mostra a linha de adiciona itens
                 if ($('.tabela-itens-pedido tbody tr').length <= 1) {
                     $('.tabela-itens-pedido .no-itens').show();
                 }
+                
                 $('.valor-total-pedido').text(somaValoresTotais($('.tabela-itens-pedido')));
             });
-            
-            /* Delega o evento blur (perder foco) ao adicionar itens do pedido */
+                    
             $('body').delegate('.data-modal', 'click', function (){
                 var dataTarget;
                 var table;
+                var origem;
 
+                origem = $(this).closest('.modal').is('#modal-anuncio');
+                console.log(origem);
                 dataTarget = $(this).attr('data-target');
-                
+
                 table = $(this).closest('.modal').find('table');
                 if($(table).find('tr').hasClass('active-tr')){
                     var activeTr;
@@ -522,6 +568,14 @@
                     value = $(activeTr).find('.data-value').text();
                     data = $(activeTr).find('.data-attr').text();
                     
+                    if($('#input-anuncio').attr('data-id') != data && origem ) {
+                        $('.tabela-itens-pedido tr[data-index]').remove();
+                        while(lstCodigosProdutos.length > 0) {
+                            lstCodigosProdutos.pop();
+                        }                
+                        $('.tabela-itens-pedido .no-itens').show();
+                    }
+                    
                     $(dataTarget).attr('data-id', data).val(value);                    
                 }                   
             });
@@ -529,42 +583,86 @@
             /* Inclui os item(s) selecionados no modal para a tabela de itens do pedido */ 
             $('body').delegate('#modal-produto button', 'click', function (){
                 if ($(this).closest('.modal').find('tr').hasClass('active-tr')) {
-                    if ($('.modal .active-tr td:eq(0)').hasClass('selecionada') == false) { 
-                    $(this).closest('.modal').find('.active-tr').each(function (index) {                            
-                        $('.tabela-itens-pedido tbody').append('<tr data-index=' + this.rowIndex + '></tr>');
-                        $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td class="preco">' + $(this).find('td').eq(1).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td><td class="valor-total">R$ 0,00</td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
-                        $(this).find('td').eq(0).addClass('selecionada');
-                    });
-
-                    $('.tabela-itens-pedido').find('.no-itens').hide();
+                    
+                    var isAdicionado = false;
+                    
+                    for (i = 0; i < lstCodigosProdutos.length; i++){
+                        if (lstCodigosProdutos[i] == parseInt($(this).closest('.modal').find('.active-tr').find('td').eq(0).text()))
+                            isAdicionado = true;
                     }
-                }               
+                    
+                    if (isAdicionado == false) { 
+                        $(this).closest('.modal').find('.active-tr').each(function (index) {                            
+                            $('.tabela-itens-pedido tbody').append('<tr data-index=' + this.rowIndex + '></tr>');
+                            $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td>' + $(this).find('td').eq(1).text() +'</td><td>' + $(this).find('td').eq(2).text() + '</td><td class="preco">' + $(this).find('td').eq(3).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td>' + '</td><td>' + $(this).find('td').eq(4).text() + '<td class="valor-total">R$ 0,00</td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
+                            lstCodigosProdutos.push(parseInt($(this).find('td').eq(0).text()));
+                            console.log(lstCodigosProdutos);
+                        });
+
+                        $('.tabela-itens-pedido').find('.no-itens').hide();
+                    }
+                }
             });
-            
+
             /* Desmarca a classe active-tr ao sair do modal */
             $('.modal').on('hidden.bs.modal', function (e) {
                 $(this).find('tr').removeClass('active-tr');
                 $('.modal table tbody').find('tr').remove();
-            });            
+            });
+            
+            $('.btn-itens-pedido').on('click', function (e){
+                if(typeof $('#input-anuncio').attr('data-id') == 'undefined' || $('#input-anuncio').attr('data-id') == ''){
+                    alert('Por favor, selecione um anúncio antes de selecionar os itens do pedido.');
+                } else {                    
+                    $.ajax({
+                        type: 'get',
+                        headers: {
+                            Accept: 'application/json; charset=utf-8',
+                            'Content-Type': 'application/json; charset=utf-8'
+                        },
+                        url: '/servicoConsultaAnuncioProduto/' + $('#input-anuncio').attr('data-id'),
+                        beforeSend: function(){
+                            showLoader('modal-cliente');
+                        },
+                        complete: function (){
+                            hideLoader('modal-cliente');
+                        },
+                        success: function(data){
+                            jsonToHtmlItensAnuncioProduto(data);  
+                        }
+                    });
+                    $('#modal-produto').modal();
+                }
+            });
         });
         
-        var produto = function (id, nome){
+        $('.btn-teste').click(function (){
+            var doUntil = $('.tabela-itens-pedido tbody tr').length;
+            var lstItens = new Array();
+            for ( i = 1; i < doUntil; i++ ){               
+                var iten = new itensProduto(
+                    parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(0).text()),
+                    parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(2).text()),
+                    parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(3).text()),
+                    parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(4).find('input').val()),
+                    parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(5).text())
+                );
+                lstItens.push(iten);
+                $('#jsonValue').val(iten);
+            }
+            
+            console.log(lstItens);
+            console.log(JSON.stringify(lstItens)); 
+        });
+        
+        //Objeto para armazenar os valores do produto
+        var itensProduto = function (id, valorCompra, valorVenda, quantidade, taxa){
           this.id = id;
-          this.nome = nome;
-          
-          var setId = function (idSetter){
-              id = idSetter;
-          };
-          var setNome = function (nomeSetter) {
-              nome = nomeSetter;   
-          };      
+          this.valorVenda = valorCompra;
+          this.valorCompra = valorVenda;
+          this.quantidade = quantidade;
+          this.taxa = taxa;
         };
-        
-        var prod = new produto(2,'Sabão');
-        
-        console.log(prod);
-        console.log(JSON.stringify(prod));
-        
     </script>
 </body>
 </html>

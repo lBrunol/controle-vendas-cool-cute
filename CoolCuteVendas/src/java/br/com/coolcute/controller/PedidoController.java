@@ -1,11 +1,19 @@
 package br.com.coolcute.controller;
 
+import br.com.coolcute.bean.ItensPedido;
 import br.com.coolcute.bean.Pedido;
 import br.com.coolcute.model.dao.PedidoDao;
 import br.com.coolcute.model.dao.StatusAnuncioDao;
 import br.com.coolcute.model.dao.StatusPedidoDao;
 import br.com.coolcute.model.dao.TipoAvaliacaoDao;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,13 +62,29 @@ public class PedidoController {
         
     }
     
+    @RequestMapping("/pedido/teste")
+    public String teste(String teste){
+        
+        ObjectMapper mapper = new ObjectMapper();
+        List<ItensPedido> lstItens = new  ArrayList<>();
+        
+        try {
+            ItensPedido ite = mapper.readValue(teste, ItensPedido.class);
+        } catch (IOException ex) {
+            Logger.getLogger(PedidoController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        return null;
+    }
+    
     @RequestMapping("/pedido/consultar/index")
     public String consulta(){        
         return "/pedido/consultar/index";
     }
 	
     @RequestMapping("criarPedido")
-        public ModelAndView adiciona(@Valid Pedido pedido){
+    public ModelAndView adiciona(@Valid Pedido pedido){
         ModelAndView modelAndView = new ModelAndView("pedido/criar/index");
         
         try {

@@ -12,6 +12,8 @@ CREATE TABLE Produto (
   proCodigo INTEGER AUTO_INCREMENT,
   proNome VARCHAR(255) NOT NULL,
   proEstoqueMin INTEGER UNSIGNED DEFAULT 0,
+  proPreco DECIMAL(8,2) NOT NULL,
+  proQuantidade INTEGER NOT NULL,
   proIsAtivo BOOL NOT NULL,
   PRIMARY KEY(proCodigo)
 );
@@ -25,13 +27,13 @@ CREATE TABLE Usuario (
 );
 CREATE TABLE TipoAvaliacoes (
   tivCodigo INTEGER AUTO_INCREMENT,
-  tivDescricao VARCHAR(50) NOT NULL,
+  tivDescricao VARCHAR(255) NOT NULL,
   PRIMARY KEY(tivCodigo)
 );
 CREATE TABLE TipoAnuncio (
   tiaCodigo INTEGER AUTO_INCREMENT,
   tiaDescricao VARCHAR(255) NOT NULL,
-  tiaPercentual DECIMAL NOT NULL,
+  tiaPercentual DECIMAL(8,2) NOT NULL,
   PRIMARY KEY(tiaCodigo)
 );
 CREATE TABLE Cliente (
@@ -49,7 +51,7 @@ CREATE TABLE TipoMovimentacao (
 CREATE TABLE Entrada (
   entCodigo INTEGER AUTO_INCREMENT,
   entLote VARCHAR(255) NOT NULL,
-  entValorTotal DECIMAL NOT NULL,
+  entValorTotal DECIMAL(8,2) NOT NULL,
   entObservacao VARCHAR(255),
   PRIMARY KEY(entCodigo)
 );
@@ -57,25 +59,17 @@ CREATE TABLE OutrasMovimentacoes (
   movCodigo INTEGER AUTO_INCREMENT,
   timCodigo INTEGER NOT NULL,
   movDescricao VARCHAR(255) NOT NULL,
-  movValor DECIMAL NOT NULL,
+  movValor DECIMAL(8,2) NOT NULL,
   movData DATE NOT NULL,
   PRIMARY KEY(movCodigo),
   FOREIGN KEY(timCodigo) REFERENCES TipoMovimentacao(timCodigo)
-);
-CREATE TABLE ProdutoEstoque (
-  estCodigo INTEGER AUTO_INCREMENT,
-  proCodigo INTEGER NOT NULL,
-  estPreco DECIMAL NOT NULL,
-  estQuantidade INTEGER NOT NULL,
-  PRIMARY KEY(estCodigo),
-  FOREIGN KEY(proCodigo) REFERENCES Produto(proCodigo)
 );
 CREATE TABLE Anuncio (
   anuCodigo INTEGER AUTO_INCREMENT,
   staCodigo INTEGER NOT NULL,
   tiaCodigo INTEGER NOT NULL,
   anuDescricao VARCHAR(255) NOT NULL,
-  anuPreco DECIMAL NOT NULL,
+  anuPreco DECIMAL(8,2) NOT NULL,
   anuDataCriacao DATE NOT NULL,
   anuIsAtivo BOOL NOT NULL,
   PRIMARY KEY(anuCodigo),
@@ -86,8 +80,7 @@ CREATE TABLE ItensEntrada (
   proCodigo INTEGER NOT NULL,
   entCodigo INTEGER NOT NULL,
   iteQuantidade INTEGER UNSIGNED NOT NULL,
-  iteValor DECIMAL,
-  iteValorTotal DECIMAL,
+  iteValorTotal DECIMAL(8,2),
   FOREIGN KEY(entCodigo) REFERENCES Entrada(entCodigo),
   FOREIGN KEY(proCodigo) REFERENCES Produto(proCodigo)
 );
@@ -98,10 +91,10 @@ CREATE TABLE Pedido (
   anuCodigo INTEGER NOT NULL,
   cliCodigo INTEGER NOT NULL,
   pedDataVenda DATE NOT NULL,
-  pedValorFrete DECIMAL NOT NULL DEFAULT 0,
+  pedValorFrete DECIMAL(8,2) NOT NULL DEFAULT 0,
   pedDataPostagem DATE,
   pedDataEntrega DATE,
-  pedValorTotal DECIMAL NOT NULL,
+  pedValorTotal DECIMAL(8,2) NOT NULL,
   pedCodigoPostagem VARCHAR(255),
   pedObservacao VARCHAR(255),
   PRIMARY KEY(pedCodigo),
@@ -113,9 +106,16 @@ CREATE TABLE Pedido (
 CREATE TABLE ItensPedido (
   pedCodigo INTEGER NOT NULL,
   proCodigo INTEGER NOT NULL,
-  itpValorVenda DECIMAL NOT NULL,
-  itpValorCompra DECIMAL NOT NULL,
-  itpTaxa DECIMAL NOT NULL,
+  itpValorVenda DECIMAL(8,2) NOT NULL,
+  itpValorCompra DECIMAL(8,2) NOT NULL,
+  itpQuantidade INTEGER NOT NULL,
+  itpTaxa DECIMAL(8,2) NOT NULL,
   FOREIGN KEY(proCodigo) REFERENCES Produto(proCodigo),
   FOREIGN KEY(pedCodigo) REFERENCES Pedido(pedCodigo)
+);
+CREATE TABLE ProdutoAnuncio(
+  anuCodigo INTEGER NOT NULL,
+  proCodigo INTEGER NOT NULL,
+  FOREIGN KEY(anuCodigo) REFERENCES Anuncio(anuCodigo),
+  FOREIGN KEY(proCodigo) REFERENCES Produto(proCodigo),  
 );

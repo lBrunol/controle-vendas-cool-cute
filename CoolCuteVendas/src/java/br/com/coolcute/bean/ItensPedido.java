@@ -15,7 +15,17 @@ public class ItensPedido {
     private Produto produto;
     private float valorVenda;
     private float valorCompra;
+    private int quantidade;
     private float taxa;
+    
+    /*public ItensPedido(int idPedido, int idProduto, float valorVenda, float valorCompra, int quantidade, float taxa){
+        this.pedido.setCodigo(idPedido);
+        this.produto.setCodigo(idProduto);
+        this.valorVenda = valorVenda;
+        this.valorCompra = valorCompra;
+        this.quantidade = quantidade;
+        this.taxa = taxa;
+    }*/
 
     /**
      * @return the pedido
@@ -85,6 +95,20 @@ public class ItensPedido {
      */
     public void setTaxa(float taxa) {
         this.taxa = taxa;
+    }
+
+    /**
+     * @return the quantidade
+     */
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    /**
+     * @param quantidade the quantidade to set
+     */
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
     
 }

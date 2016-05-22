@@ -71,7 +71,7 @@ public class ClienteDao {
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM cliente");
+        stmt = c.prepareStatement("SELECT * FROM cliente ORDER BY cliNome");
         ResultSet rs = stmt.executeQuery();
         List<Cliente> lstCliente = new ArrayList<>();
         

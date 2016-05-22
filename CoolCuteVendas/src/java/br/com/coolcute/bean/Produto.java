@@ -21,6 +21,9 @@ public class Produto {
     private String nome;    
     @NotNull(message="Por favor, um número válido")
     private int estoqueMinimo;
+    private float preco;
+    private int quantidade;
+    
 
     /**
      * @return the codigo
@@ -39,14 +42,14 @@ public class Produto {
     /**
      * @return the nome
      */
-    public String getDescricao() {
+    public String getNome() {
         return nome;
     }
 
     /**
      * @param nome the nome to set
      */
-    public void setDescricao(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -62,6 +65,34 @@ public class Produto {
      */
     public void setEstoqueMinimo(int estoqueMinimo) {
         this.estoqueMinimo = estoqueMinimo;
+    }
+
+    /**
+     * @return the preco
+     */
+    public float getPreco() {
+        return preco;
+    }
+
+    /**
+     * @param preco the preco to set
+     */
+    public void setPreco(float preco) {
+        this.preco = preco;
+    }
+
+    /**
+     * @return the quantidade
+     */
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    /**
+     * @param quantidade the quantidade to set
+     */
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
     
 }

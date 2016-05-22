@@ -6,6 +6,7 @@
 package br.com.coolcute.model.dao;
 
 import br.com.coolcute.bean.Anuncio;
+import br.com.coolcute.bean.ProdutoAnuncio;
 import br.com.coolcute.bean.StatusAnuncio;
 import br.com.coolcute.bean.TipoAnuncio;
 import br.com.coolcute.util.ConexaoBanco;
@@ -34,7 +35,7 @@ public class AnuncioDao {
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT a.anuCodigo, s.staDescricao, t.tiaDescricao, a.anuDescricao, a.anuPreco, a.anuDataCriacao FROM anuncio AS a INNER JOIN statusanuncio AS s ON a.staCodigo = s.staCodigo INNER JOIN tipoanuncio AS t on a.tiaCodigo = t.tiaCodigo");
+        stmt = c.prepareStatement("SELECT a.anuCodigo, s.staDescricao, t.tiaDescricao, a.anuDescricao, a.anuPreco, a.anuDataCriacao FROM anuncio AS a INNER JOIN statusanuncio AS s ON a.staCodigo = s.staCodigo INNER JOIN tipoanuncio AS t on a.tiaCodigo = t.tiaCodigo ORDER BY a.anuCodigo");
         ResultSet rs = stmt.executeQuery();
         List<Anuncio> lstAnuncio = new ArrayList<>();
         
@@ -64,6 +65,37 @@ public class AnuncioDao {
         c.close();
         
         return lstAnuncio;
+    }
+    
+    public List<ProdutoAnuncio> getAnuncioProduto(int codigo) throws SQLException {
+        
+        ConexaoBanco conn = new ConexaoBanco();        
+        c = conn.conectar();
+        
+        stmt = c.prepareStatement("SELECT pro.proCodigo, pro.proNome, pro.proPreco, anu.anuPreco, ROUND((tip.tiaPercentual *  anu.anuPreco),2) as taxa \n" +
+"FROM tipoanuncio as tip INNER JOIN (produto AS pro INNER JOIN (anuncio as anu INNER JOIN produtoAnuncio as prodAnu ON prodAnu.anuCodigo = anu.anuCodigo) ON pro.proCodigo = prodAnu.proCodigo) ON tip.tiaCodigo = anu.tiaCodigo WHERE anu.anuCodigo = ? ORDER BY anu.anuDescricao");
+        stmt.setInt(1, codigo);
+        
+        ResultSet rs = stmt.executeQuery();
+        List<ProdutoAnuncio> lstAnuncioProduto = new ArrayList<>();
+        
+        while (rs.next()) {
+            ProdutoAnuncio proAnu = new ProdutoAnuncio();
+                    
+            proAnu.setCodigo(rs.getInt(1));
+            proAnu.setNome(rs.getString(2));
+            proAnu.setPrecoCompra(rs.getFloat(3));
+            proAnu.setPrecoVenda(rs.getFloat(4));
+            proAnu.setTaxa(rs.getFloat(5));
+           
+            lstAnuncioProduto.add(proAnu);
+        }
+        
+        rs.close();
+        stmt.close();
+        c.close();
+        
+        return lstAnuncioProduto;
     }
     
 }

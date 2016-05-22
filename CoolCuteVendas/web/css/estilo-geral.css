@@ -74,7 +74,7 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 .modal tbody tr:hover { background-color: #27a199; color:#fff; }
 
 /* TABELAS */
-.tabela-overflow { width: 100%; overflow: auto; }
+.tabela-overflow { width: 100%; overflow: auto; max-height: 500px; }
 /* TABELA PAGINAÇÃO */
 .table-pagination tbody tr { display: none; }
 .table-pagination tbody tr.no-paginate { display: block; }
@@ -117,6 +117,7 @@ span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94
 
 @media screen and (max-width: 767px) {
     .navbar-nav .open .dropdown-menu .sub-menu > li > a { padding-left: 35px; }
+    .tabela-modal { max-height: 300px; }
 }
 
 @media screen and (min-width: 783px){

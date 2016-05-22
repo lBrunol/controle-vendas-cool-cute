@@ -149,7 +149,7 @@
                 }).focus();
              });
              
-            paginacao('.table-pagination', '.pagination', 5);
+            paginacao('.table-pagination', '.pagination', 20);
              
         });
     </script>            
