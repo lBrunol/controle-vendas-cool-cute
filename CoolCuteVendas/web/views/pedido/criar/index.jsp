@@ -167,12 +167,12 @@
         </div>
         <h2>Cadastrar Pedidos</h2>
         <hr />
-        <form method="post" action="javascript:void(0);" id="formAnuncio">
+        <form method="post" action="/criarPedido" id="formAnuncio">            
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="txtAnuncio">Anúncio</label>
+                    <label for="anuncioNome">Anúncio</label>
                     <div class="input-group">
-                        <input type="text" id="input-anuncio" class="form-control" name="txtAnuncio" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
+                        <input type="text" id="input-anuncio" class="form-control" name="anuncioNome" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />                        
                         <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" id="btn-modal-anuncio" data-toggle="modal" data-target="#modal-anuncio">+</button>
@@ -180,9 +180,9 @@
                     </div>                    
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="txtCliente">Cliente</label>
+                    <label for="clienteNome">Cliente</label>
                     <div class="input-group">
-                        <input type="text" id="input-cliente" class="form-control" name="txtCliente" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
+                        <input type="text" id="input-cliente" class="form-control" name="clienteNome" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
                         <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" id="btn-modal-cliente" data-toggle="modal" data-target="#modal-cliente">+</button>
@@ -192,12 +192,12 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="txtDataVenda">Data da Venda</label>
-                    <input type="date" class="form-control" name="txtDataVenda" />
+                    <label for="dataVenda">Data da Venda</label>
+                    <input type="date" class="form-control" name="dataVenda" />
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="txtValorFrete">Valor do Frete</label>
-                    <input type="text" class="form-control" name="txtValorFrete" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))"/>
+                    <label for="valorFrete">Valor do Frete</label>
+                    <input type="text" class="form-control" name="valorFrete" />
                 </div>
             </div>
             <div class="row">
@@ -235,30 +235,30 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-4 col-xs-12">
-                    <label for="txtDataPostagem">Data da Postagem</label>
-                    <input type="date" class="form-control" name="txtDataPostagem" />
+                    <label for="dataPostagem">Data da Postagem</label>
+                    <input type="date" class="form-control" name="dataPostagem" />
                 </div>
                 <div class="form-group col-md-4 col-xs-12">
                     <label for="txtEntrega">Data de Entrega</label>
-                    <input type="date" class="form-control" name="txtDataEntrega" />
+                    <input type="date" class="form-control" name="dataEntrega" />
                 </div>
                 <div class="form-group col-md-4 col-xs-12">
-                    <label for="txtCodigoPostagem">Código da Postagem</label>
-                    <input type="text" class="form-control" name="txtCodigoPostagem" />
+                    <label for="codigoPostagem">Código da Postagem</label>
+                    <input type="text" class="form-control" name="codigoPostagem" />                    
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="slcStatus">Status</label>
-                    <select class="form-control" name="slcStatus">
+                    <label for="statusPedido">Status</label>
+                    <select class="form-control" name="statusPedido.codigo">
                         <c:forEach items="${statusPedido}" var="statusPedido">
                             <option value="${statusPedido.getCodigo()}">${statusPedido.getDescricao()}</option>
                         </c:forEach>
                     </select>
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
-                    <label for="slcAvaliacao">Avaliação</label>
-                    <select class="form-control">
+                    <label for="tipoAvaliacao">Avaliação</label>
+                    <select class="form-control" name="tipoAvaliacao.codigo">
                         <c:forEach items="${tipoAvaliacao}" var="tipoAvaliacao">
                             <option value="${tipoAvaliacao.getCodigo()}">${tipoAvaliacao.getDescricao()}</option>
                         </c:forEach>
@@ -267,8 +267,8 @@
             </div>
             <div class="row">
                 <div class="form-group col-md-12">
-                    <label for="txtObservacoes">Observações</label>
-                    <textarea class="form-control" name="txtObservacoes"></textarea>
+                    <label for="observacao">Observações</label>
+                    <textarea class="form-control" name="observacao"></textarea>
                 </div>
             </div>
             <div class="row margin-std-bottom">
@@ -280,21 +280,22 @@
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
                     <button type="button" class="btn btn-warning margin-std-right margin-std-top" data-toggle="modal" data-target="#modal-cancelar-pedido"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
-                    <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
-                    <button type="button" class="btn btn-vermelho margin-std-top btn-teste"><i class="fa fa-fw fa-chevron-left"></i> teste</button>
-                    <a href="/pedido/teste" role="button" class="btn btn-vermelho margin-std-top btn-teste"><i class="fa fa-fw fa-chevron-left"></i> ir</a>
-                    <input type="hidden" id="jsonValue" name="teste" />
+                    <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>                    
                 </div>
             </div>
+            <input type="hidden" value="${proximoId}" name="codigo" id="codigoProduto" />
+            <input type="hidden" id="hdnAnuncio" name="anuncio.codigo">
+            <input type="hidden" id="hdnCliente" name="cliente.codigo">
+            <input type="hidden" id="itensPedido" name="itensPedido" />
         </form>        
     </div>
-    <%-- INCLUDE DO RODAPÃ --%>
+    <%-- INCLUDE DO RODAPÉ --%>
     <%@include file="/includes/rodape.jsp" %>
     <script type="text/javascript">
         $(function () {            
            
-           var lstCodigosProdutos = new Array();
-
+           var lstCodigosProdutos = new Array();            
+                        
             $('#btn-modal-cliente').on('click', function (){
                 $.ajax({
                     type: 'get',
@@ -426,10 +427,10 @@
                     parentEl.appendChild(tr);
                 }
                 
-            }            
+            }
             
             /* Validação dos campos do formulário */
-            $("#formAnuncio").validate({
+            /*$("#formAnuncio").validate({
                 errorPlacement: function(error, element) {
                 $( element )
                     .closest( "form" )
@@ -438,43 +439,43 @@
                 },
                 errorElement: "span",
                 rules: {
-                    txtAnuncio: "required",
-                    txtCliente: "required",
-                    txtDataVenda: "required",
-                    txtValorFrete: "required",
+                    anuncioNome: "required",
+                    clienteNome: "required",
+                    dataVenda: "required",
+                    valorFrete: "required",
                     txtQtdePedido: "required",
-                    txtDataPostagem: {
+                    dataPostagem: {
                         required: {
                             depends: function(element) {                                
-                                if ($('select[name*="slcStatus"]').val() == 'À postar')
+                                if ($('select[name*="statusPedido"]').val() == 'À postar')
                                     return false;
-                                else if ($('select[name*="slcStatus"]').val() == 'Cancelada')
+                                else if ($('select[name*="statusPedido"]').val() == 'Cancelada')
                                     return false;
                                 else
                                     return true;
                             }
                         }
                     },
-                    txtDataEntrega: {
+                    dataEntrega: {
                         required: {
                             depends: function(element) {                                
-                                if ($('select[name*="slcStatus"]').val() == 'À postar')
+                                if ($('select[name*="statusPedido"]').val() == 'À postar')
                                     return false;
-                                else if ($('select[name*="slcStatus"]').val() == 'Cancelada')
+                                else if ($('select[name*="statusPedido"]').val() == 'Cancelada')
                                     return false;
-                                else if ($('select[name*="slcStatus"]').val() == 'Em trânsito')
+                                else if ($('select[name*="statusPedido"]').val() == 'Em trânsito')
                                     return false;
                                 else
                                     return true;
                             }
                         }
                     },
-                    txtCodigoPostagem: {
+                    codigoPostagem: {
                         required: {
                             depends: function(element) {                                
-                                if ($('select[name*="slcStatus"]').val() == 'À postar')
+                                if ($('select[name*="statusPedido"]').val() == 'À postar')
                                     return false;
-                                else if ($('select[name*="slcStatus"]').val() == 'Cancelada')
+                                else if ($('select[name*="statusPedido"]').val() == 'Cancelada')
                                     return false;
                                 else
                                     return true;
@@ -483,39 +484,24 @@
                     }
                 },
                 messages: {
-                    txtAnuncio: "Por favor, selecione o anúncio",
-                    txtCliente: "Por favor, selecione o cliente",
-                    txtDataVenda: "Por favor, preencha a data da venda",
-                    txtValorFrete: "Por favor, preencha o valor do frete",
-                    txtDataPostagem: "Por favor, preencha a data da postagem",
-                    txtDataEntrega: "Por favor, preencha a data de entrega",
-                    txtCodigoPostagem: "Por favor, preencha o código da postagem",
+                    anuncioNome: "Por favor, selecione o anúncio",
+                    clienteNome: "Por favor, selecione o cliente",
+                    dataVenda: "Por favor, preencha a data da venda",
+                    valorFrete: "Por favor, preencha o valor do frete",
+                    dataPostagem: "Por favor, preencha a data da postagem",
+                    dataEntrega: "Por favor, preencha a data de entrega",
+                    codigoPostagem: "Por favor, preencha o código da postagem",
                     txtQtdePedido: "Por favor, preenche a quantidade"
                                     
                 },
-                submitHandler: function () {                    
-                    validaItens ();
+                submitHandler: function () {                      
+                    acoesPosValidacao();
                 }      
+            });*/  
+            $('.btn-vermelho').click(function (){
+                acoesPosValidacao();
             });
             
-            /* Valida se os itens do pedido estão preenchidos */           
-            function validaItens (){
-                if ($('.tabela-itens-pedido .no-itens').css('display') == 'table-row' || $('.tabela-itens-pedido tbody tr').length == 0){
-                    $('.no-itens td').css('color', '#a94442');
-                    
-                    $('body').stop().animate({
-                        scrollTop: $('.tabela-itens-pedido').scrollTop()
-                    },
-                    500,
-                    function () {
-                    
-                    });                    
-                    return true;
-                } else {
-                    $('.no-itens td').css('color', '#27a199');
-                }
-            }       
-
             /* Delega o evento blur (perder foco) ao adicionar itens do pedido */
             $('body').delegate('.input-qtde','blur', function () {
                 var index = $('.input-qtde').index(this);
@@ -555,7 +541,6 @@
                 var origem;
 
                 origem = $(this).closest('.modal').is('#modal-anuncio');
-                console.log(origem);
                 dataTarget = $(this).attr('data-target');
 
                 table = $(this).closest('.modal').find('table');
@@ -576,7 +561,7 @@
                         $('.tabela-itens-pedido .no-itens').show();
                     }
                     
-                    $(dataTarget).attr('data-id', data).val(value);                    
+                    $(dataTarget).attr('data-id', data).val(value);
                 }                   
             });
             
@@ -596,7 +581,6 @@
                             $('.tabela-itens-pedido tbody').append('<tr data-index=' + this.rowIndex + '></tr>');
                             $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td>' + $(this).find('td').eq(1).text() +'</td><td>' + $(this).find('td').eq(2).text() + '</td><td class="preco">' + $(this).find('td').eq(3).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td>' + '</td><td>' + $(this).find('td').eq(4).text() + '<td class="valor-total">R$ 0,00</td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
                             lstCodigosProdutos.push(parseInt($(this).find('td').eq(0).text()));
-                            console.log(lstCodigosProdutos);
                         });
 
                         $('.tabela-itens-pedido').find('.no-itens').hide();
@@ -636,28 +620,53 @@
             });
         });
         
-        $('.btn-teste').click(function (){
+        /* Transforma os itens do pedido em Json e armazena em um input */
+        function serializaItens(){
             var doUntil = $('.tabela-itens-pedido tbody tr').length;
             var lstItens = new Array();
             for ( i = 1; i < doUntil; i++ ){               
-                var iten = new itensProduto(
+                var item = new itensProduto(
                     parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(0).text()),
+                    parseInt($('#codigoProduto').val()),
                     parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(2).text()),
                     parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(3).text()),
                     parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(4).find('input').val()),
                     parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(5).text())
                 );
-                lstItens.push(iten);
-                $('#jsonValue').val(iten);
+                lstItens.push(item);
+                
             }
+            $('#itensPedido').val(JSON.stringify(lstItens));
+        }
+        
+        /* Executa a serialização dos itens do pedido, armazena os ids das combos em um input type hidden e valida se os itens do pedido estão preenchidos */           
+        function acoesPosValidacao(){
             
-            console.log(lstItens);
-            console.log(JSON.stringify(lstItens)); 
-        });
+            serializaItens();
+            $('#hdnCliente').val($('#input-cliente').attr('data-id'));
+            $('#hdnAnuncio').val($('#input-anuncio').attr('data-id'));
+            
+            if ($('.tabela-itens-pedido .no-itens').css('display') == 'table-row' || $('.tabela-itens-pedido tbody tr').length == 0){
+                $('.no-itens td').css('color', '#a94442');
+                
+                $('body').stop().animate({
+                    scrollTop: $('.tabela-itens-pedido').scrollTop()
+                },
+                500,
+                function () {
+                
+                });                            
+                return true;
+            } else {
+                $('.no-itens td').css('color', '#27a199');
+                return true;
+            }
+        } 
         
         //Objeto para armazenar os valores do produto
-        var itensProduto = function (id, valorCompra, valorVenda, quantidade, taxa){
-          this.id = id;
+        var itensProduto = function (codigoProduto, codigoPedido, valorCompra, valorVenda, quantidade, taxa){
+          this.codigoProduto = codigoProduto;
+          this.codigoPedido = codigoPedido;
           this.valorVenda = valorCompra;
           this.valorCompra = valorVenda;
           this.quantidade = quantidade;

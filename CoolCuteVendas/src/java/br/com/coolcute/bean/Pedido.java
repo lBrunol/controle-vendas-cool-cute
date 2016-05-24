@@ -6,6 +6,9 @@
 package br.com.coolcute.bean;
 
 import java.util.Calendar;
+import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 /**
  *
@@ -16,15 +19,19 @@ public class Pedido {
     private int codigo;
     private TipoAvaliacao tipoAvaliacao;
     private StatusPedido statusPedido;
-    private Anuncio anuncio;
+    private Anuncio anuncio;    
     private Cliente cliente;
+    @DateTimeFormat(iso=ISO.DATE)
     private Calendar dataVenda;
     private float frete;
+    @DateTimeFormat(iso=ISO.DATE)
     private Calendar dataPostagem;
+    @DateTimeFormat(iso=ISO.DATE)
     private Calendar dataEntrega;
     private float valorTotal;
     private String codigoPostagem;
     private String observacao;
+    private List<ItensPedido> itensEntrada;
     
 
     /**
@@ -193,6 +200,20 @@ public class Pedido {
      */
     public void setObservacao(String observacao) {
         this.observacao = observacao;
+    }
+
+    /**
+     * @return the itensEntrada
+     */
+    public List<ItensPedido> getItensEntrada() {
+        return itensEntrada;
+    }
+
+    /**
+     * @param itensEntrada the itensEntrada to set
+     */
+    public void setItensEntrada(List<ItensPedido> itensEntrada) {
+        this.itensEntrada = itensEntrada;
     }
     
 }

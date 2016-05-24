@@ -11,50 +11,13 @@ package br.com.coolcute.bean;
  */
 public class ItensPedido {
     
-    private Pedido pedido;
-    private Produto produto;
+    private int codigoProduto;
+    private int codigoPedido;
     private float valorVenda;
     private float valorCompra;
     private int quantidade;
     private float taxa;
     
-    /*public ItensPedido(int idPedido, int idProduto, float valorVenda, float valorCompra, int quantidade, float taxa){
-        this.pedido.setCodigo(idPedido);
-        this.produto.setCodigo(idProduto);
-        this.valorVenda = valorVenda;
-        this.valorCompra = valorCompra;
-        this.quantidade = quantidade;
-        this.taxa = taxa;
-    }*/
-
-    /**
-     * @return the pedido
-     */
-    public Pedido getPedido() {
-        return pedido;
-    }
-
-    /**
-     * @param pedido the pedido to set
-     */
-    public void setPedido(Pedido pedido) {
-        this.pedido = pedido;
-    }
-
-    /**
-     * @return the produto
-     */
-    public Produto getProduto() {
-        return produto;
-    }
-
-    /**
-     * @param produto the produto to set
-     */
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
     /**
      * @return the valorVenda
      */
@@ -109,6 +72,33 @@ public class ItensPedido {
      */
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }   
+
+    /**
+     * @return the codigoProduto
+     */
+    public int getCodigoProduto() {
+        return codigoProduto;
     }
-    
+
+    /**
+     * @param codigoProduto the codigoProduto to set
+     */
+    public void setCodigoProduto(int codigoProduto) {
+        this.codigoProduto = codigoProduto;
+    }
+
+    /**
+     * @return the codigoPedido
+     */
+    public int getCodigoPedido() {
+        return codigoPedido;
+    }
+
+    /**
+     * @param codigoPedido the codigoPedido to set
+     */
+    public void setCodigoPedido(int codigoPedido) {
+        this.codigoPedido = codigoPedido;
+    }
 }

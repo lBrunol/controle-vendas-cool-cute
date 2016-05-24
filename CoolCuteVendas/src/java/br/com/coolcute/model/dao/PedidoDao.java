@@ -5,6 +5,7 @@
  */
 package br.com.coolcute.model.dao;
 
+import br.com.coolcute.bean.ItensPedido;
 import br.com.coolcute.bean.Pedido;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
@@ -13,6 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.coolcute.util.ConexaoBanco;
+import java.sql.CallableStatement;
+import java.sql.Date;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -22,19 +25,40 @@ public class PedidoDao {
     private PreparedStatement stmt;
     private Connection c;
     
-    public void adiciona(Pedido tipoAnuncio) throws SQLException{
-        query = "INSERT INTO pedido( pedDescricao, pedPercentual) VALUES (?,?)";
+    public void adiciona(Pedido pedido) throws SQLException{
         ConexaoBanco conn = new ConexaoBanco();
-        
         c = conn.conectar();
-        stmt = c.prepareStatement(query);
+        
+        CallableStatement cs = c.prepareCall("{CALL PEDIDO_INSERT (?,?,?,?,?,?,?,?,?,?,?)}");
+        
+        cs.setInt(1, pedido.getTipoAvaliacao().getCodigo());
+        cs.setInt(2, pedido.getStatusPedido().getCodigo());
+        cs.setInt(3, pedido.getAnuncio().getCodigo());
+        cs.setInt(4, pedido.getCliente().getCodigo());
+        cs.setDate(5, new java.sql.Date(pedido.getDataVenda().getInstance().getTime().getTime()));
+        cs.setFloat(6, pedido.getFrete());
+        cs.setDate(7, new java.sql.Date(pedido.getDataPostagem().getInstance().getTime().getTime()));
+        cs.setDate(8, new java.sql.Date(pedido.getDataEntrega().getInstance().getTime().getTime()));
+        cs.setFloat(9, pedido.getValorTotal());
+        cs.setString(10, pedido.getCodigoPostagem());
+        cs.setString(11, pedido.getObservacao());
 
-        //stmt.setString(1, tipoAnuncio.getDescricao());
-        //stmt.setFloat(2, tipoAnuncio.getPercentual());
-
-        stmt.execute();
-        stmt.close();
-
+        cs.execute();
+        
+        cs = c.prepareCall("{CALL ITENSPEDIDO_INSERT (?,?,?,?,?,?)}");
+        
+        for( ItensPedido lstItens : pedido.getItensEntrada()){
+            cs.setInt(1, lstItens.getCodigoPedido());
+            cs.setInt(2, lstItens.getCodigoProduto());
+            cs.setFloat(3, lstItens.getValorVenda());
+            cs.setFloat(4, lstItens.getValorCompra());
+            cs.setInt(5, lstItens.getQuantidade());
+            cs.setFloat(6, lstItens.getTaxa());
+            
+            cs.execute();
+        }       
+        
+        cs.close();
         c.close();
     }
 
