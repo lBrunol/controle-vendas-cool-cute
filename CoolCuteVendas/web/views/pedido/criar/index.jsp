@@ -197,7 +197,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="valorFrete">Valor do Frete</label>
-                    <input type="text" class="form-control" name="valorFrete" />
+                    <input type="text" class="form-control" name="frete" />
                 </div>
             </div>
             <div class="row">
@@ -507,6 +507,7 @@
                 var index = $('.input-qtde').index(this);
                 var quantidade = $(this).val();
                 var valor = deVirgulaParaPonto(retiraReal($('.tabela-itens-pedido .preco').eq(index).text()));
+                var taxa = 
                 var valorTotal = numeroParaMoeda(calculaValorTotal(quantidade, valor));
 
                 $('.valor-total').eq(index).text(valorTotal);
@@ -579,7 +580,7 @@
                     if (isAdicionado == false) { 
                         $(this).closest('.modal').find('.active-tr').each(function (index) {                            
                             $('.tabela-itens-pedido tbody').append('<tr data-index=' + this.rowIndex + '></tr>');
-                            $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td>' + $(this).find('td').eq(1).text() +'</td><td>' + $(this).find('td').eq(2).text() + '</td><td class="preco">' + $(this).find('td').eq(3).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td>' + '</td><td>' + $(this).find('td').eq(4).text() + '<td class="valor-total">R$ 0,00</td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
+                            $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td>' + $(this).find('td').eq(1).text() +'</td><td>' + $(this).find('td').eq(2).text() + '</td><td class="preco">' + $(this).find('td').eq(3).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td>' + '</td><td class="taxa">' + $(this).find('td').eq(4).text() + '<td class="valor-total">R$ 0,00</td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
                             lstCodigosProdutos.push(parseInt($(this).find('td').eq(0).text()));
                         });
 
@@ -667,8 +668,8 @@
         var itensProduto = function (codigoProduto, codigoPedido, valorCompra, valorVenda, quantidade, taxa){
           this.codigoProduto = codigoProduto;
           this.codigoPedido = codigoPedido;
-          this.valorVenda = valorCompra;
-          this.valorCompra = valorVenda;
+          this.valorCompra = valorCompra;
+          this.valorVenda = valorVenda;
           this.quantidade = quantidade;
           this.taxa = taxa;
         };

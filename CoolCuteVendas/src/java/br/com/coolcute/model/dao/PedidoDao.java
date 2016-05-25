@@ -31,6 +31,11 @@ public class PedidoDao {
         
         CallableStatement cs = c.prepareCall("{CALL PEDIDO_INSERT (?,?,?,?,?,?,?,?,?,?,?)}");
         
+        float valorTotal = 0;
+        for (ItensPedido ped: pedido.getItensEntrada()){
+            valorTotal = valorTotal + (ped.getValorVenda() * ped.getQuantidade());
+        }
+        
         cs.setInt(1, pedido.getTipoAvaliacao().getCodigo());
         cs.setInt(2, pedido.getStatusPedido().getCodigo());
         cs.setInt(3, pedido.getAnuncio().getCodigo());
@@ -39,7 +44,7 @@ public class PedidoDao {
         cs.setFloat(6, pedido.getFrete());
         cs.setDate(7, new java.sql.Date(pedido.getDataPostagem().getInstance().getTime().getTime()));
         cs.setDate(8, new java.sql.Date(pedido.getDataEntrega().getInstance().getTime().getTime()));
-        cs.setFloat(9, pedido.getValorTotal());
+        cs.setFloat(9, valorTotal);
         cs.setString(10, pedido.getCodigoPostagem());
         cs.setString(11, pedido.getObservacao());
 

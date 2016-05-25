@@ -117,5 +117,5 @@ CREATE TABLE ProdutoAnuncio(
   anuCodigo INTEGER NOT NULL,
   proCodigo INTEGER NOT NULL,
   FOREIGN KEY(anuCodigo) REFERENCES Anuncio(anuCodigo),
-  FOREIGN KEY(proCodigo) REFERENCES Produto(proCodigo),  
+  FOREIGN KEY(proCodigo) REFERENCES Produto(proCodigo)
 );
