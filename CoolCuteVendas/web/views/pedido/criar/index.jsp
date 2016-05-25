@@ -260,7 +260,12 @@
                     <label for="tipoAvaliacao">Avaliação</label>
                     <select class="form-control" name="tipoAvaliacao.codigo">
                         <c:forEach items="${tipoAvaliacao}" var="tipoAvaliacao">
-                            <option value="${tipoAvaliacao.getCodigo()}">${tipoAvaliacao.getDescricao()}</option>
+                            <c:if test="${tipoAvaliacao.getDescricao() == 'Sem avaliação'}">
+                                <option selected value="${tipoAvaliacao.getCodigo()}">${tipoAvaliacao.getDescricao()}</option>
+                            </c:if>
+                            <c:if test="${tipoAvaliacao.getDescricao() != 'Sem avaliação'}">
+                                <option value="${tipoAvaliacao.getCodigo()}">${tipoAvaliacao.getDescricao()}</option>
+                            </c:if>
                         </c:forEach>
                     </select>
                 </div>                
@@ -278,7 +283,7 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
+                    <button type="submit" class="btn btn-salvar margin-std-right margin-std-top" id="btnSalvar"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
                     <button type="button" class="btn btn-warning margin-std-right margin-std-top" data-toggle="modal" data-target="#modal-cancelar-pedido"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
                     <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>                    
                 </div>
@@ -287,6 +292,7 @@
             <input type="hidden" id="hdnAnuncio" name="anuncio.codigo">
             <input type="hidden" id="hdnCliente" name="cliente.codigo">
             <input type="hidden" id="itensPedido" name="itensPedido" />
+            <input type="hidden" id="hdnValorTotal" name="valorTotal" />
         </form>        
     </div>
     <%-- INCLUDE DO RODAPÉ --%>
@@ -295,7 +301,8 @@
         $(function () {            
            
            var lstCodigosProdutos = new Array();            
-                        
+           var taxa;
+           
             $('#btn-modal-cliente').on('click', function (){
                 $.ajax({
                     type: 'get',
@@ -430,7 +437,7 @@
             }
             
             /* Validação dos campos do formulário */
-            /*$("#formAnuncio").validate({
+            $("#formAnuncio").validate({
                 errorPlacement: function(error, element) {
                 $( element )
                     .closest( "form" )
@@ -447,9 +454,9 @@
                     dataPostagem: {
                         required: {
                             depends: function(element) {                                
-                                if ($('select[name*="statusPedido"]').val() == 'À postar')
+                                if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'À postar')
                                     return false;
-                                else if ($('select[name*="statusPedido"]').val() == 'Cancelada')
+                                else if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Cancelada')
                                     return false;
                                 else
                                     return true;
@@ -459,11 +466,11 @@
                     dataEntrega: {
                         required: {
                             depends: function(element) {                                
-                                if ($('select[name*="statusPedido"]').val() == 'À postar')
+                                if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'À postar')
                                     return false;
-                                else if ($('select[name*="statusPedido"]').val() == 'Cancelada')
+                                else if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Cancelada')
                                     return false;
-                                else if ($('select[name*="statusPedido"]').val() == 'Em trânsito')
+                                else if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Em trânsito')
                                     return false;
                                 else
                                     return true;
@@ -473,9 +480,9 @@
                     codigoPostagem: {
                         required: {
                             depends: function(element) {                                
-                                if ($('select[name*="statusPedido"]').val() == 'À postar')
+                                if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'À postar')
                                     return false;
-                                else if ($('select[name*="statusPedido"]').val() == 'Cancelada')
+                                else if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Cancelada')
                                     return false;
                                 else
                                     return true;
@@ -494,12 +501,9 @@
                     txtQtdePedido: "Por favor, preenche a quantidade"
                                     
                 },
-                submitHandler: function () {                      
-                    acoesPosValidacao();
+                submitHandler: function (form) {                      
+                    acoesPosValidacao(form);
                 }      
-            });*/  
-            $('.btn-vermelho').click(function (){
-                acoesPosValidacao();
             });
             
             /* Delega o evento blur (perder foco) ao adicionar itens do pedido */
@@ -507,7 +511,7 @@
                 var index = $('.input-qtde').index(this);
                 var quantidade = $(this).val();
                 var valor = deVirgulaParaPonto(retiraReal($('.tabela-itens-pedido .preco').eq(index).text()));
-                var taxa = 
+                $('.tabela-itens-pedido .taxa').eq(index).text(taxa * quantidade);
                 var valorTotal = numeroParaMoeda(calculaValorTotal(quantidade, valor));
 
                 $('.valor-total').eq(index).text(valorTotal);
@@ -582,6 +586,7 @@
                             $('.tabela-itens-pedido tbody').append('<tr data-index=' + this.rowIndex + '></tr>');
                             $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td>' + $(this).find('td').eq(1).text() +'</td><td>' + $(this).find('td').eq(2).text() + '</td><td class="preco">' + $(this).find('td').eq(3).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td>' + '</td><td class="taxa">' + $(this).find('td').eq(4).text() + '<td class="valor-total">R$ 0,00</td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
                             lstCodigosProdutos.push(parseInt($(this).find('td').eq(0).text()));
+                            taxa = parseFloat($(this).find('td').eq(4).text());
                         });
 
                         $('.tabela-itens-pedido').find('.no-itens').hide();
@@ -641,11 +646,12 @@
         }
         
         /* Executa a serialização dos itens do pedido, armazena os ids das combos em um input type hidden e valida se os itens do pedido estão preenchidos */           
-        function acoesPosValidacao(){
+        function acoesPosValidacao(form){
             
             serializaItens();
             $('#hdnCliente').val($('#input-cliente').attr('data-id'));
             $('#hdnAnuncio').val($('#input-anuncio').attr('data-id'));
+            $('#hdnValorTotal').val(deVirgulaParaPonto(retiraReal($('.valor-total-pedido').text())));
             
             if ($('.tabela-itens-pedido .no-itens').css('display') == 'table-row' || $('.tabela-itens-pedido tbody tr').length == 0){
                 $('.no-itens td').css('color', '#a94442');
@@ -657,10 +663,10 @@
                 function () {
                 
                 });                            
-                return true;
+                return false;
             } else {
                 $('.no-itens td').css('color', '#27a199');
-                return true;
+                form.submit();
             }
         } 
         

@@ -139,7 +139,7 @@ function adicionaReal(num) {
 * @param num {String} 
 */
 function retiraReal(num) {
-    num = num.replace("R$", "");
+    num = num.replace("R$ ", "");
     return num;
 }
 
