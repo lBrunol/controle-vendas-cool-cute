@@ -1,0 +1,39 @@
+- Tirar prints das telas para servir como protótipo
+- Rever o diagrama de caso de uso (anuncio, retirar senha, ligação direta com a consulta de cliente)
+- Rever o diagrama de classes, deixar de acordo com os métodos do programa. Fazer versão resumida para documentação.
+- Rever algumas datas do cronograma
+	- finalização do projeto no dia 01-06 não no dia 02-06
+	- mudar tarefas do front-end -
+	- extender o modelos e diagramas para 07-04
+	- retirar diagrama de sequência
+	- extender prototipação até 20-04
+	- mudar a data de término do protótipo para 20-04
+	- extender front-end até dia 09-05
+	- rever datas do back-end
+- Rever os testes que serão feitos
+- Implantação ?
+
+Sistema
+- Back-end das telas de 
+	- Pedido
+	- Anúncio
+	- Entrada
+	- Status Pedido
+	- Tipo Avaliações
+	- Usuários
+	- Tipo Movimentação
+	- Produtos
+	- Movimentação
+	- Home
+- Estilização dos relatórios
+- Procedures de select
+- Lógica de sessão dos usuários
+- Implantação das procedures nos DAOS
+- Ajustes visuais no menu
+- Ajustes visuais na home (Banner full hd, possibilidade de pausá-lo e boxes responsivos)
+
+Outros Itens
+
+- Fazer slide da apresentação
+- Organizar o projeto no CD
+- Formatar projeto

@@ -160,6 +160,10 @@ function moedaParaNumero(num) {
     num = Number.parseFloat(num);
     return num;
 }
+
+function deRealParaFloat (num) {
+    return moedaParaNumero(retiraReal(num));    
+}
 /* Função que atribui texto a um elemento passado por parâmetro
 * @param el {object} elemento a ser alterado
 * @param val {string} valor que será atribuido ao elemento

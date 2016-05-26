@@ -436,6 +436,8 @@
                 
             }
             
+            console.log(deRealParaFloat("R$ 1593,35"));
+            
             /* Validação dos campos do formulário */
             $("#formAnuncio").validate({
                 errorPlacement: function(error, element) {
