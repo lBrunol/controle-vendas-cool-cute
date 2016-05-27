@@ -1,23 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.coolcute.bean;
 
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- *
- * @author Casa
- */
 public class StatusAnuncio {
     
     private int codigo;
-    @NotNull(message="Por favor, insira uma descrição válido")
-    @NotEmpty(message="Por favor, insira uma descrição válido")
+    @NotNull(message="Por favor, insira uma descrição válida")
+    @NotEmpty(message="Por favor, insira uma descrição válida")
     private String descricao;
+    
+    public StatusAnuncio(){
+    
+    }
+    
+    public StatusAnuncio(int codigo, String descricao){
+        this.codigo = codigo;
+        this.descricao = descricao;
+    }
 
     /**
      * @return the codigo

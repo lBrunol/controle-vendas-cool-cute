@@ -102,7 +102,6 @@ public class ClienteDao {
         cs.setInt(1, cliente.getCodigo());
         cs.setString(2, cliente.getNome());
         cs.setString(3, cliente.getEmail());
-        cs.execute();
 
         ResultSet rs = cs.executeQuery();
         

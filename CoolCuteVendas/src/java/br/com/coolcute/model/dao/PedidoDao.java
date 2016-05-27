@@ -190,13 +190,14 @@ public class PedidoDao {
         
         List<Pedido> lstPedido = new ArrayList<>();
         
-        StatusPedido stp = new StatusPedido();
+       
+        while (rs.next()) {
+            Pedido ped = new Pedido();
+             StatusPedido stp = new StatusPedido();
         Cliente cli = new Cliente();
         Anuncio anu = new Anuncio();
         TipoAvaliacao tiv = new TipoAvaliacao();
-        while (rs.next()) {
-            Pedido ped = new Pedido();
-            
+        
             ped.setCodigo(rs.getInt(1));
             ped.setDataVenda(new DateTime(rs.getDate(7).getTime()));
             ped.setDataPostagem(new DateTime(rs.getDate(9).getTime()));

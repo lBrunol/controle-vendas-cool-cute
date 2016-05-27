@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://displaytag.sf.net" prefix="display" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -119,7 +121,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${pedido != null}">
+                                <!--<c:if test="${pedido != null}">
                                     <c:forEach items="${pedido}" var="pedido">
                                         <tr>
                                             <td data-id="${pedido.codigo}">${pedido.codigo}</td>
@@ -137,7 +139,15 @@
                                             </td>
                                         </tr>
                                     </c:forEach>
-                                </c:if>
+                                    <display:table name="${pedido}" class="its">
+                                        <display:column property="pedido.codigo"/>
+                                        <display:column property="pedido.dataVenda"/>
+                                        <display:column property="pedido.dataPostagem" />
+                                        <display:column title="Data de Finalização"  sortable = "true">
+                                            <fmt:formatDate value="${pedido.dataPostagem}"pattern="dd/MM/yyyy" />
+                                        </display:column>
+                                    </display:table>
+                                </c:if>-->
                                 <c:if test="${pedido == null}">
                                     <tr class="no-paginate">
                                         <td colspan="10">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
