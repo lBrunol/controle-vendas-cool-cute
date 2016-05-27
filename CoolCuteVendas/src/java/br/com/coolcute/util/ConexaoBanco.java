@@ -40,7 +40,7 @@ public class ConexaoBanco {
       
         String userName   = this.usuario;
         String passName   = this.senha;
-        String url = "jdbc:mysql://localhost/world?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=utf8"; 
+        String url = "jdbc:mysql://localhost/teste?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=utf8"; 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.c = DriverManager.getConnection(url,userName, passName);            

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,66 +12,137 @@
     <%@include file="/includes/menu.jsp" %>
     <!-- CONTEÚDO -->
     <div class="container content">
-        <h2>Consultar Pedidos</h2>
-        <hr>
-
-         <h3>Selecione o Filtro:</h3>
-        <form method="post" action="javascript:void(0);" id="form-consultar-clientes">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel panel-filtro">
-                        <div class="panel-body">                                
-                            <div class="col-md-4 col-xs-12">
-                                <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="dataVenda" name="rdbFiltro" id="rdbDataVenda" />
-                                    Data da Venda
-                                </label>
-                            </div>
-                            <div class="col-md-4 col-xs-12">
-                                <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="clietne" name="rdbFiltro" id="rdbCliente" />
-                                    Cliente
-                                </label>
-                            </div> 
-                            <div class="col-md-4 col-xs-12">
-                                <label class="control-label radio-check label-checkbox">
-                                    <input type="radio" value="anuncio" name="rdbFiltro" id="rdbAnuncio" />
-                                    Anúncio
-                                </label>
-                            </div>                                 
-                        </div>
+        <!-- MODAIS -->
+        <!-- MODAL EXCLUIR -->
+        <div class="modal modal-excluir fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Deseja realmente excluir o pedido?</h2>                            
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
+                    <div class="modal-body">
+                        <p class="modal-id"><strong>Id: </strong><span></span></p>                        
+                        <p class="modal-descricao"><strong>Nome: </strong><span></span></p>
+                        <form action="/excluirPedido" method="POST">
+                            <input type="hidden" name="codigo" id="hdnCodigo" value="" />
+                            <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</button>
+                            <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+
+                    </div>
+                </div>
+            </div>
+        </div>      
+
+        <!--BreadCrumbs-->
+        <ol class="breadcrumb">
+            <li><a href="/">Início</a></li>
+            <li><a href="javascript:;">Pedidos</a></li>
+            <li class="active">Consultar</li>
+        </ol>
+        <c:if test="${msg != null }">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert"> 
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
+                <i class="fa fa-fw fa-times"></i> ${msg}
+            </div>
+        </c:if> 
+        <h2>Consultar Pedido</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <a role="button" href="/pedido/criar/" class="btn btn-mais">Adicionar Pedido +</a>
+            </div>
+        </div>
+        <form method="GET" action="/filtrarPedido" id="form-consultar-pedidos">
+            <div class="row">
+                <div class="col-md-2 col-sm-12 form-group">
+                    <label for="codigo">Código</label>
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="dataVenda">Data da Venda</label>
+                    <input type="date" class="form-control" placeholder="Data da Venda" name="dataVenda" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="dataPostagem">Data da Postagem</label>
+                    <input type="date" class="form-control" placeholder="Data da Postagem" name="dataPostagem" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="dataEntrega">Data da Entrega</label>
+                    <input type="date" class="form-control" placeholder="Data da Entrega" name="dataEntrega" placeholder="" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="statusPedido.descricao">Status do Pedido</label>
+                    <input type="text" class="form-control" placeholder="Status do Pedido" name="statusPedido.descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="tipoAvaliacao.descricao">Avaliação</label>
+                    <input type="text" class="form-control" placeholder="Avaliação" name="tipoAvaliacao.descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="cliente.nome">Nome do Cliente</label>
+                    <input type="text" class="form-control" placeholder="Nome do Cliente" name="cliente.nome" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="cliente.nome">E-mail do Cliente</label>
+                    <input type="text" class="form-control" placeholder="E-mail do Cliente" name="cliente.email" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="anuncio.descricao">Anúncio</label>
+                    <input type="text" class="form-control" placeholder="Anúncio" name="anuncio.descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sm-2 form-group">
+                    <button type="submit" id="btnPesquisar" class="btn btn-salvar">Buscar <i class="fa fa-fw fa-search"></i></button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Filtro por: Descrição" aria-describedby="basic-addon2" id="txtPesquisa" />
-                        <span class="input-group-btn"><a role="button" href="/consultarTipoAnuncio" id="btnPesquisar" class="btn btn-salvar"><i class="fa fa-fw fa-search"></i></a></span>
-                    </div>
-                </div>
-            </div>             
-            <div class="row">
-                <div class="col-md-12">
                     <div class="tabela-overflow">
-                        <table class="table margin-std-top">
+                        <table class="table table-pagination margin-std-top">
                             <thead>
                                 <tr>
+                                    <th>Código</th>
+                                    <th>Data da Venda</th>
+                                    <th>Data da Postagem</th>
+                                    <th>Data da Entrega</th>
+                                    <th>Status do Pedido</th>
+                                    <th>Avaliação</th>
+                                    <th>Nome do Cliente</th>
+                                    <th>E-mail do Cliente</th>
                                     <th>Anúncio</th>
-                                    <th>Açoes</th>
-                                  
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                
-                                    <tr>
-                                        <td>Mochila Azul</td>
-                                        <td>
-                                            <a href="/consultarTipoAnuncioItem/${tipoAnuncio.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
-                                            <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
-                                        </td>
+                                <c:if test="${pedido != null}">
+                                    <c:forEach items="${pedido}" var="pedido">
+                                        <tr>
+                                            <td data-id="${pedido.codigo}">${pedido.codigo}</td>
+                                            <td>${pedido.dataVenda}</td>
+                                            <td>${pedido.dataPostagem}</td>
+                                            <td>${pedido.dataEntrega}</td>
+                                            <td>${pedido.statusPedido.descricao}</td>
+                                            <td>${pedido.tipoAvaliacao.descricao}</td>
+                                            <td>${pedido.cliente.nome}</td>
+                                            <td>${pedido.cliente.email}</td>
+                                            <td>${pedido.anuncio.descricao}</td>
+                                            <td>
+                                                <a href="/consultarPedidoItem/${pedido.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
+                                                <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:if>
+                                <c:if test="${pedido == null}">
+                                    <tr class="no-paginate">
+                                        <td colspan="10">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
                                     </tr>
-                                                                                                   
+                                </c:if>
                             </tbody>                               
                         </table>
                     </div>
@@ -81,21 +153,7 @@
                     <div class="text-center">
                         <nav>
                             <ul class="pagination pagination-cool">
-                                <li>
-                                    <a href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                    </li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">5</a></li>
-                                    <li>
-                                    <a href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
+                                
                             </ul>
                         </nav>
                     </div>
@@ -104,6 +162,32 @@
         </form>
     </div>
     <%-- INCLUDE DO RODAPÉ --%>
-    <%@include file="/includes/rodape.jsp" %>    
+    <%@include file="/includes/rodape.jsp" %>   
+    <script type="text/javascript" src="/js/paginacao.js"></script>
+    <script type="text/javascript">
+        $(function () {           
+            
+            //Ação de exclusão
+            $('.btn-excluir').click(function(){
+                var id = $(this).closest('tr').find('td[data-id]').attr('data-id');
+                var descricao = $(this).closest('tr').find('td[data-descricao]').attr('data-descricao');
+                
+                $('.modal-excluir .modal-id span').html(id);
+                $('.modal-excluir .modal-descricao span').html(descricao);
+                $('.modal-excluir #hdnCodigo').val(id);
+            });
+            
+            
+            $('input[type="radio"]').on('change', function() {
+                $('#txtPesquisa').attr({
+                    name: $('input[type="radio"]:checked').val().toLowerCase(),
+                    placeholder: $('input[type="radio"]:checked').val()
+                }).focus();
+             });
+             
+            paginacao('.table-pagination', '.pagination', 20);
+             
+        });
+    </script>            
 </body>
 </html>

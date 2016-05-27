@@ -197,7 +197,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="valorFrete">Valor do Frete</label>
-                    <input type="text" class="form-control" name="frete" />
+                    <input type="text" class="form-control" name="frete" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
                 </div>
             </div>
             <div class="row">
@@ -417,17 +417,17 @@
                     tr.appendChild(td);
                     
                     td = document.createElement('td');
-                    tdText = document.createTextNode(data[i].precoCompra);
+                    tdText = document.createTextNode(numeroParaMoeda(data[i].precoCompra));
                     td.appendChild(tdText);
                     tr.appendChild(td);
                     
                     td = document.createElement('td');
-                    tdText = document.createTextNode(data[i].precoVenda);
+                    tdText = document.createTextNode(numeroParaMoeda(data[i].precoVenda));
                     td.appendChild(tdText);
                     tr.appendChild(td);
                     
                     td = document.createElement('td');
-                    tdText = document.createTextNode(data[i].taxa);
+                    tdText = document.createTextNode(numeroParaMoeda(data[i].taxa));
                     td.appendChild(tdText);                    
                     tr.appendChild(td);
                     
@@ -435,8 +435,6 @@
                 }
                 
             }
-            
-            console.log(deRealParaFloat("R$ 1593,35"));
             
             /* Validação dos campos do formulário */
             $("#formAnuncio").validate({
@@ -513,7 +511,7 @@
                 var index = $('.input-qtde').index(this);
                 var quantidade = $(this).val();
                 var valor = deVirgulaParaPonto(retiraReal($('.tabela-itens-pedido .preco').eq(index).text()));
-                $('.tabela-itens-pedido .taxa').eq(index).text(taxa * quantidade);
+                $('.tabela-itens-pedido .taxa').eq(index).text(numeroParaMoeda(taxa * quantidade));
                 var valorTotal = numeroParaMoeda(calculaValorTotal(quantidade, valor));
 
                 $('.valor-total').eq(index).text(valorTotal);
@@ -588,7 +586,7 @@
                             $('.tabela-itens-pedido tbody').append('<tr data-index=' + this.rowIndex + '></tr>');
                             $('.tabela-itens-pedido tbody tr:last-child').append('<td>' + $(this).find('td').eq(0).text() + '</td><td>' + $(this).find('td').eq(1).text() +'</td><td>' + $(this).find('td').eq(2).text() + '</td><td class="preco">' + $(this).find('td').eq(3).text() + '</td><td><input type="number" class="form-control input-qtde" name="txtQtdePedido"></td>' + '</td><td class="taxa">' + $(this).find('td').eq(4).text() + '<td class="valor-total">R$ 0,00</td><td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>');
                             lstCodigosProdutos.push(parseInt($(this).find('td').eq(0).text()));
-                            taxa = parseFloat($(this).find('td').eq(4).text());
+                            taxa = parseFloat(deRealParaFloat($(this).find('td').eq(4).text()));
                         });
 
                         $('.tabela-itens-pedido').find('.no-itens').hide();
@@ -636,10 +634,10 @@
                 var item = new itensProduto(
                     parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(0).text()),
                     parseInt($('#codigoProduto').val()),
-                    parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(2).text()),
-                    parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(3).text()),
+                    deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(2).text()),
+                    deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(3).text()),
                     parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(4).find('input').val()),
-                    parseFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(5).text())
+                    deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(5).text())
                 );
                 lstItens.push(item);
                 

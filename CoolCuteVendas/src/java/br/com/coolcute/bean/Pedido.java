@@ -7,8 +7,10 @@ package br.com.coolcute.bean;
 
 import java.util.Calendar;
 import java.util.List;
+import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 /**
  *
@@ -21,13 +23,14 @@ public class Pedido {
     private StatusPedido statusPedido;
     private Anuncio anuncio;    
     private Cliente cliente;
-    @DateTimeFormat(iso=ISO.DATE)
-    private Calendar dataVenda;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private DateTime dataVenda;
+    @NumberFormat(style=Style.CURRENCY)
     private float frete;
-    @DateTimeFormat(iso=ISO.DATE)
-    private Calendar dataPostagem;
-    @DateTimeFormat(iso=ISO.DATE)
-    private Calendar dataEntrega;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private DateTime dataPostagem;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private DateTime dataEntrega;
     private float valorTotal;
     private String codigoPostagem;
     private String observacao;
@@ -107,14 +110,14 @@ public class Pedido {
     /**
      * @return the dataVenda
      */
-    public Calendar getDataVenda() {
+    public DateTime getDataVenda() {
         return dataVenda;
     }
 
     /**
      * @param dataVenda the dataVenda to set
      */
-    public void setDataVenda(Calendar dataVenda) {
+    public void setDataVenda(DateTime dataVenda) {
         this.dataVenda = dataVenda;
     }
 
@@ -135,28 +138,28 @@ public class Pedido {
     /**
      * @return the dataPostagem
      */
-    public Calendar getDataPostagem() {
+    public DateTime getDataPostagem() {
         return dataPostagem;
     }
 
     /**
      * @param dataPostagem the dataPostagem to set
      */
-    public void setDataPostagem(Calendar dataPostagem) {
+    public void setDataPostagem(DateTime dataPostagem) {
         this.dataPostagem = dataPostagem;
     }
 
     /**
      * @return the dataEntrega
      */
-    public Calendar getDataEntrega() {
+    public DateTime getDataEntrega() {
         return dataEntrega;
     }
 
     /**
      * @param dataEntrega the dataEntrega to set
      */
-    public void setDataEntrega(Calendar dataEntrega) {
+    public void setDataEntrega(DateTime dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 

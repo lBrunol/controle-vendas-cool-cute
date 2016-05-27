@@ -20,8 +20,20 @@
     <mvc:resources mapping="/css/**" location="/css/" />
     <mvc:resources mapping="/images/**" location="/imagens/" />
    
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <list>
+                <bean class="br.com.coolcute.util.CustomDateEditorRegistrar"/>
+            </list>
+        </property>
+    </bean>
+    
+    
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/views/"/>
         <property name="suffix" value="index.jsp"/>
-    </bean>    
+    </bean> 
+    
+    
+    
 </beans>

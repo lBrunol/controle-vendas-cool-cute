@@ -5,8 +5,12 @@
  */
 package br.com.coolcute.model.dao;
 
+import br.com.coolcute.bean.Anuncio;
+import br.com.coolcute.bean.Cliente;
 import br.com.coolcute.bean.ItensPedido;
 import br.com.coolcute.bean.Pedido;
+import br.com.coolcute.bean.StatusPedido;
+import br.com.coolcute.bean.TipoAvaliacao;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,8 +18,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.coolcute.util.ConexaoBanco;
+import br.com.coolcute.util.StringUtil;
 import java.sql.CallableStatement;
 import java.sql.Date;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -31,20 +38,20 @@ public class PedidoDao {
         
         CallableStatement cs = c.prepareCall("{CALL PEDIDO_INSERT (?,?,?,?,?,?,?,?,?,?,?)}");
         
-        float valorTotal = 0;
+        /*float valorTotal = 0;
         for (ItensPedido ped: pedido.getItensEntrada()){
             valorTotal = valorTotal + (ped.getValorVenda() * ped.getQuantidade());
-        }
+        }*/
         
         cs.setInt(1, pedido.getTipoAvaliacao().getCodigo());
         cs.setInt(2, pedido.getStatusPedido().getCodigo());
         cs.setInt(3, pedido.getAnuncio().getCodigo());
         cs.setInt(4, pedido.getCliente().getCodigo());
-        cs.setDate(5, new java.sql.Date(pedido.getDataVenda().getInstance().getTime().getTime()));
+        cs.setDate(5, new java.sql.Date(pedido.getDataVenda().getMillis()));
         cs.setFloat(6, pedido.getFrete());
-        cs.setDate(7, new java.sql.Date(pedido.getDataPostagem().getInstance().getTime().getTime()));
-        cs.setDate(8, new java.sql.Date(pedido.getDataEntrega().getInstance().getTime().getTime()));
-        cs.setFloat(9, valorTotal);
+        cs.setDate(7, new java.sql.Date(pedido.getDataPostagem().getMillis()));
+        cs.setDate(8, new java.sql.Date(pedido.getDataEntrega().getMillis()));
+        cs.setFloat(9, pedido.getValorTotal());
         cs.setString(10, pedido.getCodigoPostagem());
         cs.setString(11, pedido.getObservacao());
 
@@ -149,5 +156,72 @@ public class PedidoDao {
         c.close();
         
         return itemPedido;        
+    }
+    
+    public List<Pedido> filterPedido(Pedido pedido) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
+        c = conn.conectar();
+        
+        CallableStatement cs = c.prepareCall("{CALL PEDIDO_SELECT (?,?,?,?,?,?,?,?,?)}");
+            
+        cs.setInt(1, pedido.getCodigo());
+        if(pedido.getDataVenda() != null)
+            cs.setDate(2, new java.sql.Date(pedido.getDataVenda().getMillis()));
+        else
+            cs.setDate(2, null);
+        if(pedido.getDataPostagem() != null)
+            cs.setDate(3, new java.sql.Date(pedido.getDataPostagem().getMillis()));
+        else
+            cs.setDate(3, null);
+        if(pedido.getDataEntrega() != null)
+            cs.setDate(4, new java.sql.Date(pedido.getDataEntrega().getMillis()));
+        else
+            cs.setDate(4, null);
+        
+        cs.setString(5, pedido.getStatusPedido().getDescricao());
+        cs.setString(6, pedido.getTipoAvaliacao().getDescricao());
+        cs.setString(7, pedido.getCliente().getNome());
+        cs.setString(8, pedido.getCliente().getEmail());
+        cs.setString(9, pedido.getAnuncio().getDescricao());
+        //cs.execute();
+
+        ResultSet rs = cs.executeQuery();
+        
+        List<Pedido> lstPedido = new ArrayList<>();
+        
+        StatusPedido stp = new StatusPedido();
+        Cliente cli = new Cliente();
+        Anuncio anu = new Anuncio();
+        TipoAvaliacao tiv = new TipoAvaliacao();
+        while (rs.next()) {
+            Pedido ped = new Pedido();
+            
+            ped.setCodigo(rs.getInt(1));
+            ped.setDataVenda(new DateTime(rs.getDate(7).getTime()));
+            ped.setDataPostagem(new DateTime(rs.getDate(9).getTime()));
+            ped.setDataEntrega(new DateTime(rs.getDate(10).getTime()));
+            
+            stp.setDescricao(rs.getString(3));
+            ped.setStatusPedido(stp);
+            
+            tiv.setDescricao(rs.getString(2));
+            ped.setTipoAvaliacao(tiv);
+            
+            cli.setNome(rs.getString(5));
+            cli.setEmail(rs.getString(6));            
+            ped.setCliente(cli);
+            
+            anu.setDescricao(rs.getString(4));
+            ped.setAnuncio(anu);
+            
+            lstPedido.add(ped);
+        }
+        
+        rs.close();
+        cs.close();
+        c.close();
+        
+        return lstPedido;        
     }
 }
