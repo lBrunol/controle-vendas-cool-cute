@@ -13,7 +13,7 @@ CREATE TABLE Produto (
   proNome VARCHAR(255) NOT NULL,
   proEstoqueMin INTEGER UNSIGNED DEFAULT 0,
   proPreco DECIMAL(8,2) NOT NULL,
-  proQuantidade INTEGER NOT NULL,
+  proQuantidade INTEGER UNSIGNED DEFAULT 0,
   proIsAtivo BOOL NOT NULL,
   PRIMARY KEY(proCodigo)
 );

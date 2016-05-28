@@ -89,8 +89,8 @@
                                         <li class="dropdown">
                                             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tipos de Anúncios <i class="fa fa-fw fa-caret-down"></i></a>
                                             <ul class="dropdown-menu sub-menu">
-                                                <li><a href="/tipo-anuncio/criar/index"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a></li>
-                                                <li><a href="/tipo-anuncio/consultar/index"><i class="fa fa-search fa-fw"></i> Consultar</a></li>
+                                                <li><a href="/tipo-anuncio/criar/"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a></li>
+                                                <li><a href="/tipo-anuncio/consultar/"><i class="fa fa-search fa-fw"></i> Consultar</a></li>
                                             </ul>
                                         </li>
                                         <li class="dropdown">

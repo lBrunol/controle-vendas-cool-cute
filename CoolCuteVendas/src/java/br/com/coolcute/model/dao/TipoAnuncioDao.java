@@ -1,7 +1,6 @@
 package br.com.coolcute.model.dao;
 
 import br.com.coolcute.bean.TipoAnuncio;
-import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,109 +11,107 @@ import java.sql.CallableStatement;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TipoAnuncioDao {
+public class TipoAnuncioDao {    
     
-    private String query;
-    private PreparedStatement stmt;
+    private CallableStatement cs;
     private Connection c;
     
-    public void adiciona(TipoAnuncio tipoAnuncio) throws SQLException{
-        query = "INSERT INTO tipoAnuncio( tiaDescricao, tiaPercentual) VALUES (?,?)";
-        ConexaoBanco conn = new ConexaoBanco();
-        
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
+    public void adicionarTipoAnuncio(TipoAnuncio tipoAnuncio) throws SQLException{
 
-        stmt.setString(1, tipoAnuncio.getDescricao());
-        stmt.setFloat(2, tipoAnuncio.getPercentual());
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-
-    public void altera(TipoAnuncio tipoAnuncio) throws SQLException{
-        query = "UPDATE tipoAnuncio SET tiaDescricao = ? , tiaPercentual = ? WHERE tiaCodigo = ?";
-        ConexaoBanco conn = new ConexaoBanco();
-
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
-
-        stmt.setString(1, tipoAnuncio.getDescricao());
-        stmt.setFloat(2, tipoAnuncio.getPercentual());
-        stmt.setInt(3, tipoAnuncio.getCodigo());
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-    
-    public void exclui(int id) throws SQLException{
-        query = "DELETE FROM tipoAnuncio WHERE tiaCodigo = ?";
-        ConexaoBanco conn = new ConexaoBanco();
-
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
-
-        stmt.setInt(1, id);
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-    
-    public List<TipoAnuncio> getTipoAnuncio() throws SQLException {
-        
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM tipoAnuncio");
-        ResultSet rs = stmt.executeQuery();
-        List<TipoAnuncio> lstTipoAnuncio = new ArrayList<>();
-        
-        while (rs.next()) {
-            TipoAnuncio tia = new TipoAnuncio();
-            
-            tia.setCodigo(rs.getInt(1));
-            tia.setDescricao(rs.getString(2));
-            tia.setPercentual(rs.getFloat(3));
-            
-            lstTipoAnuncio.add(tia);
-        }
-        
-        rs.close();
-        stmt.close();
+        cs = c.prepareCall("{CALL TIPOANUNCIO_INSERT (?,?)}");
+
+        cs.setString(1, tipoAnuncio.getDescricao());
+        cs.setFloat(2, tipoAnuncio.getPercentual());
+        cs.execute();
+        cs.close();
+
         c.close();
-        
-        return lstTipoAnuncio;
     }
-    
-    public List<TipoAnuncio> filterTipoAnuncio(TipoAnuncio tipoAnuncio) throws SQLException{
+
+    public void alterarTipoAnuncio(TipoAnuncio tipoAnuncio) throws SQLException{
         
         ConexaoBanco conn = new ConexaoBanco();
         c = conn.conectar();
         
-        CallableStatement cs = c.prepareCall("{CALL TIPOANUNCIO_SELECT (?,?)}");
+        cs = c.prepareCall("{CALL TIPOANUNCIO_UPDATE (?,?,?)}");
+        
+        cs.setInt(1, tipoAnuncio.getCodigo());
+        cs.setString(2, tipoAnuncio.getDescricao());
+        cs.setFloat(3, tipoAnuncio.getPercentual());
+        
+        cs.execute();
+        cs.close();
+
+        c.close();
+    }
+    
+    public void excluirTipoAnuncio(int id) throws SQLException{
+
+        ConexaoBanco conn = new ConexaoBanco();        
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL TIPOANUNCIO_DELETE (?)}");
+
+        cs.setInt(1, id);
+
+        cs.execute();
+        cs.close();
+
+        c.close();
+    }
+    
+    public TipoAnuncio getTipoAnuncioItem(int id) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
+        TipoAnuncio itemTipoAnuncio = new TipoAnuncio();
+        
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL TIPOANUNCIO_SELECT (?,?)}");
+            
+        cs.setInt(1, id);
+        cs.setString(2, null);
+
+        ResultSet rs = cs.executeQuery();
+        
+        if (rs.next()) {            
+            itemTipoAnuncio.setCodigo(rs.getInt(1));
+            itemTipoAnuncio.setDescricao(rs.getString(2));
+            itemTipoAnuncio.setPercentual(rs.getFloat(3));
+        }
+        
+        rs.close();
+        cs.close();
+        c.close();
+        
+        return itemTipoAnuncio;        
+    }
+    
+    public List<TipoAnuncio> getTipoAnuncio(TipoAnuncio tipoAnuncio) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL TIPOANUNCIO_SELECT (?,?)}");
             
         cs.setInt(1, tipoAnuncio.getCodigo());
         cs.setString(2, tipoAnuncio.getDescricao());
-        cs.execute();
 
         ResultSet rs = cs.executeQuery();
         
         List<TipoAnuncio> lstTipoAnuncio = new ArrayList<>();
         
         while (rs.next()) {
-            TipoAnuncio tia = new TipoAnuncio();
+            TipoAnuncio sta = new TipoAnuncio();
             
-            tia.setCodigo(rs.getInt(1));
-            tia.setDescricao(rs.getString(2));
-            tia.setPercentual(rs.getFloat(3));
+            sta.setCodigo(rs.getInt(1));
+            sta.setDescricao(rs.getString(2));
+            sta.setPercentual(rs.getFloat(3));
             
-            lstTipoAnuncio.add(tia);
+            lstTipoAnuncio.add(sta);
         }
         
         rs.close();
@@ -123,30 +120,5 @@ public class TipoAnuncioDao {
         
         return lstTipoAnuncio;        
     }
-    
-    public TipoAnuncio getTipoAnuncioItem(Long id) throws SQLException{        
-        
-        ConexaoBanco cnn = new ConexaoBanco();
-        TipoAnuncio itemTipoAnuncio = new TipoAnuncio();
-        
-        c = cnn.conectar();
-        
-        stmt = c.prepareStatement("SELECT * FROM tipoAnuncio WHERE tiaCodigo = ?" );
-        
-        stmt.setLong(1, id);
-        
-        ResultSet rs = stmt.executeQuery();
-        
-        while(rs.next()){
-            itemTipoAnuncio.setCodigo(rs.getInt(1));
-            itemTipoAnuncio.setDescricao(rs.getString(2));
-            itemTipoAnuncio.setPercentual(rs.getFloat(3));            
-        }
-        
-        rs.close();
-        stmt.close();
-        c.close();
-        
-        return itemTipoAnuncio;        
-    }
+
 }

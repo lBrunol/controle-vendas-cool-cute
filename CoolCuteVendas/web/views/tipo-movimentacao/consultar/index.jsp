@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Consulta de Tipo do Anúncio - Cool & Cute - Vendas</title>
+    <title>Consulta de Tipo de Movimentação - Cool & Cute - Vendas</title>
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
 </head>
@@ -18,13 +18,13 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Deseja realmente excluir o Tipo do Anúncio?</h2>                            
+                        <h2>Deseja realmente excluir o Tipo de Movimentação?</h2>                            
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <p class="modal-id"><strong>Id: </strong><span></span></p>                        
                         <p class="modal-descricao"><strong>Descrição: </strong><span></span></p>
-                        <form action="/excluirTipoAnuncio" method="POST">
+                        <form action="/excluirTipoMovimentacao" method="POST">
                             <input type="hidden" name="codigo" id="hdnCodigo" value="" />
                             <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</button>
                             <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
@@ -40,7 +40,7 @@
         <!--BreadCrumbs-->
         <ol class="breadcrumb">
             <li><a href="/">Início</a></li>
-            <li><a href="javascript:;">Tipo do Anúncio</a></li>
+            <li><a href="javascript:;">Tipo de Movimentação</a></li>
             <li class="active">Consultar</li>
         </ol>
         <c:if test="${msg != null }">
@@ -49,14 +49,14 @@
                 <i class="fa fa-fw fa-times"></i> ${msg}
             </div>
         </c:if> 
-        <h2>Consultar Tipo do Anúncio</h2>
+        <h2>Consultar Tipo de Movimentação</h2>
         <hr />
         <div class="row">
             <div class="col-md-12 text-right">
-                <a role="button" href="/tipo-anuncio/criar/" class="btn btn-mais">Adicionar Tipo do Anúncio +</a>
+                <a role="button" href="/tipo-movimentacao/criar/" class="btn btn-mais">Adicionar Tipo de Movimentação +</a>
             </div>
         </div>
-        <form method="GET" action="/filtrarTipoAnuncio" id="form-consultar-tipoAnuncios">
+        <form method="GET" action="/filtrarTipoMovimentacao" id="form-consultar-tipoMovimentacaos">
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="codigo">Código</label>
@@ -80,25 +80,30 @@
                                 <tr>
                                     <th>Código</th>
                                     <th>Descrição</th>
-                                    <th>Percentual</th>
+                                    <th>Operação</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${tipoAnuncio != null}">
-                                    <c:forEach items="${tipoAnuncio}" var="tipoAnuncio">
+                                <c:if test="${tipoMovimentacao != null}">
+                                    <c:forEach items="${tipoMovimentacao}" var="tipoMovimentacao">
                                         <tr>
-                                            <td data-id="${tipoAnuncio.codigo}">${tipoAnuncio.codigo}</td>
-                                            <td data-descricao="${tipoAnuncio.descricao}">${tipoAnuncio.descricao}</td>
-                                            <td>${tipoAnuncio.percentual}</td>                                            
+                                            <td data-id="${tipoMovimentacao.codigo}">${tipoMovimentacao.codigo}</td>
+                                            <td data-descricao="${tipoMovimentacao.descricao}">${tipoMovimentacao.descricao}</td>
+                                            <c:if test="${tipoMovimentacao.operacao == true}">
+                                                <td>Entrada</td>
+                                            </c:if>
+                                            <c:if test="${tipoMovimentacao.operacao == false}">
+                                                <td>Saída</td>
+                                            </c:if> 
                                             <td>
-                                                <a href="/consultarTipoAnuncioItem/${tipoAnuncio.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
+                                                <a href="/consultarTipoMovimentacaoItem/${tipoMovimentacao.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
                                                 <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </c:if>
-                                <c:if test="${tipoAnuncio == null}">
+                                <c:if test="${tipoMovimentacao == null}">
                                     <tr class="no-paginate">
                                         <td colspan="3">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
                                     </tr>

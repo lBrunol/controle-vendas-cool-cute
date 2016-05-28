@@ -1,7 +1,9 @@
 package br.com.coolcute.controller;
 
-import br.com.coolcute.bean.TipoAnuncio;
-import br.com.coolcute.model.dao.TipoAnuncioDao;
+import br.com.coolcute.bean.Usuario;
+import br.com.coolcute.model.dao.UsuarioDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,38 +12,39 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class TipoAnuncioController {
+public class UsuarioController {
     
     @Autowired
-    private TipoAnuncioDao daoTipoAnuncio;
+    private UsuarioDao daoUsuario;
     private boolean retorno;
     private String msg;
     
-    @RequestMapping("tipo-anuncio/criar/")
+    @RequestMapping("usuario/criar/")
     public String form() {
-        return "tipo-anuncio/criar/";
+        return "usuario/criar/";
     }
     
-    @RequestMapping("tipo-anuncio/consultar/")
+    @RequestMapping("usuario/consultar/")
     public String consulta(){        
-        return "tipo-anuncio/consultar/";
+        return "usuario/consultar/";
     }
     
-    @RequestMapping("adicionarAlterarTipoAnuncio")
-    public ModelAndView adicionarAlterarTipoAnuncio (@Valid TipoAnuncio tipoAnuncio, BindingResult result){
-        if(tipoAnuncio.getCodigo() != 0){        
-            return alterarTipoAnuncio(tipoAnuncio, result);
+    @RequestMapping("adicionarAlterarUsuario")
+    public ModelAndView adicionarAlterarUsuario (@Valid Usuario usuario, BindingResult result){
+        if(usuario.getCodigo() != 0){        
+            return alterarUsuario(usuario, result);
         } else {
-            return adicionarTipoAnuncio(tipoAnuncio, result);
+            return adicionarUsuario(usuario, result);
         }        
     }	
     
-    @RequestMapping("adicionarTipoAnuncio")
-    public ModelAndView adicionarTipoAnuncio(@Valid TipoAnuncio tipoAnuncio, BindingResult result){
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/");
+    @RequestMapping("adicionarUsuario")
+    public ModelAndView adicionarUsuario(@Valid Usuario usuario, BindingResult result){
+        ModelAndView modelAndView = new ModelAndView("usuario/criar/");
         
         if(result.hasErrors()){
             retorno = false;
@@ -50,7 +53,7 @@ public class TipoAnuncioController {
         }
         
         try {
-            daoTipoAnuncio.adicionarTipoAnuncio(tipoAnuncio);
+            daoUsuario.adicionarUsuario(usuario);
             retorno = true;
             msg = "Cadastrado com sucesso";
         } catch (SQLException e) {
@@ -63,13 +66,13 @@ public class TipoAnuncioController {
         modelAndView.addObject("retorno", retorno);
         modelAndView.addObject("msg", msg);
         
-        return modelAndView;		
+        return modelAndView;
     }
     
-    @RequestMapping("alterarTipoAnuncio")
-    public ModelAndView alterarTipoAnuncio(@Valid TipoAnuncio tipoAnuncio, BindingResult result) {
+    @RequestMapping("alterarUsuario")
+    public ModelAndView alterarUsuario(@Valid Usuario usuario, BindingResult result) {
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/");
+        ModelAndView modelAndView = new ModelAndView("usuario/criar/");
         
         if(result.hasErrors()){
             retorno = false;
@@ -78,7 +81,7 @@ public class TipoAnuncioController {
         }
         
         try {
-            daoTipoAnuncio.alterarTipoAnuncio(tipoAnuncio);
+            daoUsuario.alterarUsuario(usuario);
             retorno = true;
             msg = "Registro alterado com sucesso";
         } catch (SQLException e) {
@@ -94,27 +97,27 @@ public class TipoAnuncioController {
         return modelAndView;
     }
     
-    @RequestMapping("excluirTipoAnuncio") 
-    public ModelAndView excluirTipoAnuncio(TipoAnuncio tipoAnuncio, BindingResult result) {
+    @RequestMapping("excluirUsuario") 
+    public ModelAndView excluirUsuario(Usuario usuario, BindingResult result) {
 
         try {
-           daoTipoAnuncio.excluirTipoAnuncio(tipoAnuncio.getCodigo()); 
+           daoUsuario.excluirUsuario(usuario.getCodigo()); 
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         
-        return filtrarTipoAnuncio(new TipoAnuncio(), result);
+        return filtrarUsuario(new Usuario(), result);
     }
     
-    @RequestMapping("filtrarTipoAnuncio")    
-    public ModelAndView filtrarTipoAnuncio(@ModelAttribute("tipoAnuncio") TipoAnuncio tipoAnuncio, BindingResult result){
+    @RequestMapping("filtrarUsuario")    
+    public ModelAndView filtrarUsuario(@ModelAttribute("usuario") Usuario usuario, BindingResult result){
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/consultar/");
+        ModelAndView modelAndView = new ModelAndView("usuario/consultar/");
         
         try {            
-            modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncio(tipoAnuncio));
+            modelAndView.addObject("usuario", daoUsuario.getUsuario(usuario));
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -124,13 +127,13 @@ public class TipoAnuncioController {
         return modelAndView;
     }
     
-    @RequestMapping("consultarTipoAnuncioItem/{id}")    
-    public ModelAndView consultarTipoAnuncioItem(@PathVariable("id") int id){
+    @RequestMapping("consultarUsuarioItem/{id}")    
+    public ModelAndView consultarUsuarioItem(@PathVariable("id") int id){
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/");
+        ModelAndView modelAndView = new ModelAndView("usuario/criar/");
         
         try {
-            modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncioItem(id));
+            modelAndView.addObject("usuario", daoUsuario.getUsuarioItem(id));
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -138,5 +141,23 @@ public class TipoAnuncioController {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         return modelAndView;
+    }
+    
+    @RequestMapping("servicoConsultaLoginUsuario/{usuario}")
+    @ResponseBody
+    public String servicoConsultaLoginUsuario(@PathVariable("usuario") String usuario){
+        ObjectMapper mapper = new ObjectMapper();
+        boolean usuarioExiste = false;
+        String jsonValue = null;
+        
+        try {            
+            usuarioExiste = daoUsuario.getUsuarioLogin(usuario);
+            jsonValue = mapper.writeValueAsString(usuarioExiste);
+        } catch (SQLException | JsonProcessingException e) {
+            msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
+        } catch (Exception e){
+            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
+        }
+        return jsonValue;
     }
 }

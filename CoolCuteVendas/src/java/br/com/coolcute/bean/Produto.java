@@ -7,6 +7,7 @@ package br.com.coolcute.bean;
 
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
@@ -21,6 +22,7 @@ public class Produto {
     private String nome;    
     @NotNull(message="Por favor, um número válido")
     private int estoqueMinimo;
+    @NumberFormat(style=NumberFormat.Style.CURRENCY)
     private float preco;
     private int quantidade;
     

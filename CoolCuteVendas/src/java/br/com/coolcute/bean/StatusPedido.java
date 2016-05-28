@@ -9,6 +9,15 @@ public class StatusPedido {
     @NotNull(message="Por favor, insira uma descrição válido")
     @NotEmpty(message="Por favor, insira uma descrição válido")
     private String descricao;
+    
+    public StatusPedido(){
+    
+    }
+    
+    public StatusPedido(int codigo, String descricao){
+        this.codigo = codigo;
+        this.descricao = descricao;    
+    }
 
     /**
      * @return the codigo

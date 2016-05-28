@@ -9,7 +9,16 @@ public class TipoAvaliacao {
     @NotNull(message="Por favor, insira uma descrição válido")
     @NotEmpty(message="Por favor, insira uma descrição válido")
     private String descricao;
-
+    
+    public TipoAvaliacao(){
+    
+    }
+    
+    public TipoAvaliacao(int codigo, String descricao){
+        this.codigo = codigo;
+        this.descricao = descricao;
+    }
+    
     /**
      * @return the codigo
      */

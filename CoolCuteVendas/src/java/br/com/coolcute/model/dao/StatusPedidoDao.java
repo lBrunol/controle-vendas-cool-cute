@@ -1,7 +1,6 @@
 package br.com.coolcute.model.dao;
 
 import br.com.coolcute.bean.StatusPedido;
-import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,105 +11,104 @@ import java.sql.CallableStatement;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class StatusPedidoDao {
+public class StatusPedidoDao {    
     
-    private String query;
-    private PreparedStatement stmt;
+    private CallableStatement cs;
     private Connection c;
     
-    public void adiciona(StatusPedido statusPedido) throws SQLException{
-        query = "INSERT INTO statusPedido( stpDescricao ) VALUES (?)";
-        ConexaoBanco conn = new ConexaoBanco();
-        
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
+    public void adicionarStatusPedido(StatusPedido statusPedido) throws SQLException{
 
-        stmt.setString(1, statusPedido.getDescricao());
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-
-    public void altera(StatusPedido statusPedido) throws SQLException{
-        query = "UPDATE statusPedido SET stpDescricao = ? WHERE stpCodigo = ?";
-        ConexaoBanco conn = new ConexaoBanco();
-
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
-
-        stmt.setString(1, statusPedido.getDescricao());
-        stmt.setInt(2, statusPedido.getCodigo());
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-    
-    public void exclui(int id) throws SQLException{
-        query = "DELETE FROM statusPedido WHERE stpCodigo = ?";
-        ConexaoBanco conn = new ConexaoBanco();
-
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
-
-        stmt.setInt(1, id);
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-    
-    public List<StatusPedido> getStatusPedido() throws SQLException {
-        
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM statusPedido");
-        ResultSet rs = stmt.executeQuery();
-        List<StatusPedido> lstStatusPedido = new ArrayList<>();
-        
-        while (rs.next()) {
-            StatusPedido stp = new StatusPedido();
-            
-            stp.setCodigo(rs.getInt(1));
-            stp.setDescricao(rs.getString(2));
-            
-            lstStatusPedido.add(stp);
-        }
-        
-        rs.close();
-        stmt.close();
+        cs = c.prepareCall("{CALL STATUSPEDIDO_INSERT (?)}");
+
+        cs.setString(1, statusPedido.getDescricao());
+
+        cs.execute();
+        cs.close();
+
         c.close();
-        
-        return lstStatusPedido;
     }
-    
-    public List<StatusPedido> filterStatusPedido(StatusPedido statusPedido) throws SQLException{
+
+    public void alterarStatusPedido(StatusPedido statusPedido) throws SQLException{
         
         ConexaoBanco conn = new ConexaoBanco();
         c = conn.conectar();
         
-        CallableStatement cs = c.prepareCall("{CALL STATUSANUNCIO_SELECT (?,?)}");
+        cs = c.prepareCall("{CALL STATUSPEDIDO_UPDATE (?,?)}");
+        
+        cs.setInt(1, statusPedido.getCodigo());
+        cs.setString(2, statusPedido.getDescricao());
+
+        cs.execute();
+        cs.close();
+
+        c.close();
+    }
+    
+    public void excluirStatusPedido(int id) throws SQLException{
+
+        ConexaoBanco conn = new ConexaoBanco();        
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL STATUSPEDIDO_DELETE (?)}");
+
+        cs.setInt(1, id);
+
+        cs.execute();
+        cs.close();
+
+        c.close();
+    }
+    
+    public StatusPedido getStatusPedidoItem(int id) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
+        StatusPedido itemStatusPedido = new StatusPedido();
+        
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL STATUSPEDIDO_SELECT (?,?)}");
+            
+        cs.setInt(1, id);
+        cs.setString(2, null);
+
+        ResultSet rs = cs.executeQuery();
+        
+        if (rs.next()) {            
+            itemStatusPedido.setCodigo(rs.getInt(1));
+            itemStatusPedido.setDescricao(rs.getString(2));           
+        }
+        
+        rs.close();
+        cs.close();
+        c.close();
+        
+        return itemStatusPedido;        
+    }
+    
+    public List<StatusPedido> getStatusPedido(StatusPedido statusPedido) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL STATUSPEDIDO_SELECT (?,?)}");
             
         cs.setInt(1, statusPedido.getCodigo());
         cs.setString(2, statusPedido.getDescricao());
-        cs.execute();
 
         ResultSet rs = cs.executeQuery();
         
         List<StatusPedido> lstStatusPedido = new ArrayList<>();
         
         while (rs.next()) {
-            StatusPedido stp = new StatusPedido();
+            StatusPedido sta = new StatusPedido();
             
-            stp.setCodigo(rs.getInt(1));
-            stp.setDescricao(rs.getString(2));
+            sta.setCodigo(rs.getInt(1));
+            sta.setDescricao(rs.getString(2));
             
-            lstStatusPedido.add(stp);
+            lstStatusPedido.add(sta);
         }
         
         rs.close();
@@ -119,29 +117,5 @@ public class StatusPedidoDao {
         
         return lstStatusPedido;        
     }
-    
-    public StatusPedido getStatusPedidoItem(Long id) throws SQLException{        
-        
-        ConexaoBanco cnn = new ConexaoBanco();
-        StatusPedido itemStatusPedido = new StatusPedido();
-        
-        c = cnn.conectar();
-        
-        stmt = c.prepareStatement("SELECT * FROM statusPedido WHERE stpCodigo = ?" );
-        
-        stmt.setLong(1, id);
-        
-        ResultSet rs = stmt.executeQuery();
-        
-        while(rs.next()){
-            itemStatusPedido.setCodigo(rs.getInt(1));
-            itemStatusPedido.setDescricao(rs.getString(2));       
-        }
-        
-        rs.close();
-        stmt.close();
-        c.close();
-        
-        return itemStatusPedido;        
-    }
+
 }

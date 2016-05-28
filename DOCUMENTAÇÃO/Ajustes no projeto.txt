@@ -18,11 +18,11 @@ Sistema
 	- Pedido
 	- Anúncio
 	- Entrada
-	- Status Pedido
-	- Tipo Avaliações
-	- Usuários
-	- Tipo Movimentação
-	- Produtos
+	- Status Pedido - OK
+	- Tipo Avaliações - OK
+	- Usuários - OK
+	- Tipo Movimentação - OK
+	- Produtos - OK
 	- Movimentação
 	- Home
 - Estilização dos relatórios

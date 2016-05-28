@@ -1,3 +1,37 @@
+-- PRODUTO
+DROP PROCEDURE IF EXISTS PRODUTO_SELECT
+DELIMITER &&
+CREATE PROCEDURE PRODUTO_SELECT(
+        IN codigo INT(11),
+        IN nome VARCHAR(150),
+        IN preco DECIMAL(8,2),
+        IN quantidade INT
+)
+BEGIN
+    SELECT * FROM   PRODUTO 
+    WHERE proCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN proCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END
+	AND proNome LIKE
+		CASE	
+			WHEN nome = '' OR nome IS NULL THEN proNome
+			WHEN nome <> '' THEN CONCAT('%', nome, '%')
+		END
+    AND proPreco LIKE
+		CASE	
+			WHEN preco = 0 OR preco IS NULL THEN proPreco
+			WHEN preco > 0 THEN preco
+		END
+	AND proQuantidade LIKE
+		CASE	
+			WHEN quantidade = 0 OR quantidade IS NULL THEN proQuantidade
+			WHEN quantidade > 0 THEN quantidade
+		END;   
+END
+&&
+
 -- CLIENTES
 DROP PROCEDURE IF EXISTS CLIENTE_SELECT
 DELIMITER &&
@@ -26,6 +60,28 @@ BEGIN
 END
 &&
 
+-- USUÁRIOS
+DROP PROCEDURE IF EXISTS USUARIO_SELECT
+DELIMITER &&
+CREATE PROCEDURE USUARIO_SELECT(
+        IN codigo INT(11),
+        IN login VARCHAR(150)
+)
+BEGIN
+    SELECT * FROM USUARIO 
+    WHERE usrCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN usrCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END
+	AND usrLogin LIKE
+		CASE	
+			WHEN login = '' OR login IS NULL THEN usrLogin
+			WHEN login <> '' THEN CONCAT('%', login, '%')
+		END;
+END
+&&
+
 -- TIPOS DE ANÚNCIO
 DROP PROCEDURE IF EXISTS TIPOANUNCIO_SELECT
 DELIMITER &&
@@ -48,6 +104,28 @@ BEGIN
 END
 &&
 
+-- TIPOS DE ANÚNCIO
+DROP PROCEDURE IF EXISTS TIPOMOVIMENTACAO_SELECT
+DELIMITER &&
+CREATE PROCEDURE TIPOMOVIMENTACAO_SELECT(
+        IN codigo INT(11),
+        IN descricao VARCHAR(150)
+)
+BEGIN
+    SELECT * FROM TIPOMOVIMENTACAO 
+    WHERE timCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN timCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END
+	AND timDescricao LIKE
+		CASE	
+			WHEN descricao = '' OR descricao IS NULL THEN timDescricao
+			WHEN descricao <> '' THEN CONCAT('%', descricao, '%')
+		END;    
+END
+&&
+
 -- STATUS DO ANÚNCIO
 DELIMITER &&
 CREATE PROCEDURE STATUSANUNCIO_SELECT(
@@ -64,6 +142,27 @@ BEGIN
 	AND staDescricao LIKE
 		CASE	
 			WHEN descricao = '' OR descricao IS NULL THEN staDescricao
+			WHEN descricao <> '' THEN CONCAT('%', descricao, '%')
+		END;    
+END
+&&
+
+-- STATUS DO PEDIDO
+DELIMITER &&
+CREATE PROCEDURE STATUSPEDIDO_SELECT(
+        IN codigo INT(11),
+        IN descricao VARCHAR(150)
+)
+BEGIN
+    SELECT * FROM statuspedido 
+    WHERE stpCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN stpCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END
+	AND stpDescricao LIKE
+		CASE	
+			WHEN descricao = '' OR descricao IS NULL THEN stpDescricao
 			WHEN descricao <> '' THEN CONCAT('%', descricao, '%')
 		END;    
 END

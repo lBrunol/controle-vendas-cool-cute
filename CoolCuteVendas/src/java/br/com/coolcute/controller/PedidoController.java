@@ -2,6 +2,8 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.ItensPedido;
 import br.com.coolcute.bean.Pedido;
+import br.com.coolcute.bean.StatusPedido;
+import br.com.coolcute.bean.TipoAvaliacao;
 import br.com.coolcute.model.dao.PedidoDao;
 import br.com.coolcute.model.dao.StatusPedidoDao;
 import br.com.coolcute.model.dao.TipoAvaliacaoDao;
@@ -39,8 +41,8 @@ public class PedidoController {
         ModelAndView modelAndView = new ModelAndView("pedido/criar/");
         
         try {
-            modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido());
-            modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao());
+            modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido(0,null)));
+            modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao(0, null)));
             modelAndView.addObject("proximoId", ObterId.obterId("pedido"));
         } catch (SQLException e) {
             retorno = false;

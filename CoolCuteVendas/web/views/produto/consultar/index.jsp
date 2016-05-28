@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Consulta de Tipo do Anúncio - Cool & Cute - Vendas</title>
+    <title>Consulta de Produto - Cool & Cute - Vendas</title>
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
 </head>
@@ -18,13 +18,13 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Deseja realmente excluir o Tipo do Anúncio?</h2>                            
+                        <h2>Deseja realmente excluir o Produto?</h2>                            
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <p class="modal-id"><strong>Id: </strong><span></span></p>                        
                         <p class="modal-descricao"><strong>Descrição: </strong><span></span></p>
-                        <form action="/excluirTipoAnuncio" method="POST">
+                        <form action="/excluirProduto" method="POST">
                             <input type="hidden" name="codigo" id="hdnCodigo" value="" />
                             <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</button>
                             <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
@@ -40,7 +40,7 @@
         <!--BreadCrumbs-->
         <ol class="breadcrumb">
             <li><a href="/">Início</a></li>
-            <li><a href="javascript:;">Tipo do Anúncio</a></li>
+            <li><a href="javascript:;">Produto</a></li>
             <li class="active">Consultar</li>
         </ol>
         <c:if test="${msg != null }">
@@ -49,22 +49,32 @@
                 <i class="fa fa-fw fa-times"></i> ${msg}
             </div>
         </c:if> 
-        <h2>Consultar Tipo do Anúncio</h2>
+        <h2>Consultar Produto</h2>
         <hr />
         <div class="row">
             <div class="col-md-12 text-right">
-                <a role="button" href="/tipo-anuncio/criar/" class="btn btn-mais">Adicionar Tipo do Anúncio +</a>
+                <a role="button" href="/produto/criar/" class="btn btn-mais">Adicionar Produto +</a>
             </div>
         </div>
-        <form method="GET" action="/filtrarTipoAnuncio" id="form-consultar-tipoAnuncios">
+        <form method="GET" action="/filtrarProduto" id="form-consultar-produtos">
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-8 col-sm-12 form-group">
-                    <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" placeholder="Descrição" name="descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <label for="nome">Nome</label>
+                    <input type="text" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon2" />
+                </div> 
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-12 form-group">
+                    <label for="preco">Preço</label>
+                    <input type="text" class="form-control" placeholder="Preço" name="preco" aria-describedby="basic-addon2" />
+                </div>
+                <div class="col-md-8 col-sm-12 form-group">
+                    <label for="quantidade">Quantidade</label>
+                    <input type="text" class="form-control" placeholder="Quantidade" name="quantidade" aria-describedby="basic-addon2" />
                 </div> 
             </div>
             <div class="row">
@@ -80,25 +90,29 @@
                                 <tr>
                                     <th>Código</th>
                                     <th>Descrição</th>
-                                    <th>Percentual</th>
+                                    <th>Preço</th>
+                                    <th>Estoque Mínimo</th>
+                                    <th>Quantidade</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:if test="${tipoAnuncio != null}">
-                                    <c:forEach items="${tipoAnuncio}" var="tipoAnuncio">
+                                <c:if test="${produto != null}">
+                                    <c:forEach items="${produto}" var="produto">
                                         <tr>
-                                            <td data-id="${tipoAnuncio.codigo}">${tipoAnuncio.codigo}</td>
-                                            <td data-descricao="${tipoAnuncio.descricao}">${tipoAnuncio.descricao}</td>
-                                            <td>${tipoAnuncio.percentual}</td>                                            
+                                            <td data-id="${produto.codigo}">${produto.codigo}</td>
+                                            <td data-descricao="${produto.nome}">${produto.nome}</td>
+                                            <td>${produto.preco}</td>
+                                            <td>${produto.estoqueMinimo}</td>
+                                            <td>${produto.quantidade}</td>
                                             <td>
-                                                <a href="/consultarTipoAnuncioItem/${tipoAnuncio.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
+                                                <a href="/consultarProdutoItem/${produto.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
                                                 <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </c:if>
-                                <c:if test="${tipoAnuncio == null}">
+                                <c:if test="${produto == null}">
                                     <tr class="no-paginate">
                                         <td colspan="3">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
                                     </tr>

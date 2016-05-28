@@ -1,7 +1,7 @@
 package br.com.coolcute.controller;
 
-import br.com.coolcute.bean.TipoAnuncio;
-import br.com.coolcute.model.dao.TipoAnuncioDao;
+import br.com.coolcute.bean.TipoMovimentacao;
+import br.com.coolcute.model.dao.TipoMovimentacaoDao;
 import java.sql.SQLException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,35 +13,35 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class TipoAnuncioController {
+public class TipoMovimentacaoController {
     
     @Autowired
-    private TipoAnuncioDao daoTipoAnuncio;
+    private TipoMovimentacaoDao daoTipoMovimentacao;
     private boolean retorno;
     private String msg;
     
-    @RequestMapping("tipo-anuncio/criar/")
+    @RequestMapping("tipo-movimentacao/criar/")
     public String form() {
-        return "tipo-anuncio/criar/";
+        return "tipo-movimentacao/criar/";
     }
     
-    @RequestMapping("tipo-anuncio/consultar/")
+    @RequestMapping("tipo-movimentacao/consultar/")
     public String consulta(){        
-        return "tipo-anuncio/consultar/";
+        return "tipo-movimentacao/consultar/";
     }
     
-    @RequestMapping("adicionarAlterarTipoAnuncio")
-    public ModelAndView adicionarAlterarTipoAnuncio (@Valid TipoAnuncio tipoAnuncio, BindingResult result){
-        if(tipoAnuncio.getCodigo() != 0){        
-            return alterarTipoAnuncio(tipoAnuncio, result);
+    @RequestMapping("adicionarAlterarTipoMovimentacao")
+    public ModelAndView adicionarAlterarTipoMovimentacao (@Valid TipoMovimentacao tipoMovimentacao, BindingResult result){
+        if(tipoMovimentacao.getCodigo() != 0){        
+            return alterarTipoMovimentacao(tipoMovimentacao, result);
         } else {
-            return adicionarTipoAnuncio(tipoAnuncio, result);
+            return adicionarTipoMovimentacao(tipoMovimentacao, result);
         }        
     }	
     
-    @RequestMapping("adicionarTipoAnuncio")
-    public ModelAndView adicionarTipoAnuncio(@Valid TipoAnuncio tipoAnuncio, BindingResult result){
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/");
+    @RequestMapping("adicionarTipoMovimentacao")
+    public ModelAndView adicionarTipoMovimentacao(@Valid TipoMovimentacao tipoMovimentacao, BindingResult result){
+        ModelAndView modelAndView = new ModelAndView("tipo-movimentacao/criar/");
         
         if(result.hasErrors()){
             retorno = false;
@@ -50,7 +50,7 @@ public class TipoAnuncioController {
         }
         
         try {
-            daoTipoAnuncio.adicionarTipoAnuncio(tipoAnuncio);
+            daoTipoMovimentacao.adicionarTipoMovimentacao(tipoMovimentacao);
             retorno = true;
             msg = "Cadastrado com sucesso";
         } catch (SQLException e) {
@@ -66,10 +66,10 @@ public class TipoAnuncioController {
         return modelAndView;		
     }
     
-    @RequestMapping("alterarTipoAnuncio")
-    public ModelAndView alterarTipoAnuncio(@Valid TipoAnuncio tipoAnuncio, BindingResult result) {
+    @RequestMapping("alterarTipoMovimentacao")
+    public ModelAndView alterarTipoMovimentacao(@Valid TipoMovimentacao tipoMovimentacao, BindingResult result) {
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/");
+        ModelAndView modelAndView = new ModelAndView("tipo-movimentacao/criar/");
         
         if(result.hasErrors()){
             retorno = false;
@@ -78,7 +78,7 @@ public class TipoAnuncioController {
         }
         
         try {
-            daoTipoAnuncio.alterarTipoAnuncio(tipoAnuncio);
+            daoTipoMovimentacao.alterarTipoMovimentacao(tipoMovimentacao);
             retorno = true;
             msg = "Registro alterado com sucesso";
         } catch (SQLException e) {
@@ -94,27 +94,27 @@ public class TipoAnuncioController {
         return modelAndView;
     }
     
-    @RequestMapping("excluirTipoAnuncio") 
-    public ModelAndView excluirTipoAnuncio(TipoAnuncio tipoAnuncio, BindingResult result) {
+    @RequestMapping("excluirTipoMovimentacao") 
+    public ModelAndView excluirTipoMovimentacao(TipoMovimentacao tipoMovimentacao, BindingResult result) {
 
         try {
-           daoTipoAnuncio.excluirTipoAnuncio(tipoAnuncio.getCodigo()); 
+           daoTipoMovimentacao.excluirTipoMovimentacao(tipoMovimentacao.getCodigo()); 
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         
-        return filtrarTipoAnuncio(new TipoAnuncio(), result);
+        return filtrarTipoMovimentacao(new TipoMovimentacao(), result);
     }
     
-    @RequestMapping("filtrarTipoAnuncio")    
-    public ModelAndView filtrarTipoAnuncio(@ModelAttribute("tipoAnuncio") TipoAnuncio tipoAnuncio, BindingResult result){
+    @RequestMapping("filtrarTipoMovimentacao")    
+    public ModelAndView filtrarTipoMovimentacao(@ModelAttribute("tipoMovimentacao") TipoMovimentacao tipoMovimentacao, BindingResult result){
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/consultar/");
+        ModelAndView modelAndView = new ModelAndView("tipo-movimentacao/consultar/");
         
         try {            
-            modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncio(tipoAnuncio));
+            modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacao(tipoMovimentacao));
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -124,13 +124,13 @@ public class TipoAnuncioController {
         return modelAndView;
     }
     
-    @RequestMapping("consultarTipoAnuncioItem/{id}")    
-    public ModelAndView consultarTipoAnuncioItem(@PathVariable("id") int id){
+    @RequestMapping("consultarTipoMovimentacaoItem/{id}")    
+    public ModelAndView consultarTipoMovimentacaoItem(@PathVariable("id") int id){
         
-        ModelAndView modelAndView = new ModelAndView("tipo-anuncio/criar/");
+        ModelAndView modelAndView = new ModelAndView("tipo-movimentacao/criar/");
         
         try {
-            modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncioItem(id));
+            modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacaoItem(id));
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);

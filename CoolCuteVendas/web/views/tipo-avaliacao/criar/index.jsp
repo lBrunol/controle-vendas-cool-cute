@@ -35,7 +35,7 @@
         </c:if>
         <h2>Cadastro de Tipo de Avaliação</h2>
         <hr>
-        <form method="post" action="/adicionarAlterarStatusAnuncio" id="formStatusAnuncio">
+        <form method="post" action="/adicionarAlterarTipoAvaliacao" id="formTipoAvaliacao">
             <div class="row">
                 <div class="hidden">
                     <c:choose>
@@ -69,7 +69,7 @@
     <%@include file="/includes/rodape.jsp" %>
     <script type="text/javascript">
         /* Validação dos campos do formulário */
-        $("#formStatusAnuncio").validate({
+        $("#formTipoAvaliacao").validate({
             errorPlacement: function(error, element) {
             $( element )
                 .closest( "form" )
