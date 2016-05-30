@@ -26,6 +26,17 @@ public class Produto {
     private float preco;
     private int quantidade;
     
+    public Produto(){
+    
+    }
+
+    public Produto(int codigo, String nome, int estoqueMinimo, float preco, int quantidade ){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.estoqueMinimo = estoqueMinimo;
+        this.preco = preco;
+        this.quantidade = quantidade;       
+    }
 
     /**
      * @return the codigo

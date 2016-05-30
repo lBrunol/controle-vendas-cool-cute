@@ -2,7 +2,10 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Produto;
 import br.com.coolcute.model.dao.ProdutoDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -138,5 +142,24 @@ public class ProdutoController {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         return modelAndView;
+    }
+    
+    @RequestMapping("servicoConsultarProduto")
+    @ResponseBody
+    public String servicoConsultarProduto() {
+        
+        ObjectMapper mapper = new ObjectMapper();
+        List<Produto> lstPro = null;
+        String jsonValue = null;
+        
+        try {            
+            lstPro = daoProduto.getProduto(new Produto());
+            jsonValue = mapper.writeValueAsString(lstPro);
+        } catch (SQLException | JsonProcessingException e) {
+            msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
+        } catch (Exception e){
+            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
+        }
+        return jsonValue;
     }
 }

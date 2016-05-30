@@ -18,11 +18,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import br.com.coolcute.util.ConexaoBanco;
-import br.com.coolcute.util.StringUtil;
 import java.sql.CallableStatement;
-import java.sql.Date;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 @Repository

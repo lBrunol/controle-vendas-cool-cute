@@ -15,6 +15,17 @@ public class TipoAnuncio {
     private String descricao;
     private float percentual;
 
+    
+    public TipoAnuncio(){
+    
+    }
+    
+    public TipoAnuncio (int codigo, String descricao, float percentual){
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.percentual = percentual;
+    }
+    
     /**
      * @return the codigo
      */

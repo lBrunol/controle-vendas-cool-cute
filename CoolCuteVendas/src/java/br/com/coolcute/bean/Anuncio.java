@@ -5,7 +5,9 @@
  */
 package br.com.coolcute.bean;
 
-import java.util.Calendar;
+import java.util.List;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
@@ -17,8 +19,31 @@ public class Anuncio {
     private StatusAnuncio statusAnuncio;
     private TipoAnuncio tipoAnuncio;
     private String descricao;
+    @NumberFormat(style=NumberFormat.Style.CURRENCY)
     private float preco;
-    private Calendar dataCriacao;
+    private DateTime dataCriacao;
+    private List<ProdutoAnuncio> produtoAnuncio;
+    
+    public Anuncio(){
+    
+    }
+    
+    public Anuncio(int codigo, StatusAnuncio statusAnuncio, TipoAnuncio tipoAnuncio, String descricao, float preco ){
+        this.codigo = codigo;
+        this.statusAnuncio = statusAnuncio;
+        this.tipoAnuncio = tipoAnuncio;
+        this.descricao = descricao;
+        this.preco = preco;
+    }
+    
+    public Anuncio(int codigo, StatusAnuncio statusAnuncio, TipoAnuncio tipoAnuncio, String descricao, float preco, DateTime dataCriacao ){
+        this.codigo = codigo;
+        this.statusAnuncio = statusAnuncio;
+        this.tipoAnuncio = tipoAnuncio;
+        this.descricao = descricao;
+        this.preco = preco;
+        this.dataCriacao = dataCriacao;
+    }
 
     /**
      * @return the codigo
@@ -93,14 +118,28 @@ public class Anuncio {
     /**
      * @return the dataCriacao
      */
-    public Calendar getDataCriacao() {
+    public DateTime getDataCriacao() {
         return dataCriacao;
     }
 
     /**
      * @param dataCriacao the dataCriacao to set
      */
-    public void setDataCriacao(Calendar dataCriacao) {
+    public void setDataCriacao(DateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
+    }
+
+    /**
+     * @return the produtoAnuncio
+     */
+    public List<ProdutoAnuncio> getProdutoAnuncio() {
+        return produtoAnuncio;
+    }
+
+    /**
+     * @param produtoAnuncio the produtoAnuncio to set
+     */
+    public void setProdutoAnuncio(List<ProdutoAnuncio> produtoAnuncio) {
+        this.produtoAnuncio = produtoAnuncio;
     }
 }

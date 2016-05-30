@@ -270,3 +270,66 @@ BEGIN
 		END;
 END
 &&
+
+-- ANÚNCIO
+DELIMITER &&
+CREATE PROCEDURE ANUNCIOPRODUTO_SELECT(
+    IN codigo INT(11)
+)
+BEGIN
+	SELECT pro.proCodigo, pro.proNome, pro.proPreco, anu.anuPreco, ROUND((tip.tiaPercentual *  anu.anuPreco),2) as taxa 
+	FROM tipoanuncio as tip 
+	INNER JOIN (produto AS pro INNER JOIN (anuncio as anu INNER JOIN produtoAnuncio as prodAnu ON prodAnu.anuCodigo = anu.anuCodigo) ON pro.proCodigo = prodAnu.proCodigo) ON tip.tiaCodigo = anu.tiaCodigo 
+	WHERE anu.anuCodigo = codigo 
+	ORDER BY anu.anuDescricao;
+END
+&&
+
+DELIMITER &&
+CREATE PROCEDURE ANUNCIO_SELECT (
+	IN codigo INT,
+	IN descricao VARCHAR(255),
+	IN preco DECIMAL(8,2),
+	IN dataCriacao DATE,
+	IN tipoAnuncio VARCHAR(255),
+	IN statusAnuncio VARCHAR(255)
+)
+BEGIN
+	SELECT a.anuCodigo, s.staDescricao, t.tiaDescricao, a.anuDescricao, a.anuPreco, a.anuDataCriacao, s.staCodigo, t.tiaCodigo
+	FROM anuncio AS a 
+	INNER JOIN statusAnuncio AS s ON a.staCodigo = s.staCodigo 
+	INNER JOIN tipoanuncio AS t on a.tiaCodigo = t.tiaCodigo
+	WHERE a.anuCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN a.anuCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END
+	AND a.anuDescricao LIKE
+		CASE	
+			WHEN descricao = '' OR descricao IS NULL THEN a.anuDescricao
+			WHEN descricao <> '' THEN CONCAT('%', descricao, '%')
+		END
+	AND a.anuPreco LIKE
+		CASE	
+			WHEN preco = 0 OR preco IS NULL THEN a.anuPreco
+			WHEN preco > 0 THEN preco
+		END
+	AND a.anuDataCriacao LIKE
+		CASE	
+			WHEN dataCriacao = '' OR dataCriacao IS NULL THEN a.anuDataCriacao
+			WHEN dataCriacao <> '' THEN CONCAT('%', dataCriacao, '%')
+		END    
+	AND s.staDescricao =
+		CASE	
+			WHEN statusAnuncio = '' OR statusAnuncio IS NULL THEN s.staDescricao
+			WHEN statusAnuncio <> '' THEN statusAnuncio
+		END
+	AND t.tiaDescricao =
+		CASE	
+			WHEN tipoAnuncio = '' OR tipoAnuncio IS NULL THEN t.tiaDescricao
+			WHEN tipoAnuncio <> '' THEN tipoAnuncio
+		END
+		
+	ORDER BY a.anuCodigo;
+END
+&&

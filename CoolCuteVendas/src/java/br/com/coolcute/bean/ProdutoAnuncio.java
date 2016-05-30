@@ -12,6 +12,7 @@ package br.com.coolcute.bean;
 public class ProdutoAnuncio {
     
     private int codigo;
+    private int codigoProduto;
     private String nome;
     private float precoCompra;
     private float precoVenda;
@@ -85,6 +86,20 @@ public class ProdutoAnuncio {
      */
     public void setTaxa(float taxa) {
         this.taxa = taxa;
+    }
+
+    /**
+     * @return the codigoProduto
+     */
+    public int getCodigoProduto() {
+        return codigoProduto;
+    }
+
+    /**
+     * @param codigoProduto the codigoProduto to set
+     */
+    public void setCodigoProduto(int codigoProduto) {
+        this.codigoProduto = codigoProduto;
     }
     
 }

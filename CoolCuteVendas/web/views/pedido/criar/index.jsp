@@ -216,6 +216,7 @@
                                     <th>Qtde.</th>
                                     <th>Taxa</th>
                                     <th>Total</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -407,7 +408,7 @@
                     tr = document.createElement('tr');                    
                     
                     td = document.createElement('td');
-                    tdText = document.createTextNode(data[i].codigo);
+                    tdText = document.createTextNode(data[i].codigoProduto);
                     td.appendChild(tdText);
                     tr.appendChild(td);
                     

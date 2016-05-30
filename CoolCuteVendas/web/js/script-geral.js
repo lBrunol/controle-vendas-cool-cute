@@ -171,3 +171,31 @@ function deRealParaFloat (num) {
 function atribuiTexto (el, val){
     $(el).val(val);
 }
+/*
+ * Função que seleciona um valor em um select de acordo com seu atributo "value"
+ * @param valor {object} valor que será comparado aos values dos selects
+ * @param element {object} elemento select que terá o valor selecionado
+ * @param isString {boolean} verifica se o valor é uma string para que o value da função possa ser convertido para string evitando erros na comparação dos valores
+ */
+function selectValorDropdownList(valor, element, isString){
+    var dd = document.getElementById(element);
+    var opts = dd.options.length;
+    var value = valor;
+    if(typeof isString != 'undefined' && isString != false && isString != '' )
+        value = value + '';
+    for (var i=0; i<opts; i++){
+        if (dd.options[i].value == value){
+            dd.options[i].selected = true;
+            break;
+        }
+    }
+}
+Array.prototype.removeValue = function(val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] === val) {
+            this.splice(i, 1);
+            i--;
+        }
+    }
+    return this;
+}
