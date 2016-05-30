@@ -18,7 +18,7 @@
                 <a role="button" href="/entrada/criar/" class="btn btn-mais">Adicionar Entrada +</a>
             </div>
         </div>
-        <form method="GET" action="/filtrarEntrada" id="form-consultar-entrada">
+        <form method="GET" action="/filtrarCliente" id="form-consultar-entrada">
             <div class="row">
                 <div class="col-md-2 col-sm-12 form-group">
                     <label for="codigo">Código</label>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
                     <label for="data-entrada">Data de Entrada</label>
-                    <input type="date" class="form-control" placeholder="data-entrada" name="datEntrada" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="date" class="form-control" placeholder="Data de entrada" name="dataEntrada" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div>  
             </div>
             <div class="row">

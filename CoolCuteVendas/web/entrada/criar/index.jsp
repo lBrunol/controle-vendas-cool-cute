@@ -59,7 +59,7 @@
         </div>
         <h2>Cadastro de Entradas</h2>
         <hr />
-        <form method="post" action="javascript:void(0);" id="formEntrada">
+        <form method="post" action="/adicionarAlterarEntrada" id="formEntrada">
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="txtLote">Lote</label>
