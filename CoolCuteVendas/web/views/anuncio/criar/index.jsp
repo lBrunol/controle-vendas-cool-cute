@@ -136,6 +136,9 @@
                                     </tr> 
                                 </c:if>
                                 <c:if test="${produtoAnuncio != null}" >
+                                    <tr class="no-itens" style="display: none;">
+                                        <td colspan="4" class="btn-produto-anuncio" data-toggle="modal" data-target="#modal-produto" style="color:#27a199; cursor:pointer;"><strong>Adicione produtos a este anúncio.</strong></td>
+                                    </tr>
                                     <c:forEach items="${produtoAnuncio}" var="produtoAnuncio">
                                         <tr>
                                             <td>${produtoAnuncio.getCodigoProduto()}</td>
@@ -174,12 +177,10 @@
             
             //Adiciona os produtos do anúncio no array 
             if($('#hdnCodigo').val() != "0"){
-                $('.tabela-itens-produto tbody tr td:first-child').each(function(){
+                $('.tabela-itens-produto tbody tr:not(.no-itens) td:first-child').each(function(){
                     lstCodigosProdutos.push(parseInt($(this).text()));
                 });
             }
-            
-            console.log(lstCodigosProdutos);
             
             $('.btn-produto-anuncio').on('click', function (){
                 $.ajax({
@@ -256,7 +257,6 @@
                 
                 //Remove o código atual do array de controle dos produtos
                 lstCodigosProdutos.removeValue(parseInt($(this).parent().siblings().eq(0).text()));
-                console.log(lstCodigosProdutos);
                 //Remove a linha atual
                 $(this).parent().parent().remove();                    
                 
@@ -287,7 +287,6 @@
 
                         $('.tabela-itens-produto').find('.no-itens').hide();
                     }
-                    console.log(lstCodigosProdutos);
                 }
             });
             

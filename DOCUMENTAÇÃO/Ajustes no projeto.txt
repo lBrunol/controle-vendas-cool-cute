@@ -16,7 +16,7 @@
 Sistema
 - Back-end das telas de 
 	- Pedido
-	- Anúncio
+	- Anúncio - OK
 	- Entrada
 	- Status Pedido - OK
 	- Tipo Avaliações - OK

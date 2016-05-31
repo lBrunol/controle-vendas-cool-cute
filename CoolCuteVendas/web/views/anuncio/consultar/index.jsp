@@ -7,7 +7,7 @@
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
     <style>
-        .table { width: 1600px; }
+        .table { width: 1200px; }
     </style>
 </head>
 <body>
@@ -51,7 +51,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
                 <i class="fa fa-fw fa-times"></i> ${msg}
             </div>
-        </c:if> 
+        </c:if>
         <h2>Consultar Anúncio</h2>
         <hr />
         <div class="row">
@@ -63,25 +63,26 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" value="${anuncioFiltro.codigo == 0 ? "" : anuncioFiltro.codigo}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
                     <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" placeholder="Descrição" name="descricao" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Descrição" name="descricao" value="${anuncioFiltro.descricao}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="preco">Preço</label>
-                    <input type="text" class="form-control" placeholder="Preço" name="preco" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Preço" name="preco" value="${anuncioFiltro.preco == 0 ? "" : anuncioFiltro.preco}" aria-describedby="basic-addon2" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 col-sm-12 form-group">
                     <label for="codigo">Data de criação</label>
-                    <input type="date" class="form-control" placeholder="Data de criação" name="dataCriacao" aria-describedby="basic-addon2" />
+                    <input type="date" class="form-control" placeholder="Data de criação" name="dataCriacao" value="${anuncioFiltro.dataCriacao}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
                     <label for="statusAnuncio.descricao">Status</label>
-                    <select class="form-control" name="statusAnuncio.descricao">
+                    <select class="form-control" name="statusAnuncio.descricao" id="statusAnuncio">
+                        <option></option>
                         <c:forEach items="${statusAnuncio}" var="statusAnuncio">
                             <option value="${statusAnuncio.getDescricao()}">${statusAnuncio.getDescricao()}</option>
                         </c:forEach>
@@ -89,7 +90,8 @@
                 </div>                
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="tipoAnuncio.descricao">Tipo</label>
-                    <select class="form-control" name="tipoAnuncio.descricao">
+                    <select class="form-control" name="tipoAnuncio.descricao" id="tipoAnuncio">
+                        <option></option>
                         <c:forEach items="${tipoAnuncio}" var="tipoAnuncio">
                             <option value="${tipoAnuncio.getDescricao()}">${tipoAnuncio.getDescricao()}</option>
                         </c:forEach>
@@ -175,6 +177,15 @@
             paginacao('.table-pagination', '.pagination', 10);
              
         });
+        
+        <c:if test="${(anuncioFiltro.statusAnuncio.descricao != null) && (anuncioFiltro.statusAnuncio.descricao != '')}">
+            selectValorDropdownList('${anuncioFiltro.statusAnuncio.descricao}', 'statusAnuncio', true);
+        </c:if>
+            
+        <c:if test="${(anuncioFiltro.tipoAnuncio.descricao != null) && (anuncioFiltro.tipoAnuncio.descricao != '')}">
+            selectValorDropdownList('${anuncioFiltro.tipoAnuncio.descricao}', 'tipoAnuncio', true);            
+        </c:if>
+            
     </script>            
 </body>
 </html>

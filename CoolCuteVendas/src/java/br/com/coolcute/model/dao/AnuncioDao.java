@@ -54,7 +54,7 @@ public class AnuncioDao {
         ConexaoBanco conn = new ConexaoBanco();
         c = conn.conectar();
         
-        cs = c.prepareCall("{CALL ANUNCIO_UPDATE (?,?,?,?,?,?,?)}");
+        cs = c.prepareCall("{CALL ANUNCIO_UPDATE (?,?,?,?,?,?)}");
         
         cs.setInt(1, anuncio.getCodigo());
         cs.setInt(2, anuncio.getStatusAnuncio().getCodigo());
@@ -62,6 +62,7 @@ public class AnuncioDao {
         cs.setString(4, anuncio.getDescricao());
         cs.setFloat(5 ,anuncio.getPreco());
         cs.setBoolean(6, true);
+        cs.execute();
         
         cs = c.prepareCall("{CALL ANUNCIOPRODUTO_INSERT (?,?)}");
         
@@ -71,8 +72,7 @@ public class AnuncioDao {
             
             cs.execute();
         }
-
-        cs.execute();
+        
         cs.close();
 
         c.close();
@@ -159,8 +159,15 @@ public class AnuncioDao {
         else
             cs.setDate(4, null);        
         
-        cs.setString(5, anuncio.getTipoAnuncio().getDescricao());
-        cs.setString(6, anuncio.getStatusAnuncio().getDescricao());
+        if(anuncio.getTipoAnuncio() != null)
+            cs.setString(5, anuncio.getTipoAnuncio().getDescricao());
+        else
+            cs.setString(5, null);
+        
+        if(anuncio.getStatusAnuncio() != null)
+            cs.setString(6, anuncio.getStatusAnuncio().getDescricao());
+        else
+            cs.setString(6, null);
         
         ResultSet rs = cs.executeQuery();
         

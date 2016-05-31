@@ -1,7 +1,6 @@
 package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Anuncio;
-import br.com.coolcute.bean.Produto;
 import br.com.coolcute.bean.ProdutoAnuncio;
 import br.com.coolcute.bean.StatusAnuncio;
 import br.com.coolcute.bean.TipoAnuncio;
@@ -17,8 +16,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -96,9 +93,11 @@ public class AnuncioController {
             retorno = false;
             modelAndView.addObject("retorno", retorno);
             return modelAndView;
-        }
+        }        
         
-        try {            
+        try {
+            anuncio.setCodigo(ObterId.obterId("anuncio"));
+            
             ObjectMapper mapper = new ObjectMapper();
             Collection<ProdutoAnuncio> lstItens;
             
@@ -119,6 +118,8 @@ public class AnuncioController {
                 modelAndView.addObject("statusAnuncio", daoStatusAnuncio.getStatusAnuncio(new StatusAnuncio()));
                 modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncio(new TipoAnuncio()));
                 modelAndView.addObject("proximoId", ObterId.obterId("anuncio"));
+                modelAndView.addObject("anuncio", daoAnuncio.getAnuncioItem(anuncio.getCodigo()));
+                modelAndView.addObject("produtoAnuncio", daoAnuncio.getAnuncioProduto(anuncio.getCodigo()));
             } catch (SQLException ex) {
                 retorno = false;
                 msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
@@ -152,10 +153,10 @@ public class AnuncioController {
             
             anuncio.setProdutoAnuncio((List<ProdutoAnuncio>) lstItens);
             
-            daoAnuncio.excluirProdutoAnuncio(anuncio.getCodigo());            
+            daoAnuncio.excluirProdutoAnuncio(anuncio.getCodigo());
             daoAnuncio.alterarAnuncio(anuncio);
             retorno = true;
-            msg = "Cadastrado com sucesso";
+            msg = "Alterado com sucesso";
         } catch (SQLException e) {
             retorno = false;
             msg = "Ocorreu um erro com o banco de dados ao alterar o registro. " + e.getMessage();
@@ -166,6 +167,8 @@ public class AnuncioController {
                 modelAndView.addObject("statusAnuncio", daoStatusAnuncio.getStatusAnuncio(new StatusAnuncio()));
                 modelAndView.addObject("tipoAnuncio", daoTipoAnuncio.getTipoAnuncio(new TipoAnuncio()));
                 modelAndView.addObject("proximoId", ObterId.obterId("anuncio"));
+                modelAndView.addObject("anuncio", daoAnuncio.getAnuncioItem(anuncio.getCodigo()));
+                modelAndView.addObject("produtoAnuncio", daoAnuncio.getAnuncioProduto(anuncio.getCodigo()));
             } catch (SQLException ex) {
                 retorno = false;
                 msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
@@ -184,7 +187,8 @@ public class AnuncioController {
     public ModelAndView excluirAnuncio(Anuncio anuncio, BindingResult result) {
 
         try {
-           daoAnuncio.excluirAnuncio(anuncio.getCodigo()); 
+            daoAnuncio.excluirProdutoAnuncio(anuncio.getCodigo());
+            daoAnuncio.excluirAnuncio(anuncio.getCodigo()); 
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
         } catch (Exception e){
@@ -198,9 +202,9 @@ public class AnuncioController {
     public ModelAndView filtrarAnuncio(@ModelAttribute("anuncio") Anuncio anuncio, BindingResult result){
         
         ModelAndView modelAndView = new ModelAndView("anuncio/consultar/");
-        
         try {            
             modelAndView.addObject("anuncio", daoAnuncio.getAnuncio(anuncio));
+            modelAndView.addObject("anuncioFiltro", anuncio);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
