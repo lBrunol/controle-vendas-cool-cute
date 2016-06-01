@@ -53,7 +53,7 @@
                 </div> 
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="email">Email</label>
-                    <input type="text" id="input-email"class="form-control" name="email" value="${cliente.getEmail()}" />
+                    <input type="text" id="input-email" class="form-control" name="email" value="${cliente.getEmail()}" />
                 </div>
             </div>
             <div class="row margin-std-bottom">
