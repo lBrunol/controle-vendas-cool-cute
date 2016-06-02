@@ -333,3 +333,44 @@ BEGIN
 	ORDER BY a.anuCodigo;
 END
 &&
+
+DELIMITER &&
+CREATE PROCEDURE OUTRASMOVIMENTACOES_SELECT (
+	IN codigo INT,
+	IN descricao VARCHAR(255),
+	IN valor DECIMAL(8,2),
+	IN data DATE,
+	IN tipoMovimentacao VARCHAR(255)
+)
+BEGIN
+	SELECT movCodigo, movDescricao, movValor, movData, outrasmovimentacoes.timCodigo, timDescricao
+	FROM outrasmovimentacoes 
+	INNER JOIN tipoMovimentacao 
+	ON outrasMovimentacoes.timCodigo = tipoMovimentacao.timCodigo
+	WHERE movCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN movCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END
+	AND movDescricao LIKE
+		CASE	
+			WHEN descricao = '' OR descricao IS NULL THEN movDescricao
+			WHEN descricao <> '' THEN CONCAT('%', descricao, '%')
+		END
+	AND movValor LIKE
+		CASE	
+			WHEN valor = 0 OR valor IS NULL THEN movValor
+			WHEN valor > 0 THEN valor
+		END
+	AND movData LIKE
+		CASE	
+			WHEN data = '' OR data IS NULL THEN movData
+			WHEN data <> '' THEN CONCAT('%', data, '%')
+		END
+	AND timDescricao =
+		CASE	
+			WHEN tipoMovimentacao = '' OR tipoMovimentacao IS NULL THEN timDescricao
+			WHEN tipoMovimentacao <> '' THEN tipoMovimentacao
+		END;
+END
+&&

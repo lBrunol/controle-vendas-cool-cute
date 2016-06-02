@@ -21,6 +21,16 @@ public class TipoMovimentacao {
     private String descricao;
     
     private boolean operacao;
+    
+    public TipoMovimentacao(){
+    
+    }
+    
+    public TipoMovimentacao(int codigo, String descricao, boolean operacao){
+        this.codigo = codigo;
+        this.descricao = descricao;
+        this.operacao = operacao;    
+    }
 
     /**
      * @return the codigo

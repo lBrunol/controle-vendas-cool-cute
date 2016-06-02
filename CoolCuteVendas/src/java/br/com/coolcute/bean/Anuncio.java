@@ -7,6 +7,7 @@ package br.com.coolcute.bean;
 
 import java.util.List;
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 /**
@@ -21,6 +22,7 @@ public class Anuncio {
     private String descricao;
     @NumberFormat(style=NumberFormat.Style.CURRENCY)
     private float preco;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private DateTime dataCriacao;
     private List<ProdutoAnuncio> produtoAnuncio;
     

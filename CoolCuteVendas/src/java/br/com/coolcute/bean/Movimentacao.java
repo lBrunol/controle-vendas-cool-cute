@@ -5,20 +5,36 @@
  */
 package br.com.coolcute.bean;
 
-import java.util.Calendar;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
  * @author Fabiana
  */
-public class OutrasMovimentacoes {
+public class Movimentacao {
     
     private int codigo;
     private TipoMovimentacao tipoMovimentacao;
     private String descricao;
+    @NumberFormat(style=NumberFormat.Style.CURRENCY)
     private float valor;
-    private Calendar data;
-
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private DateTime data;
+    
+    public Movimentacao(){
+    
+    }
+    
+    public Movimentacao(int codigo, TipoMovimentacao tipoMovimentacao, String descricao, float valor, DateTime data){
+        this.codigo = codigo;
+        this.tipoMovimentacao = tipoMovimentacao;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.data = data;
+    }
+    
     /**
      * @return the codigo
      */
@@ -78,14 +94,14 @@ public class OutrasMovimentacoes {
     /**
      * @return the data
      */
-    public Calendar getData() {
+    public DateTime getData() {
         return data;
     }
 
     /**
      * @param data the data to set
      */
-    public void setData(Calendar data) {
+    public void setData(DateTime data) {
         this.data = data;
     }
     

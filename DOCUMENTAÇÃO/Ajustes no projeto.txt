@@ -23,7 +23,7 @@ Sistema
 	- Usuários - OK
 	- Tipo Movimentação - OK
 	- Produtos - OK
-	- Movimentação
+	- Movimentação - OK
 	- Home
 - Estilização dos relatórios
 - Procedures de select
