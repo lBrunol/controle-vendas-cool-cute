@@ -150,5 +150,26 @@ public class UsuarioDao {
         
         return true;
     }
+    
+    public boolean autenticaUsuario (Usuario usuario) throws SQLException{
+        ConexaoBanco conn = new ConexaoBanco();
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL AUTENTICA_USUARIO (?,?)}");
+            
+        cs.setString(1, usuario.getLogin());
+        cs.setString(2, usuario.getSenha());
+        
+        ResultSet rs = cs.executeQuery();
+        
+        if(rs.next()){
+            if(rs.getInt(1) > 0){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
 
 }

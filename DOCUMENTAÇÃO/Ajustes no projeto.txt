@@ -27,7 +27,7 @@ Sistema
 	- Home
 - Estilização dos relatórios
 - Procedures de select
-- Lógica de sessão dos usuários
+- Lógica de sessão dos usuários - OK
 - Implantação das procedures nos DAOS
 - Ajustes visuais no menu
 - Ajustes visuais na home (Banner full hd, possibilidade de pausá-lo e boxes responsivos)

@@ -27,13 +27,13 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox"> 
             <div class="item active" id="animationBanner">
-              <img src="imagens/wp3.jpg" class="img-responsive" alt="" id="wp2"/>
+              <img src="/imagens/wp3.jpg" class="img-responsive" alt="" id="wp2"/>
               <div class="logoHome">
-                  <img src="imagens/logoHome.png" class="img-responsive">
+                  <img src="/imagens/logoHome.png" class="img-responsive">
               </div>
             </div>
             <div class="item">
-                <img src="imagens/wp1.jpg" class="img-responsive" alt="" />
+                <img src="/imagens/wp1.jpg" class="img-responsive" alt="" />
                 <div class="divContaineres">
                     <!-- div class container Vendas -->
                     <!-- __________________________________________________________________________________-->

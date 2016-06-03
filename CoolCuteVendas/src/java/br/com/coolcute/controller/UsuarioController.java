@@ -5,6 +5,7 @@ import br.com.coolcute.model.dao.UsuarioDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -159,5 +160,5 @@ public class UsuarioController {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         return jsonValue;
-    }
+    }    
 }
