@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
@@ -95,7 +96,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="preco">Preço</label>
-                    <input type="text" class="form-control" name="preco" value="${anuncio.getPreco()}" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
+                    <input type="text" class="form-control" name="preco" value="<fmt:formatNumber type="currency" value="${anuncio.getPreco()}" />" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
                 </div>
             </div>
             <div class="row">
@@ -145,7 +146,7 @@
                                         <tr>
                                             <td>${produtoAnuncio.getCodigoProduto()}</td>
                                             <td>${produtoAnuncio.getNome()}</td>
-                                            <td class="preco">${produtoAnuncio.getPrecoCompra()}</td>
+                                            <td class="preco"><fmt:formatNumber type="currency" value="${produtoAnuncio.getPrecoCompra()}" /></td>
                                             <td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
                                         </tr>
                                     </c:forEach>

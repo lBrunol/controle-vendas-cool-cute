@@ -231,9 +231,12 @@ public class PedidoDao {
             Pedido ped = new Pedido();
         
             ped.setCodigo(rs.getInt(1));
-            ped.setDataVenda(new DateTime(rs.getDate(7).getTime()));
-            ped.setDataPostagem(new DateTime(rs.getDate(9).getTime()));
-            ped.setDataEntrega(new DateTime(rs.getDate(10).getTime()));
+            if(rs.getDate(7) != null)
+                ped.setDataVenda(new DateTime(rs.getDate(7).getTime()));
+            if(rs.getDate(9) != null)
+                ped.setDataPostagem(new DateTime(rs.getDate(9).getTime()));
+            if(rs.getDate(10) != null)
+                ped.setDataEntrega(new DateTime(rs.getDate(10).getTime()));
             ped.setFrete(rs.getFloat(8));
             ped.setValorTotal(rs.getFloat(11));
             ped.setCodigoPostagem(rs.getString(12));

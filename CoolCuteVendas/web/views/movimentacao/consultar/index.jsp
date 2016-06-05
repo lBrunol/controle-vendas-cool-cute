@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -112,7 +113,7 @@
                                             <td data-id="${movimentacao.codigo}">${movimentacao.codigo}</td>
                                             <td data-descricao="${movimentacao.descricao}">${movimentacao.descricao}</td>
                                             <td>${movimentacao.valor}</td>
-                                            <td>${movimentacao.data}</td>
+                                            <td><joda:format pattern="dd/MM/yyyy" value="${movimentacao.data}" /></td>
                                             <td>${movimentacao.tipoMovimentacao.descricao}</td>
                                             <td>
                                                 <a href="/consultarMovimentacaoItem/${movimentacao.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>

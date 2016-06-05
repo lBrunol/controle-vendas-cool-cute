@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,7 +103,7 @@
                                         <tr>
                                             <td data-id="${produto.codigo}">${produto.codigo}</td>
                                             <td data-descricao="${produto.nome}">${produto.nome}</td>
-                                            <td>${produto.preco}</td>
+                                            <td><fmt:formatNumber type="currency" value="${produto.preco}" /></td>
                                             <td>${produto.estoqueMinimo}</td>
                                             <td>${produto.quantidade}</td>
                                             <td>

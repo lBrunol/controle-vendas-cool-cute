@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,7 +73,7 @@
                 </div>
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="preco">Preço</label>
-                    <input type="text" class="form-control" placeholder="Preço" name="preco" value="${anuncioFiltro.preco == 0 ? "" : anuncioFiltro.preco}" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Preço" name="preco" value="<fmt:formatNumber type="currency" value='${anuncioFiltro.preco == 0 ? "" : anuncioFiltro.preco}' />" aria-describedby="basic-addon2" />
                 </div>
             </div>
             <div class="row">
@@ -124,8 +126,8 @@
                                         <tr>
                                             <td data-id="${anuncio.codigo}">${anuncio.codigo}</td>
                                             <td data-descricao="${anuncio.descricao}">${anuncio.descricao}</td>
-                                            <td>${anuncio.preco}</td>
-                                            <td>${anuncio.dataCriacao}</td>
+                                            <td><fmt:formatNumber type="currency" value="${anuncio.preco}" /></td>
+                                            <td><joda:format pattern="dd/MM/yyyy" value="${anuncio.dataCriacao}" /></td>
                                             <td>${anuncio.statusAnuncio.descricao}</td>
                                             <td>${anuncio.tipoAnuncio.descricao}</td>
                                             <td>

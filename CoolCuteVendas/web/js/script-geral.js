@@ -51,9 +51,10 @@ function calculaValorTotal(quant, valor) {
     var valorTotal;
 
     valorTotal = valor * quant;
-
-    if (typeof valorTotal != 'undefined' && !isNaN(valorTotal)) {
-        return valorTotal;
+    console.log(valorTotal);
+    if (!isNaN(valorTotal)) {
+        console.log('teste');
+        return valorTotal; 
     } else {
         return 0;
     }
@@ -62,7 +63,7 @@ function calculaValorTotal(quant, valor) {
 function somaValoresTotais (el){
     var valorTotal = 0;
     $(el).find('.valor-total').each(function(){
-        valorTotal = valorTotal + moedaParaNumero(retiraReal($(this).text()));
+        valorTotal = valorTotal + deRealParaFloat($(this).text());
     });
     
     return numeroParaMoeda(valorTotal);
@@ -161,7 +162,7 @@ function moedaParaNumero(num) {
     return num;
 }
 
-function deRealParaFloat (num) {
+function deRealParaFloat(num) {
     return moedaParaNumero(retiraReal(num));    
 }
 /* Função que atribui texto a um elemento passado por parâmetro

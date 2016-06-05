@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
@@ -57,7 +58,7 @@
                 </div>
                 <div class="form-group col-md-3">
                     <label for="preco">Preço</label>
-                    <input type="text" class="form-control" name="preco" value="${produto.getPreco()}" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
+                    <input type="text" class="form-control" name="preco" value="<fmt:formatNumber type="currency" value="${produto.getPreco()}" />" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
                 </div>
             </div>
             <div class="row margin-std-bottom">

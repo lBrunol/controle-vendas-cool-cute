@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
 <!DOCTYPE html>
@@ -209,7 +210,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="valorFrete">Valor do Frete</label>
-                    <input type="text" class="form-control" name="frete" value="${pedido.getFrete()}" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
+                    <input type="text" class="form-control" name="frete" value="<fmt:formatNumber type="currency" value="${pedido.getFrete()}" />" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
                 </div>
             </div>
             <div class="row">
@@ -245,11 +246,11 @@
                                         <tr>
                                             <td>${itensPedido.getCodigoProduto()}</td>
                                             <td>${itensPedido.getNomeCliente()}</td>                                            
-                                            <td>${itensPedido.getValorCompra()}</td>
-                                            <td class="preco">${itensPedido.getValorVenda()}</td>                                            
+                                            <td><fmt:formatNumber value="${itensPedido.getValorCompra()}" type="currency" /></td>
+                                            <td class="preco"><fmt:formatNumber value="${itensPedido.getValorVenda()}" type="currency" /></td>
                                             <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" value="${itensPedido.getQuantidade()}"></td>
-                                            <td>${itensPedido.getTaxa()}</td>
-                                            <td>${itensPedido.getValorTotal()}</td>
+                                            <td><fmt:formatNumber value="${itensPedido.getTaxa()}" type="currency" /></td>
+                                            <td><fmt:formatNumber value="${itensPedido.getValorTotal()}" type="currency" /></td>
                                             <td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
                                         </tr>
                                     </c:forEach>
@@ -258,7 +259,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="4"><strong>Valor Total:</strong></td>
-                                    <td colspan="4" class="valor-total-pedido">${pedido.getValorTotal()}</td>
+                                    <td colspan="4" class="valor-total-pedido"><fmt:formatNumber value="${pedido.getValorTotal()}" type="currency" /></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -317,7 +318,7 @@
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-salvar margin-std-right margin-std-top" id="btnSalvar"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
                     <button type="button" disabled class="btn btn-warning margin-std-right margin-std-top" id="cancelaPedido"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
-                    <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>                    
+                    <button type="button" onclick="serializaItens()" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>                    
                 </div>
             </div>
             <input type="hidden" value="${proximoId}" name="itensPedido.codigoProduto" id="codigoProduto" />
@@ -567,7 +568,7 @@
             $('body').delegate('.input-qtde','blur', function () {
                 var index = $('.input-qtde').index(this);
                 var quantidade = $(this).val();
-                var valor = deVirgulaParaPonto(retiraReal($('.tabela-itens-pedido .preco').eq(index).text()));
+                var valor = deRealParaFloat($('.tabela-itens-pedido .preco').eq(index).text());
                 $('.tabela-itens-pedido .taxa').eq(index).text(numeroParaMoeda(taxa * quantidade));
                 var valorTotal = numeroParaMoeda(calculaValorTotal(quantidade, valor));
 
@@ -705,10 +706,12 @@
                     parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(4).find('input').val()),
                     deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(5).text())
                 );
+                console.log(deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(2).text()))
                 lstItens.push(item);
                 
             }
             $('#itens').val(JSON.stringify(lstItens));
+            console.log(JSON.stringify(lstItens));
         }
         
         /* Executa a serialização dos itens do pedido, armazena os ids das combos em um input type hidden e valida se os itens do pedido estão preenchidos */           
