@@ -34,7 +34,7 @@ public class Pedido {
     private float valorTotal;
     private String codigoPostagem;
     private String observacao;
-    private List<ItensPedido> itensEntrada;
+    private List<ItensPedido> itensPedido;
     
 
     /**
@@ -206,17 +206,17 @@ public class Pedido {
     }
 
     /**
-     * @return the itensEntrada
+     * @return the itensPedido
      */
-    public List<ItensPedido> getItensEntrada() {
-        return itensEntrada;
+    public List<ItensPedido> getItensPedido() {
+        return itensPedido;
     }
 
     /**
-     * @param itensEntrada the itensEntrada to set
+     * @param itensPedido the itensPedido to set
      */
-    public void setItensEntrada(List<ItensPedido> itensEntrada) {
-        this.itensEntrada = itensEntrada;
+    public void setItensPedido(List<ItensPedido> itensPedido) {
+        this.itensPedido = itensPedido;
     }
     
 }

@@ -17,6 +17,8 @@ public class ItensPedido {
     private float valorCompra;
     private int quantidade;
     private float taxa;
+    private String nomeCliente;
+    private float valorTotal;
     
     /**
      * @return the valorVenda
@@ -100,5 +102,33 @@ public class ItensPedido {
      */
     public void setCodigoPedido(int codigoPedido) {
         this.codigoPedido = codigoPedido;
+    }
+
+    /**
+     * @return the nomeCliente
+     */
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    /**
+     * @param nomeCliente the nomeCliente to set
+     */
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    /**
+     * @return the valorTotal
+     */
+    public float getValorTotal() {
+        return valorTotal;
+    }
+
+    /**
+     * @param valorTotal the valorTotal to set
+     */
+    public void setValorTotal(float valorTotal) {
+        this.valorTotal = valorTotal;
     }
 }

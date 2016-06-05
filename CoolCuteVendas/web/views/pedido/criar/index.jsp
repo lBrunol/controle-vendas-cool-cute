@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -167,12 +169,22 @@
         </div>
         <h2>Cadastrar Pedidos</h2>
         <hr />
-        <form method="post" action="/criarPedido" id="formAnuncio">            
+        <form method="post" action="/adicionarAlterarPedido" id="formAnuncio">            
             <div class="row">
+                <div class="hidden">
+                    <c:choose>
+                        <c:when test="${not empty pedido.codigo}">
+                          <input type="hidden" name="codigo" value="${pedido.codigo}" id="hdnCodigo" />
+                        </c:when>
+                        <c:otherwise>
+                          <input type="hidden" name="codigo" value="0" id="hdnCodigo" />
+                        </c:otherwise>
+                    </c:choose>
+                </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="anuncioNome">Anúncio</label>
                     <div class="input-group">
-                        <input type="text" id="input-anuncio" class="form-control" name="anuncioNome" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />                        
+                        <input type="text" id="input-anuncio" class="form-control" name="anuncioNome" data-id="${pedido.getAnuncio().getCodigo()}" value="${pedido.getAnuncio().getDescricao()}" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />                        
                         <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" id="btn-modal-anuncio" data-toggle="modal" data-target="#modal-anuncio">+</button>
@@ -182,7 +194,7 @@
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="clienteNome">Cliente</label>
                     <div class="input-group">
-                        <input type="text" id="input-cliente" class="form-control" name="clienteNome" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
+                        <input type="text" id="input-cliente" class="form-control" name="clienteNome" data-id="${pedido.getCliente().getCodigo()}" value="${pedido.getCliente().getNome()}" onkeypress="return(travaDigitacao(event))" onblur="return(validaTextoInvalido($(this)))" />
                         <div class="help-block with-errors"></div>
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-mais" id="btn-modal-cliente" data-toggle="modal" data-target="#modal-cliente">+</button>
@@ -193,17 +205,17 @@
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="dataVenda">Data da Venda</label>
-                    <input type="date" class="form-control" name="dataVenda" />
+                    <input type="date" class="form-control" name="dataVenda" value="<joda:format pattern="yyyy-MM-dd" value="${pedido.getDataVenda()}" />" />
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="valorFrete">Valor do Frete</label>
-                    <input type="text" class="form-control" name="frete" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
+                    <input type="text" class="form-control" name="frete" value="${pedido.getFrete()}" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="pull-right">
-                        <label class="padding-std-right">Itens do Pedido</label><button type="button" class="btn btn-mais btn-itens-pedido">+</button>
+                        <label class="padding-std-right">Itens do Pedido</label><button type="button" class="btn btn-mais btn-itens-pedido" id="btn-itens-pedido">+</button>
                     </div>
                     <div class="tabela-overflow">
                         <table class="table tabela-itens-pedido">
@@ -220,14 +232,33 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="no-itens">
-                                    <td colspan="6" class="btn-itens-pedido" style="color:#27a199; cursor:pointer;"><strong>Adicione itens ao pedido.</strong></td>
-                                </tr>
+                                <c:if test="${itensPedido == null}" >
+                                    <tr class="no-itens">
+                                        <td colspan="6" class="btn-itens-pedido" style="color:#27a199; cursor:pointer;"><strong>Adicione itens ao pedido.</strong></td>
+                                    </tr> 
+                                </c:if>
+                                <c:if test="${itensPedido != null}" >
+                                    <tr class="no-itens" style="display: none;">
+                                        <td colspan="6" class="btn-itens-pedido" style="color:#27a199; cursor:pointer;"><strong>Adicione itens ao pedido.</strong></td>
+                                    </tr>
+                                    <c:forEach items="${itensPedido}" var="itensPedido">
+                                        <tr>
+                                            <td>${itensPedido.getCodigoProduto()}</td>
+                                            <td>${itensPedido.getNomeCliente()}</td>                                            
+                                            <td>${itensPedido.getValorCompra()}</td>
+                                            <td class="preco">${itensPedido.getValorVenda()}</td>                                            
+                                            <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" value="${itensPedido.getQuantidade()}"></td>
+                                            <td>${itensPedido.getTaxa()}</td>
+                                            <td>${itensPedido.getValorTotal()}</td>
+                                            <td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
+                                        </tr>
+                                    </c:forEach>
+                                </c:if>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4"><strong>Valor Total: </strong></td>
-                                    <td colspan="4" class="valor-total-pedido"></td>
+                                    <td colspan="4"><strong>Valor Total:</strong></td>
+                                    <td colspan="4" class="valor-total-pedido">${pedido.getValorTotal()}</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -237,21 +268,21 @@
             <div class="row">
                 <div class="form-group col-md-4 col-xs-12">
                     <label for="dataPostagem">Data da Postagem</label>
-                    <input type="date" class="form-control" name="dataPostagem" />
+                    <input type="date" class="form-control" name="dataPostagem" value="<joda:format pattern="yyyy-MM-dd" value="${pedido.getDataPostagem()}" />" />
                 </div>
                 <div class="form-group col-md-4 col-xs-12">
                     <label for="txtEntrega">Data de Entrega</label>
-                    <input type="date" class="form-control" name="dataEntrega" />
+                    <input type="date" class="form-control" name="dataEntrega" value="<joda:format pattern="yyyy-MM-dd" value="${pedido.getDataEntrega()}" />" />
                 </div>
                 <div class="form-group col-md-4 col-xs-12">
                     <label for="codigoPostagem">Código da Postagem</label>
-                    <input type="text" class="form-control" name="codigoPostagem" />                    
+                    <input type="text" class="form-control" name="codigoPostagem" value="${pedido.getCodigoPostagem()}" />                    
                 </div>
             </div>
             <div class="row">
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="statusPedido">Status</label>
-                    <select class="form-control" name="statusPedido.codigo">
+                    <select class="form-control" name="statusPedido.codigo" id="statusPedido">
                         <c:forEach items="${statusPedido}" var="statusPedido">
                             <option value="${statusPedido.getCodigo()}">${statusPedido.getDescricao()}</option>
                         </c:forEach>
@@ -259,7 +290,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="tipoAvaliacao">Avaliação</label>
-                    <select class="form-control" name="tipoAvaliacao.codigo">
+                    <select class="form-control" name="tipoAvaliacao.codigo" id="tipoAvaliacao">
                         <c:forEach items="${tipoAvaliacao}" var="tipoAvaliacao">
                             <c:if test="${tipoAvaliacao.getDescricao() == 'Sem avaliação'}">
                                 <option selected value="${tipoAvaliacao.getCodigo()}">${tipoAvaliacao.getDescricao()}</option>
@@ -274,7 +305,7 @@
             <div class="row">
                 <div class="form-group col-md-12">
                     <label for="observacao">Observações</label>
-                    <textarea class="form-control" name="observacao"></textarea>
+                    <textarea class="form-control" name="observacao">${pedido.getObservacao()}</textarea>
                 </div>
             </div>
             <div class="row margin-std-bottom">
@@ -285,14 +316,14 @@
             <div class="row">
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-salvar margin-std-right margin-std-top" id="btnSalvar"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
-                    <button type="button" class="btn btn-warning margin-std-right margin-std-top" data-toggle="modal" data-target="#modal-cancelar-pedido"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
+                    <button type="button" disabled class="btn btn-warning margin-std-right margin-std-top" id="cancelaPedido"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
                     <button type="button" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>                    
                 </div>
             </div>
-            <input type="hidden" value="${proximoId}" name="codigo" id="codigoProduto" />
+            <input type="hidden" value="${proximoId}" name="itensPedido.codigoProduto" id="codigoProduto" />
             <input type="hidden" id="hdnAnuncio" name="anuncio.codigo">
             <input type="hidden" id="hdnCliente" name="cliente.codigo">
-            <input type="hidden" id="itensPedido" name="itensPedido" />
+            <input type="hidden" id="itens" name="itens" />
             <input type="hidden" id="hdnValorTotal" name="valorTotal" />
         </form>        
     </div>
@@ -303,6 +334,31 @@
            
            var lstCodigosProdutos = new Array();            
            var taxa;
+           
+           //Adiciona os produtos do anúncio no array 
+            if($('#hdnCodigo').val() != "0"){
+                $('.tabela-itens-pedido tbody tr:not(.no-itens) td:first-child').each(function(){
+                    lstCodigosProdutos.push(parseInt($(this).text()));
+                });
+                
+                if ($('select[name*="statusPedido.codigo"] option:selected').text() != 'À postar'){
+                   desabilitaCampos();
+                   if ($('select[name*="statusPedido.codigo"] option:selected').text() != 'Em trânsito') {
+                        $('input[name*="dataPostagem"], input[name*="dataEntrega"], input[name*="codigoPostagem"]').attr('disabled','disabled');
+
+                        if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Cancelada') {
+                            $('select[name*="statusPedido.codigo"]', 'select[name*="tipoAvaliacao.codigo"], input[name*="observacao"]').attr('disabled','disabled');
+                        }
+
+                   }
+                }
+
+                $('#cancelaPedido').removeAttr('disabled');
+            }
+
+            function desabilitaCampos(){
+                 $('#input-anuncio, #btn-modal-anuncio, #input-cliente, #btn-modal-cliente, input[name*="dataVenda"], input[name*="frete"], #btn-itens-pedido, .input-qtde, .btn-excluir').attr('disabled','disabled');
+            }
            
             $('#btn-modal-cliente').on('click', function (){
                 $.ajax({
@@ -564,7 +620,7 @@
                         while(lstCodigosProdutos.length > 0) {
                             lstCodigosProdutos.pop();
                         }                
-                        $('.tabela-itens-pedido .no-itens').show();
+                        //$('.tabela-itens-pedido .no-itens').show();
                     }
                     
                     $(dataTarget).attr('data-id', data).val(value);
@@ -600,11 +656,20 @@
                 $(this).find('tr').removeClass('active-tr');
                 $('.modal table tbody').find('tr').remove();
             });
-            
+
+            $('#cancelaPedido').on('click', function(e){
+
+                if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'À postar'){
+                    $('#modal-cancelar-pedido').modal();
+                } else {
+                    alert('O pedido não pode ser cancelado após o envio dos produtos');
+                }
+            });
+
             $('.btn-itens-pedido').on('click', function (e){
                 if(typeof $('#input-anuncio').attr('data-id') == 'undefined' || $('#input-anuncio').attr('data-id') == ''){
                     alert('Por favor, selecione um anúncio antes de selecionar os itens do pedido.');
-                } else {                    
+                } else {
                     $.ajax({
                         type: 'get',
                         headers: {
@@ -643,7 +708,7 @@
                 lstItens.push(item);
                 
             }
-            $('#itensPedido').val(JSON.stringify(lstItens));
+            $('#itens').val(JSON.stringify(lstItens));
         }
         
         /* Executa a serialização dos itens do pedido, armazena os ids das combos em um input type hidden e valida se os itens do pedido estão preenchidos */           
@@ -680,6 +745,14 @@
           this.quantidade = quantidade;
           this.taxa = taxa;
         };
+        
+        <c:if test="${pedido.statusPedido.codigo != null }">
+            selectValorDropdownList(${pedido.statusPedido.codigo}, 'statusPedido');            
+        </c:if>
+            
+        <c:if test="${pedido.tipoAvaliacao.codigo != null }">            
+            selectValorDropdownList(${pedido.tipoAvaliacao.codigo}, 'tipoAvaliacao');            
+        </c:if>
     </script>
 </body>
 </html>

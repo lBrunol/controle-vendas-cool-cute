@@ -30,6 +30,11 @@ public class Anuncio {
     
     }
     
+    public Anuncio(int codigo, String descricao){
+        this.codigo = codigo;
+        this.descricao = descricao;
+    }    
+    
     public Anuncio(int codigo, StatusAnuncio statusAnuncio, TipoAnuncio tipoAnuncio, String descricao, float preco ){
         this.codigo = codigo;
         this.statusAnuncio = statusAnuncio;

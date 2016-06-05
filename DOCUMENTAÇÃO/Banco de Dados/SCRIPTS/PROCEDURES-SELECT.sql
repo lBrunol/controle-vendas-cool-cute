@@ -217,7 +217,11 @@ BEGIN
 		ped.pedDataEntrega, 
 		ped.pedValorTotal, 
 		ped.pedCodigoPostagem, 
-		ped.pedObservacao
+		ped.pedObservacao,
+		tiv.tivCodigo,
+		stp.stpCodigo,
+		anu.anuCodigo,
+		cli.cliCodigo
 	FROM pedido as ped 
 	INNER JOIN tipoAvaliacoes as tiv ON ped.tivCodigo = tiv.TivCodigo 
 	INNER JOIN anuncio as anu ON ped.anuCodigo = anu.anuCodigo 
@@ -228,21 +232,24 @@ BEGIN
 			WHEN codigo = 0 OR codigo IS NULL THEN ped.pedCodigo
 			WHEN codigo > 0 THEN codigo		       
 		END
-	AND ped.pedDataVenda LIKE
+	AND ((ped.pedDataVenda =
 		CASE	
 			WHEN dataVenda = '' OR dataVenda IS NULL THEN ped.pedDataVenda
-			WHEN dataVenda <> '' THEN CONCAT('%', dataVenda, '%')
-		END
-    AND ped.pedDataPostagem LIKE
+			WHEN dataVenda <> '' THEN dataVenda
+		END)
+	OR (ped.pedDataVenda IS NULL))
+    AND ((ped.pedDataPostagem =
 		CASE	
 			WHEN dataPostagem = '' OR dataPostagem IS NULL THEN ped.pedDataPostagem
-			WHEN dataPostagem <> '' THEN CONCAT('%', dataPostagem, '%')
-		END
-	AND ped.pedDataEntrega LIKE
+			WHEN dataPostagem <> '' THEN dataPostagem
+		END)
+	OR (ped.pedDataPostagem IS NULL))
+	AND ((ped.pedDataEntrega =
 		CASE	
 			WHEN dataEntrega = '' OR dataEntrega IS NULL THEN ped.pedDataEntrega
-			WHEN dataEntrega <> '' THEN CONCAT('%', dataEntrega, '%')
-		END
+			WHEN dataEntrega <> '' THEN dataEntrega
+		END)
+	OR (ped.pedDataEntrega IS NULL))
 	AND stp.stpDescricao =
 		CASE	
 			WHEN statusPedido = '' OR statusPedido IS NULL THEN stp.stpDescricao
@@ -268,6 +275,18 @@ BEGIN
 			WHEN anuncio = '' OR anuncio IS NULL THEN anu.anuDescricao
 			WHEN anuncio <> '' THEN CONCAT('%', anuncio, '%')
 		END;
+END
+&&
+
+-- PEDIDO
+DELIMITER &&
+CREATE PROCEDURE ITENSPEDIDO_SELECT(
+    IN codigo INT(11)
+)
+BEGIN
+	SELECT itensPedido.*, produto.proNome, (itensPedido.itpValorVenda * itensPedido.itpQuantidade) as valorTotal
+	FROM itensPedido INNER JOIN produto on itensPedido.proCodigo = produto.proCodigo
+	WHERE pedCodigo = codigo;
 END
 &&
 

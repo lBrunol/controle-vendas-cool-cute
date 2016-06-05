@@ -1,17 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.coolcute.model.dao;
 
 import br.com.coolcute.bean.Anuncio;
 import br.com.coolcute.bean.Cliente;
-import br.com.coolcute.bean.ItensPedido;
 import br.com.coolcute.bean.Pedido;
+import br.com.coolcute.bean.ItensPedido;
 import br.com.coolcute.bean.StatusPedido;
 import br.com.coolcute.bean.TipoAvaliacao;
-import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,31 +17,35 @@ import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PedidoDao {
+public class PedidoDao {    
     
-    private String query;
-    private PreparedStatement stmt;
+    private CallableStatement cs;
     private Connection c;
     
-    public void adiciona(Pedido pedido) throws SQLException{
-        ConexaoBanco conn = new ConexaoBanco();
+    public void adicionarPedido(Pedido pedido) throws SQLException{
+
+        ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
         CallableStatement cs = c.prepareCall("{CALL PEDIDO_INSERT (?,?,?,?,?,?,?,?,?,?,?)}");
-        
-        /*float valorTotal = 0;
-        for (ItensPedido ped: pedido.getItensEntrada()){
-            valorTotal = valorTotal + (ped.getValorVenda() * ped.getQuantidade());
-        }*/
         
         cs.setInt(1, pedido.getTipoAvaliacao().getCodigo());
         cs.setInt(2, pedido.getStatusPedido().getCodigo());
         cs.setInt(3, pedido.getAnuncio().getCodigo());
         cs.setInt(4, pedido.getCliente().getCodigo());
-        cs.setDate(5, new java.sql.Date(pedido.getDataVenda().getMillis()));
+        if(pedido.getDataVenda() != null)
+            cs.setDate(5, new java.sql.Date(pedido.getDataVenda().getMillis()));
+        else
+            cs.setDate(5, null);
         cs.setFloat(6, pedido.getFrete());
-        cs.setDate(7, new java.sql.Date(pedido.getDataPostagem().getMillis()));
-        cs.setDate(8, new java.sql.Date(pedido.getDataEntrega().getMillis()));
+        if(pedido.getDataPostagem() != null)
+            cs.setDate(7, new java.sql.Date(pedido.getDataPostagem().getMillis()));
+        else
+            cs.setDate(7, null);
+        if(pedido.getDataEntrega() != null)
+            cs.setDate(8, new java.sql.Date(pedido.getDataEntrega().getMillis()));
+        else
+            cs.setDate(8, null);
         cs.setFloat(9, pedido.getValorTotal());
         cs.setString(10, pedido.getCodigoPostagem());
         cs.setString(11, pedido.getObservacao());
@@ -56,7 +54,7 @@ public class PedidoDao {
         
         cs = c.prepareCall("{CALL ITENSPEDIDO_INSERT (?,?,?,?,?,?)}");
         
-        for( ItensPedido lstItens : pedido.getItensEntrada()){
+        for( ItensPedido lstItens : pedido.getItensPedido()){
             cs.setInt(1, lstItens.getCodigoPedido());
             cs.setInt(2, lstItens.getCodigoProduto());
             cs.setFloat(3, lstItens.getValorVenda());
@@ -65,97 +63,139 @@ public class PedidoDao {
             cs.setFloat(6, lstItens.getTaxa());
             
             cs.execute();
-        }       
+        }
         
         cs.close();
         c.close();
     }
 
-    public void altera(Pedido tipoAnuncio) throws SQLException{
-        query = "UPDATE pedido SET pedDescricao = ? , pedPercentual = ? WHERE pedCodigo = ?";
-        ConexaoBanco conn = new ConexaoBanco();
-
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
-
-        //stmt.setString(1, tipoAnuncio.getDescricao());
-        //stmt.setFloat(2, tipoAnuncio.getPercentual());
-        //stmt.setInt(3, tipoAnuncio.getCodigo());
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-    
-    public void exclui(Long id) throws SQLException{
-        query = "DELETE FROM pedido WHERE pedCodigo = ?";
-        ConexaoBanco conn = new ConexaoBanco();
-
-        c = conn.conectar();
-        stmt = c.prepareStatement(query);
-
-        stmt.setLong(1, id);
-
-        stmt.execute();
-        stmt.close();
-
-        c.close();
-    }
-    
-    public List<Pedido> getPedido() throws SQLException {
+    public void alterarPedido(Pedido pedido) throws SQLException{
         
+        ConexaoBanco conn = new ConexaoBanco();
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL PEDIDO_UPDATE (?,?,?,?,?,?,?,?,?,?,?,?)}");
+        
+        cs.setInt(1, pedido.getCodigo());
+        cs.setInt(2, pedido.getTipoAvaliacao().getCodigo());
+        cs.setInt(3, pedido.getStatusPedido().getCodigo());
+        cs.setInt(4, pedido.getAnuncio().getCodigo());
+        cs.setInt(5, pedido.getCliente().getCodigo());
+        if(pedido.getDataVenda() != null)
+            cs.setDate(6, new java.sql.Date(pedido.getDataVenda().getMillis()));
+        else
+            cs.setDate(6, null);
+        cs.setFloat(7, pedido.getFrete());
+        if(pedido.getDataPostagem() != null)
+            cs.setDate(8, new java.sql.Date(pedido.getDataPostagem().getMillis()));
+        else
+            cs.setDate(8, null);
+        if(pedido.getDataEntrega() != null)
+            cs.setDate(9, new java.sql.Date(pedido.getDataEntrega().getMillis()));
+        else
+            cs.setDate(9, null);
+        cs.setFloat(10, pedido.getValorTotal());
+        cs.setString(11, pedido.getCodigoPostagem());
+        cs.setString(12, pedido.getObservacao());
+
+        cs.execute();
+        
+        cs = c.prepareCall("{CALL ITENSPEDIDO_INSERT (?,?,?,?,?,?)}");
+        
+        for( ItensPedido lstItens : pedido.getItensPedido()){
+            cs.setInt(1, pedido.getCodigo());
+            cs.setInt(2, lstItens.getCodigoProduto());
+            cs.setFloat(3, lstItens.getValorVenda());
+            cs.setFloat(4, lstItens.getValorCompra());
+            cs.setInt(5, lstItens.getQuantidade());
+            cs.setFloat(6, lstItens.getTaxa());
+            
+            cs.execute();
+        }
+        
+        cs.close();
+
+        c.close();
+    }
+    
+    public void excluirPedido(int id) throws SQLException{
+
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM pedido");
-        ResultSet rs = stmt.executeQuery();
-        List<Pedido> lstPedido = new ArrayList<>();
-        
-        while (rs.next()) {
-            Pedido ped = new Pedido();
-            
-            //ped.setCodigo(rs.getInt(1));
-            //ped.setDescricao(rs.getString(2));
-            //ped.setPercentual(rs.getFloat(3));
-            
-            lstPedido.add(ped);
-        }
-        
-        rs.close();
-        stmt.close();
+        cs = c.prepareCall("{CALL ANUNCIO_DELETE (?)}");
+
+        cs.setInt(1, id);
+
+        cs.execute();
+        cs.close();
+
         c.close();
-        
-        return lstPedido;
     }
     
-    public Pedido getPedidoItem(Long id) throws SQLException{        
+    public void excluirItensPedido (int id) throws SQLException{
+        ConexaoBanco conn = new ConexaoBanco();        
+        c = conn.conectar();
         
-        ConexaoBanco cnn = new ConexaoBanco();
+        cs = c.prepareCall("{CALL ITENSPEDIDO_DELETE (?)}");
+
+        cs.setInt(1, id);
+
+        cs.execute();
+        cs.close();
+
+        c.close();
+    }
+    
+    public Pedido getPedidoItem(int id) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
         Pedido itemPedido = new Pedido();
         
-        c = cnn.conectar();
+        c = conn.conectar();
         
-        stmt = c.prepareStatement("SELECT * FROM tipoAnuncio WHERE pedCodigo = ?" );
+        CallableStatement cs = c.prepareCall("{CALL PEDIDO_SELECT (?,?,?,?,?,?,?,?,?)}");
+            
+        cs.setInt(1, id);
+        cs.setDate(2, null);
+        cs.setDate(3, null);
+        cs.setDate(4, null);
+        cs.setString(5, null);
+        cs.setString(6, null);
+        cs.setString(7, null);
+        cs.setString(8, null);
+        cs.setString(9, null);
+
+        ResultSet rs = cs.executeQuery();
         
-        stmt.setLong(1, id);
-        
-        ResultSet rs = stmt.executeQuery();
-        
-        while(rs.next()){
-            //itemPedido.setCodigo(rs.getInt(1));
-            //itemPedido.setDescricao(rs.getString(2));
-            //itemPedido.setPercentual(rs.getFloat(3));            
+        if (rs.next()) {
+            
+            itemPedido.setCodigo(rs.getInt(1));
+            if(rs.getDate(7) != null)
+                itemPedido.setDataVenda(new DateTime(rs.getDate(7).getTime()));
+            if(rs.getDate(9) != null)
+                itemPedido.setDataPostagem(new DateTime(rs.getDate(9).getTime()));
+            if(rs.getDate(10) != null)
+                itemPedido.setDataEntrega(new DateTime(rs.getDate(10).getTime()));
+            itemPedido.setFrete(rs.getFloat(8));
+            itemPedido.setValorTotal(rs.getFloat(11));
+            itemPedido.setCodigoPostagem(rs.getString(12));
+            itemPedido.setObservacao(rs.getString(13));
+            itemPedido.setStatusPedido(new StatusPedido(rs.getInt(15), rs.getString(3)));
+            itemPedido.setTipoAvaliacao(new TipoAvaliacao(rs.getInt(14), rs.getString(2)));          
+            itemPedido.setCliente(new Cliente(rs.getInt(17), rs.getString(5), rs.getString(6)));
+            itemPedido.setAnuncio(new Anuncio(rs.getInt(16), rs.getString(4)));
+            
         }
         
         rs.close();
-        stmt.close();
+        cs.close();
         c.close();
         
         return itemPedido;        
     }
     
-    public List<Pedido> filterPedido(Pedido pedido) throws SQLException{
+    public List<Pedido> getPedido(Pedido pedido) throws SQLException {
         
         ConexaoBanco conn = new ConexaoBanco();
         c = conn.conectar();
@@ -181,7 +221,6 @@ public class PedidoDao {
         cs.setString(7, pedido.getCliente().getNome());
         cs.setString(8, pedido.getCliente().getEmail());
         cs.setString(9, pedido.getAnuncio().getDescricao());
-        //cs.execute();
 
         ResultSet rs = cs.executeQuery();
         
@@ -190,28 +229,19 @@ public class PedidoDao {
        
         while (rs.next()) {
             Pedido ped = new Pedido();
-             StatusPedido stp = new StatusPedido();
-        Cliente cli = new Cliente();
-        Anuncio anu = new Anuncio();
-        TipoAvaliacao tiv = new TipoAvaliacao();
         
             ped.setCodigo(rs.getInt(1));
             ped.setDataVenda(new DateTime(rs.getDate(7).getTime()));
             ped.setDataPostagem(new DateTime(rs.getDate(9).getTime()));
             ped.setDataEntrega(new DateTime(rs.getDate(10).getTime()));
-            
-            stp.setDescricao(rs.getString(3));
-            ped.setStatusPedido(stp);
-            
-            tiv.setDescricao(rs.getString(2));
-            ped.setTipoAvaliacao(tiv);
-            
-            cli.setNome(rs.getString(5));
-            cli.setEmail(rs.getString(6));            
-            ped.setCliente(cli);
-            
-            anu.setDescricao(rs.getString(4));
-            ped.setAnuncio(anu);
+            ped.setFrete(rs.getFloat(8));
+            ped.setValorTotal(rs.getFloat(11));
+            ped.setCodigoPostagem(rs.getString(12));
+            ped.setObservacao(rs.getString(13));
+            ped.setStatusPedido(new StatusPedido(rs.getInt(15), rs.getString(3)));
+            ped.setTipoAvaliacao(new TipoAvaliacao(rs.getInt(14), rs.getString(2)));          
+            ped.setCliente(new Cliente(rs.getInt(17), rs.getString(5), rs.getString(6)));
+            ped.setAnuncio(new Anuncio(rs.getInt(16), rs.getString(4)));
             
             lstPedido.add(ped);
         }
@@ -222,4 +252,40 @@ public class PedidoDao {
         
         return lstPedido;        
     }
+    
+    public List<ItensPedido> getItensPedido(int codigo) throws SQLException {
+        
+        ConexaoBanco conn = new ConexaoBanco();        
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL ITENSPEDIDO_SELECT (?)}");
+        
+        cs.setInt(1, codigo);
+        
+        ResultSet rs = cs.executeQuery();
+        
+        List<ItensPedido> lstItensPedido = new ArrayList<>();
+        
+        while (rs.next()) {
+            ItensPedido itens = new ItensPedido();
+                    
+            itens.setCodigoPedido(rs.getInt(1));
+            itens.setCodigoProduto(rs.getInt(2));
+            itens.setValorVenda(rs.getFloat(3));
+            itens.setValorCompra(rs.getFloat(4));
+            itens.setQuantidade(rs.getInt(5));
+            itens.setTaxa(rs.getFloat(6));
+            itens.setNomeCliente(rs.getString(7));
+            itens.setValorTotal(rs.getFloat(8));
+           
+            lstItensPedido.add(itens);
+        }
+        
+        rs.close();
+        cs.close();
+        c.close();
+        
+        return lstItensPedido;
+    }
+
 }

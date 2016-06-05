@@ -33,6 +33,8 @@
                 </div>
             </c:if>
         </c:if>
+        <!-- MODAIS -->
+        <!-- MODAL PRODUTOS -->
         <div class="modal multi-selection fade" id="modal-produto" tabindex="-1" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">

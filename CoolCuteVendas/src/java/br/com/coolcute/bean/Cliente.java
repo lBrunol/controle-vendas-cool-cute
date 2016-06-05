@@ -12,7 +12,16 @@ public class Cliente {
     @NotNull(message="Por favor, insira um e-mail válido")
     @NotEmpty (message="Por favor, insira um e-mail válido")
     private String email;
-
+    
+    public Cliente(){
+    
+    }
+    
+    public Cliente(int codigo, String nome, String email){
+        this.codigo = codigo;
+        this.nome = nome;
+        this.email = email;
+    }
     /**
      * @return the codigo
      */

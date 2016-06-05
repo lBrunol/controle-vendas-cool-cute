@@ -1,13 +1,15 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@taglib uri="http://displaytag.sf.net" prefix="display" %>
+<%@taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Consulta de Pedidos - Cool & Cute - Vendas</title>
+    <title>Consulta de Pedido - Cool & Cute - Vendas</title>
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
+    <style>
+        .table { width: 1600px; }
+    </style>
 </head>
 <body>
     <%-- INCLUDE DO MENU --%>
@@ -20,12 +22,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Deseja realmente excluir o pedido?</h2>                            
+                        <h2>Deseja realmente excluir o Pedido?</h2>                            
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <p class="modal-id"><strong>Id: </strong><span></span></p>                        
-                        <p class="modal-descricao"><strong>Nome: </strong><span></span></p>
+                        <p class="modal-descricao"><strong>Descrição: </strong><span></span></p>
                         <form action="/excluirPedido" method="POST">
                             <input type="hidden" name="codigo" id="hdnCodigo" value="" />
                             <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</button>
@@ -42,7 +44,7 @@
         <!--BreadCrumbs-->
         <ol class="breadcrumb">
             <li><a href="/">Início</a></li>
-            <li><a href="javascript:;">Pedidos</a></li>
+            <li><a href="javascript:;">Pedido</a></li>
             <li class="active">Consultar</li>
         </ol>
         <c:if test="${msg != null }">
@@ -50,7 +52,7 @@
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button> 
                 <i class="fa fa-fw fa-times"></i> ${msg}
             </div>
-        </c:if> 
+        </c:if>
         <h2>Consultar Pedido</h2>
         <hr />
         <div class="row">
@@ -60,41 +62,55 @@
         </div>
         <form method="GET" action="/filtrarPedido" id="form-consultar-pedidos">
             <div class="row">
-                <div class="col-md-2 col-sm-12 form-group">
+                <div class="col-md-3 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" value="${pedidoFiltro.codigo == 0 ? "" : pedidoFiltro.codigo}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
-                    <label for="dataVenda">Data da Venda</label>
-                    <input type="date" class="form-control" placeholder="Data da Venda" name="dataVenda" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <label for="dataVenda">Data da venda</label>
+                    <input type="date" class="form-control" placeholder="Data da venda" name="dataVenda" value="${pedidoFiltro.dataVenda}" aria-describedby="basic-addon2" />
+                </div>
+                <div class="col-md-4 col-sm-12 form-group">
+                    <label for="dataPostagem">Data da postagem</label>
+                    <input type="date" class="form-control" placeholder="Data da postagem" name="dataPostagem" value="${pedidoFiltro.dataPostagem}" aria-describedby="basic-addon2" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-12 form-group">
+                    <label for="dataEntrega">Data de entrega</label>
+                    <input type="date" class="form-control" placeholder="Data de entrega" name="dataEntrega" value="${pedidoFiltro.dataEntrega}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
-                    <label for="dataPostagem">Data da Postagem</label>
-                    <input type="date" class="form-control" placeholder="Data da Postagem" name="dataPostagem" aria-describedby="basic-addon2" id="txtPesquisa" />
-                </div>
-                <div class="col-md-5 col-sm-12 form-group">
-                    <label for="dataEntrega">Data da Entrega</label>
-                    <input type="date" class="form-control" placeholder="Data da Entrega" name="dataEntrega" placeholder="" aria-describedby="basic-addon2" id="txtPesquisa" />
-                </div>
-                <div class="col-md-5 col-sm-12 form-group">
-                    <label for="statusPedido.descricao">Status do Pedido</label>
-                    <input type="text" class="form-control" placeholder="Status do Pedido" name="statusPedido.descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
-                </div>
-                <div class="col-md-5 col-sm-12 form-group">
+                    <label for="statusPedido.descricao">Status</label>
+                    <select class="form-control" name="statusPedido.descricao" id="statusPedido">
+                        <option></option>
+                        <c:forEach items="${statusPedido}" var="statusPedido">
+                            <option value="${statusPedido.getDescricao()}">${statusPedido.getDescricao()}</option>
+                        </c:forEach>
+                    </select>                    
+                </div>                
+                <div class="col-md-4 col-sm-12 form-group">
                     <label for="tipoAvaliacao.descricao">Avaliação</label>
-                    <input type="text" class="form-control" placeholder="Avaliação" name="tipoAvaliacao.descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <select class="form-control" name="tipoAvaliacao.descricao" id="tipoAvaliacao">
+                        <option></option>
+                        <c:forEach items="${tipoAvaliacao}" var="tipoAvaliacao">
+                            <option value="${tipoAvaliacao.getDescricao()}">${tipoAvaliacao.getDescricao()}</option>
+                        </c:forEach>
+                    </select>
                 </div>
-                <div class="col-md-5 col-sm-12 form-group">
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-12 form-group">
                     <label for="cliente.nome">Nome do Cliente</label>
-                    <input type="text" class="form-control" placeholder="Nome do Cliente" name="cliente.nome" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Nome do Cliente" name="cliente.nome" value="${pedidoFiltro.cliente.nome}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
-                    <label for="cliente.nome">E-mail do Cliente</label>
-                    <input type="text" class="form-control" placeholder="E-mail do Cliente" name="cliente.email" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <label for="cliente.email">E-mail do Cliente</label>
+                    <input type="text" class="form-control" placeholder="Nome do Cliente" name="cliente.email" value="${pedidoFiltro.cliente.email}" aria-describedby="basic-addon2" />
                 </div>
-                <div class="col-md-5 col-sm-12 form-group">
+                <div class="col-md-4 col-sm-12 form-group">
                     <label for="anuncio.descricao">Anúncio</label>
-                    <input type="text" class="form-control" placeholder="Anúncio" name="anuncio.descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Anúncio" name="anuncio.descricao" value="${pedidoFiltro.anuncio.descricao}" aria-describedby="basic-addon2" />
                 </div>
             </div>
             <div class="row">
@@ -109,10 +125,10 @@
                             <thead>
                                 <tr>
                                     <th>Código</th>
-                                    <th>Data da Venda</th>
-                                    <th>Data da Postagem</th>
-                                    <th>Data da Entrega</th>
-                                    <th>Status do Pedido</th>
+                                    <th>Data Venda</th>
+                                    <th>Data Postagem</th>
+                                    <th>Data Entrega</th>
+                                    <th>Status</th>
                                     <th>Avaliação</th>
                                     <th>Nome do Cliente</th>
                                     <th>E-mail do Cliente</th>
@@ -120,14 +136,15 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
+                            <c:set var="now" value="<%= java.util.Calendar.getInstance().getTime()%>" />
                             <tbody>
-                                <!--<c:if test="${pedido != null}">
+                                <c:if test="${pedido != null}">
                                     <c:forEach items="${pedido}" var="pedido">
                                         <tr>
                                             <td data-id="${pedido.codigo}">${pedido.codigo}</td>
-                                            <td>${pedido.dataVenda}</td>
-                                            <td>${pedido.dataPostagem}</td>
-                                            <td>${pedido.dataEntrega}</td>
+                                            <td><joda:format pattern="dd/MM/yyyy" value="${pedido.dataVenda}" /></td>
+                                            <td><joda:format pattern="dd/MM/yyyy" value="${pedido.dataPostagem}" /></td>
+                                            <td><joda:format pattern="dd/MM/yyyy" value="${pedido.dataEntrega}" /></td>
                                             <td>${pedido.statusPedido.descricao}</td>
                                             <td>${pedido.tipoAvaliacao.descricao}</td>
                                             <td>${pedido.cliente.nome}</td>
@@ -139,15 +156,7 @@
                                             </td>
                                         </tr>
                                     </c:forEach>
-                                    <display:table name="${pedido}" class="its">
-                                        <display:column property="pedido.codigo"/>
-                                        <display:column property="pedido.dataVenda"/>
-                                        <display:column property="pedido.dataPostagem" />
-                                        <display:column title="Data de Finalização"  sortable = "true">
-                                            <fmt:formatDate value="${pedido.dataPostagem}"pattern="dd/MM/yyyy" />
-                                        </display:column>
-                                    </display:table>
-                                </c:if>-->
+                                </c:if>
                                 <c:if test="${pedido == null}">
                                     <tr class="no-paginate">
                                         <td colspan="10">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
@@ -175,7 +184,7 @@
     <%@include file="/includes/rodape.jsp" %>   
     <script type="text/javascript" src="/js/paginacao.js"></script>
     <script type="text/javascript">
-        $(function () {           
+        $(function () {
             
             //Ação de exclusão
             $('.btn-excluir').click(function(){
@@ -187,17 +196,18 @@
                 $('.modal-excluir #hdnCodigo').val(id);
             });
             
-            
-            $('input[type="radio"]').on('change', function() {
-                $('#txtPesquisa').attr({
-                    name: $('input[type="radio"]:checked').val().toLowerCase(),
-                    placeholder: $('input[type="radio"]:checked').val()
-                }).focus();
-             });
-             
-            paginacao('.table-pagination', '.pagination', 20);
+            paginacao('.table-pagination', '.pagination', 10);
              
         });
+        
+        <c:if test="${(pedidoFiltro.statusPedido.descricao != null) && (pedidoFiltro.statusPedido.descricao != '')}">
+            selectValorDropdownList('${pedidoFiltro.statusPedido.descricao}', 'statusPedido', true);
+        </c:if>
+            
+        <c:if test="${(pedidoFiltro.tipoAvaliacao.descricao != null) && (pedidoFiltro.tipoAvaliacao.descricao != '')}">
+            selectValorDropdownList('${pedidoFiltro.tipoAvaliacao.descricao}', 'tipoAvaliacao', true);            
+        </c:if>
+            
     </script>            
 </body>
 </html>
