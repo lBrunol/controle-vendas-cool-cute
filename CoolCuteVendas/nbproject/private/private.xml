@@ -3,21 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/model/dao/ProdutoDao.java</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/controller/PedidoController.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/entrada/criar/index.jsp</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/js/script-geral.js</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/css/estilo-geral.css</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/pedido/criar/index.jsp</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/produto/consultar/index.jsp</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/bean/Pedido.java</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/util/ConexaoBanco.java</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/bean/ItensPedido.java</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/pedido/consultar/index.jsp</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/produto/criar/index.jsp</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/controller/EntradaController.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/model/dao/MovimentacaoDao.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/bean/Entrada.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/bean/ItensEntrada.java</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/model/dao/PedidoDao.java</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/controller/AnuncioController.java</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/anuncio/criar/index.jsp</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/model/dao/AnuncioDao.java</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/anuncio/consultar/index.jsp</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/model/dao/EntradaDao.java</file>
         </group>
     </open-files>
 </project-private>

@@ -56,6 +56,24 @@ public class MovimentacaoDao {
         c.close();
     }
     
+    public void alterarMovimentacaoDescricao(Movimentacao movimentacao) throws SQLException{
+        
+        ConexaoBanco conn = new ConexaoBanco();
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL OUTRASMOVIMENTACOES_DESCRICAO_UPDATE (?,?,?)}");
+        
+        cs.setString(1, movimentacao.getDescricao());
+        cs.setFloat(2 ,movimentacao.getValor());
+        cs.setDate(3, new java.sql.Date(movimentacao.getData().getMillis()));
+        
+        cs.execute();
+        
+        cs.close();
+
+        c.close();
+    }
+    
     public void excluirMovimentacao(int id) throws SQLException{
 
         ConexaoBanco conn = new ConexaoBanco();        
@@ -64,6 +82,21 @@ public class MovimentacaoDao {
         cs = c.prepareCall("{CALL OUTRASMOVIMENTACOES_DELETE (?)}");
 
         cs.setInt(1, id);
+
+        cs.execute();
+        cs.close();
+
+        c.close();
+    }
+    
+    public void excluirMovimentacaoDescricao(String descricao) throws SQLException{
+
+        ConexaoBanco conn = new ConexaoBanco();        
+        c = conn.conectar();
+        
+        cs = c.prepareCall("{CALL OUTRASMOVIMENTACOES_DESCRICAO_DELETE (?)}");
+
+        cs.setString(1, descricao);
 
         cs.execute();
         cs.close();

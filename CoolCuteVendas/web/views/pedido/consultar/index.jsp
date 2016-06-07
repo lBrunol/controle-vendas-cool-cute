@@ -28,7 +28,7 @@
                     <div class="modal-body">
                         <p class="modal-id"><strong>Id: </strong><span></span></p>                        
                         <p class="modal-descricao"><strong>Descrição: </strong><span></span></p>
-                        <form action="/excluirPedido" method="POST">
+                        <form action="javascript:void(0);" method="POST">
                             <input type="hidden" name="codigo" id="hdnCodigo" value="" />
                             <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</button>
                             <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
@@ -141,7 +141,7 @@
                                 <c:if test="${pedido != null}">
                                     <c:forEach items="${pedido}" var="pedido">
                                         <tr>
-                                            <td data-id="${pedido.codigo}">${pedido.codigo}</td>
+                                            <td data-id="${pedido.codigo}"><a href="/consultarPedidoItem/${pedido.codigo}">${pedido.codigo}</a></td>
                                             <td><joda:format pattern="dd/MM/yyyy" value="${pedido.dataVenda}" /></td>
                                             <td><joda:format pattern="dd/MM/yyyy" value="${pedido.dataPostagem}" /></td>
                                             <td><joda:format pattern="dd/MM/yyyy" value="${pedido.dataEntrega}" /></td>
@@ -152,7 +152,7 @@
                                             <td>${pedido.anuncio.descricao}</td>
                                             <td>
                                                 <a href="/consultarPedidoItem/${pedido.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
-                                                <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>
+                                                <!--<button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>-->
                                             </td>
                                         </tr>
                                     </c:forEach>

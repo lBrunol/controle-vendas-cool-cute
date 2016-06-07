@@ -394,6 +394,54 @@ BEGIN
 END
 &&
 
+-- ENTRADA
+DROP PROCEDURE IF EXISTS ENTRADA_SELECT
+DELIMITER &&
+CREATE PROCEDURE ENTRADA_SELECT(
+        IN codigo INT(11),
+        IN lote varchar(255),
+        IN valorTotal DECIMAL(8,2),
+        IN observacao VARCHAR (255)
+)
+BEGIN
+    SELECT *
+	FROM entrada
+    WHERE entCodigo = 
+		CASE	
+			WHEN codigo = 0 OR codigo IS NULL THEN entCodigo
+			WHEN codigo > 0 THEN codigo		       
+		END	
+	AND entLote =
+		CASE	
+			WHEN lote = '' OR lote IS NULL THEN entLote
+			WHEN lote <> '' THEN lote
+		END
+	AND entValorTotal =
+		CASE	
+			WHEN valorTotal = 0 OR valorTotal IS NULL THEN entValorTotal
+			WHEN valorTotal > 0 THEN valorTotal
+		END
+	AND entObservacao LIKE
+		CASE	
+			WHEN observacao = '' OR observacao IS NULL THEN entObservacao
+			WHEN observacao <> '' THEN CONCAT('%', observacao, '%')
+		END;
+END
+&&
+
+-- ENTRADA
+DROP PROCEDURE IF EXISTS ITENSENTRADA_SELECT
+DELIMITER &&
+CREATE PROCEDURE ITENSENTRADA_SELECT(
+    IN codigo INT(11)
+)
+BEGIN
+	SELECT itensEntrada.*, produto.proNome, produto.proPreco
+	FROM itensEntrada INNER JOIN produto on itensEntrada.proCodigo = produto.proCodigo
+	WHERE entCodigo = codigo;
+END
+&&
+
 DELIMITER &&
 CREATE PROCEDURE AUTENTICA_USUARIO (
 	IN V_USRLOGIN VARCHAR(255),

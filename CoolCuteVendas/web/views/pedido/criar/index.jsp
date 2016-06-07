@@ -159,8 +159,8 @@
                     </div>
                     <div class="modal-body">
                         <p>Após o cancelamento, não será mais possível reativar este pedido</p>
-                         <button type="button" class="btn btn-salvar margin-std-right margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-check"></i> Confirmar</button>
-                         <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
+                        <button type="button" class="btn btn-salvar margin-std-right margin-std-top" id="confirmaCancelaPedido" data-dismiss="modal"><i class="fa fa-fw fa-check"></i> Confirmar</button>
+                        <button type="button" class="btn btn-vermelho margin-std-top" data-dismiss="modal"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>
                     </div>
                     <div class="modal-footer">
                         
@@ -242,15 +242,16 @@
                                     <tr class="no-itens" style="display: none;">
                                         <td colspan="6" class="btn-itens-pedido" style="color:#27a199; cursor:pointer;"><strong>Adicione itens ao pedido.</strong></td>
                                     </tr>
+                                   
                                     <c:forEach items="${itensPedido}" var="itensPedido">
                                         <tr>
                                             <td>${itensPedido.getCodigoProduto()}</td>
                                             <td>${itensPedido.getNomeCliente()}</td>                                            
                                             <td><fmt:formatNumber value="${itensPedido.getValorCompra()}" type="currency" /></td>
-                                            <td class="preco"><fmt:formatNumber value="${itensPedido.getValorVenda()}" type="currency" /></td>
+                                            <td class="preco"><fmt:formatNumber minFractionDigits="2" type="currency" value="${itensPedido.getValorVenda()}" /></td>
                                             <td><input type="number" class="form-control input-qtde" name="txtQtdePedido" value="${itensPedido.getQuantidade()}"></td>
-                                            <td><fmt:formatNumber value="${itensPedido.getTaxa()}" type="currency" /></td>
-                                            <td><fmt:formatNumber value="${itensPedido.getValorTotal()}" type="currency" /></td>
+                                            <td class="taxa"><fmt:formatNumber value="${itensPedido.getTaxa()}" type="currency" /></td>
+                                            <td class="valor-total"><fmt:formatNumber value="${itensPedido.getValorTotal()}" type="currency" /></td>
                                             <td><button class="btn btn-pequeno btn-vermelho btn-excluir" type="button"><i class="fa fa-trash fa-fw"></i></button></td>
                                         </tr>
                                     </c:forEach>
@@ -326,6 +327,7 @@
             <input type="hidden" id="hdnCliente" name="cliente.codigo">
             <input type="hidden" id="itens" name="itens" />
             <input type="hidden" id="hdnValorTotal" name="valorTotal" />
+            <input type="hidden" id="hdnCancelar" value="false" name="cancelar">
         </form>        
     </div>
     <%-- INCLUDE DO RODAPÉ --%>
@@ -338,6 +340,7 @@
            
            //Adiciona os produtos do anúncio no array 
             if($('#hdnCodigo').val() != "0"){
+                console.log(taxa);
                 $('.tabela-itens-pedido tbody tr:not(.no-itens) td:first-child').each(function(){
                     lstCodigosProdutos.push(parseInt($(this).text()));
                 });
@@ -348,7 +351,7 @@
                         $('input[name*="dataPostagem"], input[name*="dataEntrega"], input[name*="codigoPostagem"]').attr('disabled','disabled');
 
                         if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Cancelada') {
-                            $('select[name*="statusPedido.codigo"]', 'select[name*="tipoAvaliacao.codigo"], input[name*="observacao"]').attr('disabled','disabled');
+                            $('select[name*="statusPedido.codigo"], select[name*="tipoAvaliacao.codigo"], textarea[name*="observacao"], #btnSalvar').attr('disabled','disabled');
                         }
 
                    }
@@ -662,9 +665,17 @@
 
                 if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'À postar'){
                     $('#modal-cancelar-pedido').modal();
+                } else if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Cancelada') {
+                    alert('Este pedido já foi cancelado');
                 } else {
                     alert('O pedido não pode ser cancelado após o envio dos produtos');
                 }
+            });
+            
+            $('#confirmaCancelaPedido').on('click', function (e){
+                $('select[name*="statusPedido.codigo"] option[value=9]').prop('selected',true);
+                $('#hdnCancelar').val('true');
+                acoesPosValidacao($('#formAnuncio'));
             });
 
             $('.btn-itens-pedido').on('click', function (e){
@@ -706,12 +717,10 @@
                     parseInt($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(4).find('input').val()),
                     deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(5).text())
                 );
-                console.log(deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(i).find('td').eq(2).text()))
                 lstItens.push(item);
                 
             }
             $('#itens').val(JSON.stringify(lstItens));
-            console.log(JSON.stringify(lstItens));
         }
         
         /* Executa a serialização dos itens do pedido, armazena os ids das combos em um input type hidden e valida se os itens do pedido estão preenchidos */           

@@ -17,7 +17,7 @@ button:focus,
 input:focus,
 a:focus { outline: 0 !important; }
 textarea { resize: none; }
-input[type="date"] { -webkit-appearance: textfield; -moz-appearance: field; }
+/*input[type="date"] { -webkit-appearance: textfield; -moz-appearance: field; }*/
 
 .logo { padding: 15px; }
 

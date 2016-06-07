@@ -1,18 +1,14 @@
 package br.com.coolcute.controller;
 
-import br.com.coolcute.bean.ItensPedido;
+import br.com.coolcute.bean.ItensEntrada;
 import br.com.coolcute.bean.Movimentacao;
-import br.com.coolcute.bean.Pedido;
+import br.com.coolcute.bean.Entrada;
 import br.com.coolcute.bean.Produto;
-import br.com.coolcute.bean.StatusPedido;
 import br.com.coolcute.bean.TipoAvaliacao;
 import br.com.coolcute.bean.TipoMovimentacao;
-import br.com.coolcute.model.dao.AnuncioDao;
-import br.com.coolcute.model.dao.ClienteDao;
 import br.com.coolcute.model.dao.MovimentacaoDao;
-import br.com.coolcute.model.dao.PedidoDao;
+import br.com.coolcute.model.dao.EntradaDao;
 import br.com.coolcute.model.dao.ProdutoDao;
-import br.com.coolcute.model.dao.StatusPedidoDao;
 import br.com.coolcute.model.dao.TipoAvaliacaoDao;
 import br.com.coolcute.util.ObterId;
 import java.sql.SQLException;
@@ -32,14 +28,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.joda.time.DateTime;
 
 @Controller
-public class PedidoController {
-    
+public class EntradaController {
+    /*
     @Autowired
-    private PedidoDao daoPedido;
-    @Autowired
-    private StatusPedidoDao daoStatusPedido;
-    @Autowired
-    private TipoAvaliacaoDao daoTipoAvaliacao;
+    private EntradaDao daoEntrada;
     @Autowired
     private MovimentacaoDao daoMovimentacao;
     @Autowired
@@ -47,15 +39,15 @@ public class PedidoController {
     private boolean retorno;
     private String msg;
     
-    @RequestMapping("pedido/criar/")
+    @RequestMapping("entrada/criar/")
     public ModelAndView form() {
         
-        ModelAndView modelAndView = new ModelAndView("pedido/criar/");
+        ModelAndView modelAndView = new ModelAndView("entrada/criar/");
         
         try {
-            modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido()));
+            modelAndView.addObject("statusEntrada", daoStatusEntrada.getStatusEntrada(new StatusEntrada()));
             modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao()));
-            modelAndView.addObject("proximoId", ObterId.obterId("pedido"));
+            modelAndView.addObject("proximoId", ObterId.obterId("entrada"));
         } catch (SQLException e) {
             retorno = false;
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
@@ -66,12 +58,12 @@ public class PedidoController {
         return modelAndView;
     }
     
-    @RequestMapping("pedido/consultar/")
+    @RequestMapping("entrada/consultar/")
     public ModelAndView consulta(){        
-        ModelAndView modelAndView = new ModelAndView("pedido/consultar/");
+        ModelAndView modelAndView = new ModelAndView("entrada/consultar/");
         
         try {
-            modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido()));
+            modelAndView.addObject("statusEntrada", daoStatusEntrada.getStatusEntrada(new StatusEntrada()));
             modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao()));
         } catch (SQLException e) {
             retorno = false;
@@ -83,22 +75,22 @@ public class PedidoController {
         return modelAndView;
     }
     
-    @RequestMapping("adicionarAlterarPedido")
-    public ModelAndView adicionarAlterarPedido (@RequestParam("itens") String itens, @RequestParam("cancelar") String cancelar, @Valid Pedido pedido, BindingResult result){
+    @RequestMapping("adicionarAlterarEntrada")
+    public ModelAndView adicionarAlterarEntrada (@RequestParam("itens") String itens, @RequestParam("cancelar") String cancelar, @Valid Entrada entrada, BindingResult result){
         if(!"true".equals(cancelar)){
-            if(pedido.getCodigo() != 0){        
-                return alterarPedido(itens, pedido, result);
+            if(entrada.getCodigo() != 0){        
+                return alterarEntrada(itens, entrada, result);
             } else {
-                return adicionarPedido(itens, pedido, result);
+                return adicionarEntrada(itens, entrada, result);
             }
         } else {
-            return cancelarPedido(itens, pedido, result);
+            return cancelarEntrada(itens, entrada, result);
         }
     }	
     
-    @RequestMapping("adicionarPedido")
-    public ModelAndView adicionarPedido(@RequestParam("itens") String itens, @Valid Pedido pedido, BindingResult result) {
-        ModelAndView modelAndView = new ModelAndView("pedido/criar/");
+    @RequestMapping("adicionarEntrada")
+    public ModelAndView adicionarEntrada(@RequestParam("itens") String itens, @Valid Entrada entrada, BindingResult result) {
+        ModelAndView modelAndView = new ModelAndView("entrada/criar/");
         
         if(result.hasErrors()){
             retorno = false;
@@ -107,17 +99,17 @@ public class PedidoController {
         }
         
         try {
-            pedido.setCodigo(ObterId.obterId("pedido"));
+            entrada.setCodigo(ObterId.obterId("entrada"));
             
             ObjectMapper mapper = new ObjectMapper();
-            Collection<ItensPedido> lstItens;
+            Collection<ItensEntrada> lstItens;
             
-            lstItens = mapper.readValue(itens, new TypeReference<Collection<ItensPedido>>() {});
+            lstItens = mapper.readValue(itens, new TypeReference<Collection<ItensEntrada>>() {});
             
-            pedido.setItensPedido((List<ItensPedido>) lstItens);
+            entrada.setItensEntrada((List<ItensEntrada>) lstItens);
             
-            daoPedido.adicionarPedido(pedido);
-            daoMovimentacao.adicionarMovimentacao(new Movimentacao(0, new TipoMovimentacao(11,null, true),"PED" + pedido.getCodigo(), pedido.getValorTotal(), new DateTime()));
+            daoEntrada.adicionarEntrada(entrada);
+            daoMovimentacao.adicionarMovimentacao(new Movimentacao(0, new TipoMovimentacao(11,null, true),"PED" + entrada.getCodigo(), entrada.getValorTotal(), new DateTime()));
             
             retorno = true;
             msg = "Cadastrado com sucesso";
@@ -128,11 +120,11 @@ public class PedidoController {
             msg = "Ocorreu um erro ao cadastrar os registros. " + e.getMessage();
         } finally {
             try {
-                modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido()));
+                modelAndView.addObject("statusEntrada", daoStatusEntrada.getStatusEntrada(new StatusEntrada()));
                 modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao()));
-                modelAndView.addObject("proximoId", ObterId.obterId("pedido"));
-                modelAndView.addObject("pedido", daoPedido.getPedidoItem(pedido.getCodigo()));
-                modelAndView.addObject("itensPedido", daoPedido.getItensPedido(pedido.getCodigo()));
+                modelAndView.addObject("proximoId", ObterId.obterId("entrada"));
+                modelAndView.addObject("entrada", daoEntrada.getEntradaItem(entrada.getCodigo()));
+                modelAndView.addObject("itensEntrada", daoEntrada.getItensEntrada(entrada.getCodigo()));
             } catch (SQLException ex) {
                 retorno = false;
                 msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
@@ -148,10 +140,10 @@ public class PedidoController {
         return modelAndView;		
     }
     
-    @RequestMapping("alterarPedido")
-    public ModelAndView alterarPedido(@RequestParam("itens") String itens, @Valid Pedido pedido, BindingResult result) {
+    @RequestMapping("alterarEntrada")
+    public ModelAndView alterarEntrada(@RequestParam("itens") String itens, @Valid Entrada entrada, BindingResult result) {
         
-        ModelAndView modelAndView = new ModelAndView("pedido/criar/");
+        ModelAndView modelAndView = new ModelAndView("entrada/criar/");
         
         if(result.hasErrors()){
             retorno = false;
@@ -161,15 +153,15 @@ public class PedidoController {
         
         try {            
             ObjectMapper mapper = new ObjectMapper();
-            Collection<ItensPedido> lstItens;
+            Collection<ItensEntrada> lstItens;
             
-            lstItens = mapper.readValue(itens, new TypeReference<Collection<ItensPedido>>() {});
+            lstItens = mapper.readValue(itens, new TypeReference<Collection<ItensEntrada>>() {});
             
-            pedido.setItensPedido((List<ItensPedido>) lstItens);
+            entrada.setItensEntrada((List<ItensEntrada>) lstItens);
             
-            daoPedido.excluirItensPedido(pedido);
-            daoMovimentacao.alterarMovimentacaoDescricao(new Movimentacao(0, new TipoMovimentacao(0,null, true),"PED" + pedido.getCodigo(), pedido.getValorTotal(), new DateTime()));
-            daoPedido.alterarPedido(pedido);
+            daoEntrada.excluirItensEntrada(entrada);
+            daoMovimentacao.alterarMovimentacaoDescricao(new Movimentacao(0, new TipoMovimentacao(0,null, true),"PED" + entrada.getCodigo(), entrada.getValorTotal(), new DateTime()));
+            daoEntrada.alterarEntrada(entrada);
             retorno = true;
             msg = "Alterado com sucesso";
         } catch (SQLException e) {
@@ -180,11 +172,11 @@ public class PedidoController {
             msg = "Ocorreu um erro ao alterar os registros. " + e.getMessage();
         } finally {
             try {
-                modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido()));
+                modelAndView.addObject("statusEntrada", daoStatusEntrada.getStatusEntrada(new StatusEntrada()));
                 modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao()));
-                modelAndView.addObject("proximoId", ObterId.obterId("pedido"));
-                modelAndView.addObject("pedido", daoPedido.getPedidoItem(pedido.getCodigo()));
-                modelAndView.addObject("itensPedido", daoPedido.getItensPedido(pedido.getCodigo()));
+                modelAndView.addObject("proximoId", ObterId.obterId("entrada"));
+                modelAndView.addObject("entrada", daoEntrada.getEntradaItem(entrada.getCodigo()));
+                modelAndView.addObject("itensEntrada", daoEntrada.getItensEntrada(entrada.getCodigo()));
             } catch (SQLException ex) {
                 retorno = false;
                 msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
@@ -199,25 +191,25 @@ public class PedidoController {
         return modelAndView;
     }
     
-    @RequestMapping("excluirPedido") 
-    public ModelAndView excluirPedido(Pedido pedido, BindingResult result) {
+    @RequestMapping("excluirEntrada") 
+    public ModelAndView excluirEntrada(Entrada entrada, BindingResult result) {
 
         try {
-            daoPedido.excluirItensPedido(pedido);
-            daoPedido.excluirPedido(pedido.getCodigo()); 
+            daoEntrada.excluirItensEntrada(entrada);
+            daoEntrada.excluirEntrada(entrada.getCodigo()); 
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         
-        return filtrarPedido(new Pedido(), result);
+        return filtrarEntrada(new Entrada(), result);
     }
     
-    @RequestMapping("cancelarPedido")
-    public ModelAndView cancelarPedido(@RequestParam("itens") String itens, @Valid Pedido pedido, BindingResult result) {
+    @RequestMapping("cancelarEntrada")
+    public ModelAndView cancelarEntrada(@RequestParam("itens") String itens, @Valid Entrada entrada, BindingResult result) {
         
-        ModelAndView modelAndView = new ModelAndView("pedido/criar/");
+        ModelAndView modelAndView = new ModelAndView("entrada/criar/");
         
         if(result.hasErrors()){
             retorno = false;
@@ -227,14 +219,14 @@ public class PedidoController {
         
         try {            
             ObjectMapper mapper = new ObjectMapper();
-            Collection<ItensPedido> lstItens;
+            Collection<ItensEntrada> lstItens;
             
-            lstItens = mapper.readValue(itens, new TypeReference<Collection<ItensPedido>>() {});
+            lstItens = mapper.readValue(itens, new TypeReference<Collection<ItensEntrada>>() {});
             
-            pedido.setItensPedido((List<ItensPedido>) lstItens);
+            entrada.setItensEntrada((List<ItensEntrada>) lstItens);
             
-            daoMovimentacao.excluirMovimentacaoDescricao("PED" + pedido.getCodigo());
-            daoPedido.alterarPedido(pedido);
+            daoMovimentacao.excluirMovimentacaoDescricao("PED" + entrada.getCodigo());
+            daoEntrada.alterarEntrada(entrada);
             retorno = true;
             msg = "Cancelado com sucesso";
         } catch (SQLException e) {
@@ -245,11 +237,11 @@ public class PedidoController {
             msg = "Ocorreu um erro ao cancelar os registros. " + e.getMessage();
         } finally {
             try {
-                modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido()));
+                modelAndView.addObject("statusEntrada", daoStatusEntrada.getStatusEntrada(new StatusEntrada()));
                 modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao()));
-                modelAndView.addObject("proximoId", ObterId.obterId("pedido"));
-                modelAndView.addObject("pedido", daoPedido.getPedidoItem(pedido.getCodigo()));
-                modelAndView.addObject("itensPedido", daoPedido.getItensPedido(pedido.getCodigo()));
+                modelAndView.addObject("proximoId", ObterId.obterId("entrada"));
+                modelAndView.addObject("entrada", daoEntrada.getEntradaItem(entrada.getCodigo()));
+                modelAndView.addObject("itensEntrada", daoEntrada.getItensEntrada(entrada.getCodigo()));
             } catch (SQLException ex) {
                 retorno = false;
                 msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
@@ -264,13 +256,13 @@ public class PedidoController {
         return modelAndView;
     }
     
-    @RequestMapping("filtrarPedido")    
-    public ModelAndView filtrarPedido(@ModelAttribute("pedido") Pedido pedido, BindingResult result){
+    @RequestMapping("filtrarEntrada")    
+    public ModelAndView filtrarEntrada(@ModelAttribute("entrada") Entrada entrada, BindingResult result){
         
-        ModelAndView modelAndView = new ModelAndView("pedido/consultar/");
+        ModelAndView modelAndView = new ModelAndView("entrada/consultar/");
         try {            
-            modelAndView.addObject("pedido", daoPedido.getPedido(pedido));
-            modelAndView.addObject("pedidoFiltro", pedido);
+            modelAndView.addObject("entrada", daoEntrada.getEntrada(entrada));
+            modelAndView.addObject("entradaFiltro", entrada);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -278,7 +270,7 @@ public class PedidoController {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         } finally {
             try {
-                modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido()));
+                modelAndView.addObject("statusEntrada", daoStatusEntrada.getStatusEntrada(new StatusEntrada()));
                 modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao()));
             } catch (SQLException ex) {
                 retorno = false;
@@ -290,13 +282,13 @@ public class PedidoController {
         return modelAndView;
     }
     
-    @RequestMapping("consultarPedidoItem/{id}")    
-    public ModelAndView consultarPedidoItem(@PathVariable("id") int id){
+    @RequestMapping("consultarEntradaItem/{id}")    
+    public ModelAndView consultarEntradaItem(@PathVariable("id") int id){
         
-        ModelAndView modelAndView = new ModelAndView("pedido/criar/");
+        ModelAndView modelAndView = new ModelAndView("entrada/criar/");
         
         try {
-            modelAndView.addObject("pedido", daoPedido.getPedidoItem(id));
+            modelAndView.addObject("entrada", daoEntrada.getEntradaItem(id));
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -304,9 +296,9 @@ public class PedidoController {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         } finally {
             try {
-                modelAndView.addObject("statusPedido", daoStatusPedido.getStatusPedido(new StatusPedido()));
+                modelAndView.addObject("statusEntrada", daoStatusEntrada.getStatusEntrada(new StatusEntrada()));
                 modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(new TipoAvaliacao()));
-                modelAndView.addObject("itensPedido", daoPedido.getItensPedido(id));
+                modelAndView.addObject("itensEntrada", daoEntrada.getItensEntrada(id));
             } catch (SQLException ex) {
                 retorno = false;
                 msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
@@ -315,5 +307,5 @@ public class PedidoController {
             }
         }
         return modelAndView;
-    }    
+    }    */
 }

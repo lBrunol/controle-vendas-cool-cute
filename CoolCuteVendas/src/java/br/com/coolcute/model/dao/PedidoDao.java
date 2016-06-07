@@ -4,6 +4,7 @@ import br.com.coolcute.bean.Anuncio;
 import br.com.coolcute.bean.Cliente;
 import br.com.coolcute.bean.Pedido;
 import br.com.coolcute.bean.ItensPedido;
+import br.com.coolcute.bean.Produto;
 import br.com.coolcute.bean.StatusPedido;
 import br.com.coolcute.bean.TipoAvaliacao;
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import br.com.coolcute.util.ConexaoBanco;
 import java.sql.CallableStatement;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
+import br.com.coolcute.model.dao.ProdutoDao;
 
 @Repository
 public class PedidoDao {    
@@ -55,6 +57,7 @@ public class PedidoDao {
         cs = c.prepareCall("{CALL ITENSPEDIDO_INSERT (?,?,?,?,?,?)}");
         
         for( ItensPedido lstItens : pedido.getItensPedido()){
+            new ProdutoDao().atualizaQuantidadeProduto(new Produto(lstItens.getCodigoProduto(),null,0,0,lstItens.getQuantidade()), false);
             cs.setInt(1, lstItens.getCodigoPedido());
             cs.setInt(2, lstItens.getCodigoProduto());
             cs.setFloat(3, lstItens.getValorVenda());
@@ -72,6 +75,8 @@ public class PedidoDao {
     public void alterarPedido(Pedido pedido) throws SQLException{
         
         ConexaoBanco conn = new ConexaoBanco();
+        
+        
         c = conn.conectar();
         
         cs = c.prepareCall("{CALL PEDIDO_UPDATE (?,?,?,?,?,?,?,?,?,?,?,?)}");
@@ -100,9 +105,13 @@ public class PedidoDao {
 
         cs.execute();
         
-        cs = c.prepareCall("{CALL ITENSPEDIDO_INSERT (?,?,?,?,?,?)}");
+        cs = c.prepareCall("{CALL ITENSPEDIDO_INSERT (?,?,?,?,?,?)}");        
         
         for( ItensPedido lstItens : pedido.getItensPedido()){
+            if(pedido.getStatusPedido().getCodigo() != 9)
+                new ProdutoDao().atualizaQuantidadeProduto(new Produto(lstItens.getCodigoProduto(),null,0,0,lstItens.getQuantidade()), false);
+            else
+                new ProdutoDao().atualizaQuantidadeProduto(new Produto(lstItens.getCodigoProduto(),null,0,0,lstItens.getQuantidade()), true);
             cs.setInt(1, pedido.getCodigo());
             cs.setInt(2, lstItens.getCodigoProduto());
             cs.setFloat(3, lstItens.getValorVenda());
@@ -123,7 +132,7 @@ public class PedidoDao {
         ConexaoBanco conn = new ConexaoBanco();        
         c = conn.conectar();
         
-        cs = c.prepareCall("{CALL ANUNCIO_DELETE (?)}");
+        cs = c.prepareCall("{CALL PEDIDO_DELETE (?)}");
 
         cs.setInt(1, id);
 
@@ -133,13 +142,21 @@ public class PedidoDao {
         c.close();
     }
     
-    public void excluirItensPedido (int id) throws SQLException{
+    public void excluirItensPedido (Pedido pedido) throws SQLException{
+        
+        List<ItensPedido> lstItensAntigos = new ArrayList();
+        lstItensAntigos = getItensPedido(pedido.getCodigo());
+        
+        for( ItensPedido lstItens : lstItensAntigos){
+            new ProdutoDao().atualizaQuantidadeProduto(new Produto(lstItens.getCodigoProduto(),null,0,0,lstItens.getQuantidade()), true);
+        }
+        
         ConexaoBanco conn = new ConexaoBanco();        
-        c = conn.conectar();
+        c = conn.conectar();        
         
         cs = c.prepareCall("{CALL ITENSPEDIDO_DELETE (?)}");
-
-        cs.setInt(1, id);
+        
+        cs.setInt(1, pedido.getCodigo());        
 
         cs.execute();
         cs.close();

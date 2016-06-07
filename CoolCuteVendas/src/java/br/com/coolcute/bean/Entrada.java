@@ -5,7 +5,10 @@
  */
 package br.com.coolcute.bean;
 
-import java.util.Calendar;
+import java.util.List;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 /**
  *
@@ -16,12 +19,12 @@ public class Entrada {
     private int codigo;
     
     private String lote;
-    
-    private float valorTotal;
-    
+    @NumberFormat(style=NumberFormat.Style.CURRENCY)
+    private float valorTotal;    
     private String observacao;
-    
-    private Calendar dataEntrada;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private DateTime dataEntrada;
+    private List<ItensEntrada> itensEntrada;
 
     /**
      * @return the codigo
@@ -82,15 +85,29 @@ public class Entrada {
     /**
      * @return the dataEntrada
      */
-    public Calendar getDataEntrada() {
+    public DateTime getDataEntrada() {
         return dataEntrada;
     }
 
     /**
      * @param dataEntrada the dataEntrada to set
      */
-    public void setDataEntrada(Calendar dataEntrada) {
+    public void setDataEntrada(DateTime dataEntrada) {
         this.dataEntrada = dataEntrada;
+    }
+
+    /**
+     * @return the itensEntrada
+     */
+    public List<ItensEntrada> getItensEntrada() {
+        return itensEntrada;
+    }
+
+    /**
+     * @param itensEntrada the itensEntrada to set
+     */
+    public void setItensEntrada(List<ItensEntrada> itensEntrada) {
+        this.itensEntrada = itensEntrada;
     }
     
 }

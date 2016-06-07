@@ -11,39 +11,12 @@ package br.com.coolcute.bean;
  */
 public class ItensEntrada {
     
-    private Produto produto;
-    private Entrada entrada;
+    private int codigoEntrada;
+    private int codigoProduto;    
     private int quantidade;
-    private float valor;
     private float valorTotal;
-
-    /**
-     * @return the produto
-     */
-    public Produto getProduto() {
-        return produto;
-    }
-
-    /**
-     * @param produto the produto to set
-     */
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    /**
-     * @return the entrada
-     */
-    public Entrada getEntrada() {
-        return entrada;
-    }
-
-    /**
-     * @param entrada the entrada to set
-     */
-    public void setEntrada(Entrada entrada) {
-        this.entrada = entrada;
-    }
+    private String nomeProduto;
+    private float valorProduto;
 
     /**
      * @return the quantidade
@@ -57,21 +30,7 @@ public class ItensEntrada {
      */
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-    }
-
-    /**
-     * @return the valor
-     */
-    public float getValor() {
-        return valor;
-    }
-
-    /**
-     * @param valor the valor to set
-     */
-    public void setValor(float valor) {
-        this.valor = valor;
-    }
+    }    
 
     /**
      * @return the valorTotal
@@ -85,6 +44,62 @@ public class ItensEntrada {
      */
     public void setValorTotal(float valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    /**
+     * @return the codigoEntrada
+     */
+    public int getCodigoEntrada() {
+        return codigoEntrada;
+    }
+
+    /**
+     * @param codigoEntrada the codigoEntrada to set
+     */
+    public void setCodigoEntrada(int codigoEntrada) {
+        this.codigoEntrada = codigoEntrada;
+    }
+
+    /**
+     * @return the codigoProduto
+     */
+    public int getCodigoProduto() {
+        return codigoProduto;
+    }
+
+    /**
+     * @param codigoProduto the codigoProduto to set
+     */
+    public void setCodigoProduto(int codigoProduto) {
+        this.codigoProduto = codigoProduto;
+    }
+
+    /**
+     * @return the nomeProduto
+     */
+    public String getNomeProduto() {
+        return nomeProduto;
+    }
+
+    /**
+     * @param nomeProduto the nomeProduto to set
+     */
+    public void setNomeProduto(String nomeProduto) {
+        this.nomeProduto = nomeProduto;
+    }
+
+    /**
+     * @return the valorProduto
+     */
+    public float getValorProduto() {
+        return valorProduto;
+    }
+
+    /**
+     * @param valorProduto the valorProduto to set
+     */
+    public void setValorProduto(float valorProduto) {
+        this.valorProduto = valorProduto;
     }
     
 }
