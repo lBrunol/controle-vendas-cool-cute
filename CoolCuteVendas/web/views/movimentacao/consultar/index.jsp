@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
 <!DOCTYPE html>
 <html>
@@ -71,11 +72,11 @@
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="valor">Valor</label>
-                    <input type="text" class="form-control" placeholder="Valor" name="valor" value="${movimentacaoFiltro.valor == 0 ? "" : movimentacaoFiltro.valor}" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Valor" name="valor" value="<fmt:formatNumber type="currency" value="${movimentacaoFiltro.valor == 0 ? null : movimentacaoFiltro.valor}" />" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="data">Data</label>
-                    <input type="date" class="form-control" placeholder="Data" name="data" value="${movimentacaoFiltro.data}" aria-describedby="basic-addon2" />
+                    <input type="date" class="form-control" placeholder="Data" name="data" value="<joda:format pattern="yyyy-MM-dd" value="${movimentacaoFiltro.data}" />" aria-describedby="basic-addon2" />
                 </div>              
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="tipoMovimentacao.descricao">Tipo</label>
@@ -110,9 +111,9 @@
                                 <c:if test="${movimentacao != null}">
                                     <c:forEach items="${movimentacao}" var="movimentacao">
                                         <tr>
-                                            <td data-id="${movimentacao.codigo}">${movimentacao.codigo}</td>
+                                            <td data-id="${movimentacao.codigo}"><a href="/consultarMovimentacaoItem/${movimentacao.codigo}">${movimentacao.codigo}</a></td>
                                             <td data-descricao="${movimentacao.descricao}">${movimentacao.descricao}</td>
-                                            <td>${movimentacao.valor}</td>
+                                            <td><fmt:formatNumber type="currency" value="${movimentacao.valor}" /></td>
                                             <td><joda:format pattern="dd/MM/yyyy" value="${movimentacao.data}" /></td>
                                             <td>${movimentacao.tipoMovimentacao.descricao}</td>
                                             <td>

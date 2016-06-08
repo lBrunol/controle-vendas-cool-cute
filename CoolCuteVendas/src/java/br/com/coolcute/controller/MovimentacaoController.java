@@ -32,7 +32,7 @@ public class MovimentacaoController {
         
         try {
             modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacao(new TipoMovimentacao()));
-            modelAndView.addObject("proximoId", ObterId.obterId("movimentacao"));
+            modelAndView.addObject("proximoId", ObterId.obterId("outrasmovimentacoes"));
         } catch (SQLException e) {
             retorno = false;
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
@@ -79,7 +79,7 @@ public class MovimentacaoController {
         }
         
         try {
-            movimentacao.setCodigo(ObterId.obterId("movimentacao"));
+            movimentacao.setCodigo(ObterId.obterId("outrasmovimentacoes"));
                         
             daoMovimentacao.adicionarMovimentacao(movimentacao);
             retorno = true;
@@ -92,7 +92,7 @@ public class MovimentacaoController {
         } finally {
             try {
                 modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacao(new TipoMovimentacao()));
-                modelAndView.addObject("proximoId", ObterId.obterId("movimentacao"));
+                modelAndView.addObject("proximoId", ObterId.obterId("outrasmovimentacoes"));
                 modelAndView.addObject("movimentacao", daoMovimentacao.getMovimentacaoItem(movimentacao.getCodigo()));
             } catch (SQLException ex) {
                 retorno = false;
@@ -131,7 +131,7 @@ public class MovimentacaoController {
         } finally {
             try {
                 modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacao(new TipoMovimentacao()));
-                modelAndView.addObject("proximoId", ObterId.obterId("movimentacao"));
+                modelAndView.addObject("proximoId", ObterId.obterId("outrasmovimentacoes"));
                 modelAndView.addObject("movimentacao", daoMovimentacao.getMovimentacaoItem(movimentacao.getCodigo()));
             } catch (SQLException ex) {
                 retorno = false;

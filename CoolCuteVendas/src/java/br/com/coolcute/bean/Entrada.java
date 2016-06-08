@@ -25,6 +25,19 @@ public class Entrada {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private DateTime dataEntrada;
     private List<ItensEntrada> itensEntrada;
+    
+    public Entrada(){
+    
+    }
+    
+    public Entrada(int codigo, String lote, float valorTotal, String observacao, DateTime dataEntrada, List<ItensEntrada> itensEntrada){
+        this.codigo = codigo;
+        this.lote = lote;
+        this.valorTotal = valorTotal;
+        this.observacao = observacao;
+        this.dataEntrada = dataEntrada;
+        this.itensEntrada = itensEntrada;
+    }
 
     /**
      * @return the codigo

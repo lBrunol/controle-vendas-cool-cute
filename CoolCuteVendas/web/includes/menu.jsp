@@ -123,9 +123,9 @@
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-user"></i> ${usuarioLogado.login} <b class="caret"></b></a>
                                         <ul class="dropdown-menu">
-                                            <li>
+                                            <!--<li>
                                                 <a href="#"><i class="fa fa-fw fa-user"></i>Perfil</a>
-                                            </li>
+                                            </li>-->
                                             <li><a href="/usuario/criar/"><i class="fa fa-pencil-square-o fa-fw"></i> Criar/Editar</a></li>
                                             <li><a href="/usuario/consultar/"><i class="fa fa-search fa-fw"></i> Consultar</a></li>
                                             <li class="divider"></li>

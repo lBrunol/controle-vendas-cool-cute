@@ -60,11 +60,11 @@
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" value="${tipoAvaliacaoFiltro.codigo == 0 ? "" : tipoAvaliacaoFiltro.codigo}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-8 col-sm-12 form-group">
                     <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" placeholder="Descrição" name="descricao" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Descrição" name="descricao" value="${tipoAvaliacaoFiltro.descricao}" aria-describedby="basic-addon2" />
                 </div> 
             </div>
             <div class="row">

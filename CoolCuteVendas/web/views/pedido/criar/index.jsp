@@ -143,6 +143,9 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div class="loader-ajax">
+                            <img src="/imagens/loader.gif" />
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-salvar" data-dismiss="modal">OK</button>
@@ -319,7 +322,7 @@
                 <div class="col-md-12">
                     <button type="submit" class="btn btn-salvar margin-std-right margin-std-top" id="btnSalvar"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
                     <button type="button" disabled class="btn btn-warning margin-std-right margin-std-top" id="cancelaPedido"><i class="fa fa-fw fa-ban"></i> Cancelar Pedido</button>
-                    <button type="button" onclick="serializaItens()" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</button>                    
+                    <a role="button" href="/pedido/consultar/" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</a>                    
                 </div>
             </div>
             <input type="hidden" value="${proximoId}" name="itensPedido.codigoProduto" id="codigoProduto" />
@@ -340,7 +343,6 @@
            
            //Adiciona os produtos do anúncio no array 
             if($('#hdnCodigo').val() != "0"){
-                console.log(taxa);
                 $('.tabela-itens-pedido tbody tr:not(.no-itens) td:first-child').each(function(){
                     lstCodigosProdutos.push(parseInt($(this).text()));
                 });
@@ -690,10 +692,10 @@
                         },
                         url: '/servicoConsultaAnuncioProduto/' + $('#input-anuncio').attr('data-id'),
                         beforeSend: function(){
-                            showLoader('modal-cliente');
+                            showLoader('modal-produto');
                         },
                         complete: function (){
-                            hideLoader('modal-cliente');
+                            hideLoader('modal-produto');
                         },
                         success: function(data){
                             jsonToHtmlItensAnuncioProduto(data);  

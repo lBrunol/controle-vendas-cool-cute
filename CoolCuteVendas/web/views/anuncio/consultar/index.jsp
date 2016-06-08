@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-12 form-group">
                     <label for="codigo">Data de criação</label>
-                    <input type="date" class="form-control" placeholder="Data de criação" name="dataCriacao" value="${anuncioFiltro.dataCriacao}" aria-describedby="basic-addon2" />
+                    <input type="date" class="form-control" placeholder="Data de criação" name="dataCriacao" value="<joda:format pattern="yyyy-MM-dd" value="${anuncioFiltro.dataCriacao}" />" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
                     <label for="statusAnuncio.descricao">Status</label>

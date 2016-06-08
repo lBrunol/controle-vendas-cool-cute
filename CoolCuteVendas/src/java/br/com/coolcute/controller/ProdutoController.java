@@ -2,6 +2,7 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Produto;
 import br.com.coolcute.model.dao.ProdutoDao;
+import br.com.coolcute.util.ObterId;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
@@ -54,6 +55,7 @@ public class ProdutoController {
         }
         
         try {
+            produto.setCodigo(ObterId.obterId("produto"));
             daoProduto.adicionarProduto(produto);
             retorno = true;
             msg = "Cadastrado com sucesso";
@@ -62,6 +64,15 @@ public class ProdutoController {
             msg = "Ocorreu um erro com o banco de dados ao cadastrar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao cadastrar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("produto", daoProduto.getProdutoItem(produto.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -90,6 +101,16 @@ public class ProdutoController {
             msg = "Ocorreu um erro com o banco de dados ao alterar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao alterar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("produto", daoProduto.getProdutoItem(produto.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                retorno = false;
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -117,8 +138,9 @@ public class ProdutoController {
         
         ModelAndView modelAndView = new ModelAndView("produto/consultar/");
         
-        try {            
+        try {
             modelAndView.addObject("produto", daoProduto.getProduto(produto));
+            modelAndView.addObject("produtoFiltro", produto);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);

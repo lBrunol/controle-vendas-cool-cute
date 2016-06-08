@@ -2,6 +2,7 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.TipoAvaliacao;
 import br.com.coolcute.model.dao.TipoAvaliacaoDao;
+import br.com.coolcute.util.ObterId;
 import java.sql.SQLException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class TipoAvaliacaoController {
         }
         
         try {
+            tipoAvaliacao.setCodigo(ObterId.obterId("tipoavaliacoes"));
             daoTipoAvaliacao.adicionarTipoAvaliacao(tipoAvaliacao);
             retorno = true;
             msg = "Cadastrado com sucesso";
@@ -58,6 +60,16 @@ public class TipoAvaliacaoController {
             msg = "Ocorreu um erro com o banco de dados ao cadastrar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao cadastrar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacaoItem(tipoAvaliacao.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                retorno = false;
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -86,6 +98,16 @@ public class TipoAvaliacaoController {
             msg = "Ocorreu um erro com o banco de dados ao alterar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao alterar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacaoItem(tipoAvaliacao.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                retorno = false;
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -115,6 +137,7 @@ public class TipoAvaliacaoController {
         
         try {            
             modelAndView.addObject("tipoAvaliacao", daoTipoAvaliacao.getTipoAvaliacao(tipoAvaliacao));
+            modelAndView.addObject("tipoAvaliacaoFiltro", tipoAvaliacao);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);

@@ -2,10 +2,10 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Usuario;
 import br.com.coolcute.model.dao.UsuarioDao;
+import br.com.coolcute.util.ObterId;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,6 +54,7 @@ public class UsuarioController {
         }
         
         try {
+            usuario.setCodigo(ObterId.obterId("usuario"));
             daoUsuario.adicionarUsuario(usuario);
             retorno = true;
             msg = "Cadastrado com sucesso";
@@ -62,6 +63,15 @@ public class UsuarioController {
             msg = "Ocorreu um erro com o banco de dados ao cadastrar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao cadastrar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("usuario", daoUsuario.getUsuarioItem(usuario.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -90,6 +100,16 @@ public class UsuarioController {
             msg = "Ocorreu um erro com o banco de dados ao alterar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao alterar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("usuario", daoUsuario.getUsuarioItem(usuario.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                retorno = false;
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -119,6 +139,7 @@ public class UsuarioController {
         
         try {            
             modelAndView.addObject("usuario", daoUsuario.getUsuario(usuario));
+            modelAndView.addObject("usuarioFiltro", usuario);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);

@@ -20,10 +20,10 @@
       <!-- CONTEÚDO -->
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
-        <ol class="carousel-indicators">
+        <!--<ol class="carousel-indicators">
           <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
           <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        </ol>
+        </ol>-->
         <!-- Wrapper for slides -->
         <div class="carousel-inner" role="listbox"> 
             <div class="item active" id="animationBanner">
@@ -32,11 +32,9 @@
                   <img src="/imagens/logoHome.png" class="img-responsive">
               </div>
             </div>
-            <div class="item">
+            <!--<div class="item">
                 <img src="/imagens/wp1.jpg" class="img-responsive" alt="" />
                 <div class="divContaineres">
-                    <!-- div class container Vendas -->
-                    <!-- __________________________________________________________________________________-->
                     <div class="row">
                         <div class="container-home" id="containerVendas">
                             <h3> Vendas </h3>
@@ -55,7 +53,6 @@
                             <div class="row">
                                 <button type="button" class="btn btn-mais">Mais +</button>
                             </div>
-                            <!-- div class container saldo -->
 
                             <div class="container-home" id="containerSaldo">
                                 <h3> Saldo </h3>
@@ -76,8 +73,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- __________________________________________________________________________________-->
-                    <!-- div class container mais vendidas-->
+
                     <div class="row">
                         <div class="container-home" id="containerMaisVendidas">
                             <h3> Mais Vendidas </h3>
@@ -96,7 +92,7 @@
                                 <button type="button" class="btn btn-mais">Mais +</button>
                             </div>
                         </div>
-                        <!-- div class container mais ultimas movimentações-->
+
                         <div class="container-home" id="containerUltimasMovimentacoes">
                             <h3> Últimas Movimentações </h3>
                             <div class="row">
@@ -113,16 +109,16 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <!--<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
             <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" id="btnProximaImagem">
                 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
-            </a>
+            </a>-->
         </div>
     </div>
  

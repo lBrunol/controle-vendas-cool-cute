@@ -2,6 +2,7 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.TipoMovimentacao;
 import br.com.coolcute.model.dao.TipoMovimentacaoDao;
+import br.com.coolcute.util.ObterId;
 import java.sql.SQLException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class TipoMovimentacaoController {
         }
         
         try {
+            tipoMovimentacao.setCodigo(ObterId.obterId("tipoMovimentacao"));
             daoTipoMovimentacao.adicionarTipoMovimentacao(tipoMovimentacao);
             retorno = true;
             msg = "Cadastrado com sucesso";
@@ -58,6 +60,15 @@ public class TipoMovimentacaoController {
             msg = "Ocorreu um erro com o banco de dados ao cadastrar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao cadastrar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacaoItem(tipoMovimentacao.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -86,6 +97,16 @@ public class TipoMovimentacaoController {
             msg = "Ocorreu um erro com o banco de dados ao alterar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao alterar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacaoItem(tipoMovimentacao.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                retorno = false;
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -115,6 +136,7 @@ public class TipoMovimentacaoController {
         
         try {            
             modelAndView.addObject("tipoMovimentacao", daoTipoMovimentacao.getTipoMovimentacao(tipoMovimentacao));
+            modelAndView.addObject("tipoMovimentacaoFiltro", tipoMovimentacao);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);

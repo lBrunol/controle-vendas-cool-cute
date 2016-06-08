@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,11 +61,11 @@
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" value="${tipoAnuncioFiltro.codigo == 0 ? "" : tipoAnuncioFiltro.codigo}" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div>
                 <div class="col-md-8 col-sm-12 form-group">
                     <label for="descricao">Descrição</label>
-                    <input type="text" class="form-control" placeholder="Descrição" name="descricao" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Descrição" name="descricao" value="${tipoAnuncioFiltro.descricao}" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div> 
             </div>
             <div class="row">
@@ -90,7 +91,7 @@
                                         <tr>
                                             <td data-id="${tipoAnuncio.codigo}">${tipoAnuncio.codigo}</td>
                                             <td data-descricao="${tipoAnuncio.descricao}">${tipoAnuncio.descricao}</td>
-                                            <td>${tipoAnuncio.percentual}</td>                                            
+                                            <td><fmt:formatNumber type="percent" value="${tipoAnuncio.percentual}" /></td>                                            
                                             <td>
                                                 <a href="/consultarTipoAnuncioItem/${tipoAnuncio.codigo}" class="btn btn-pequeno btn-warning" role="button"><i class="fa fa-fw fa-pencil-square-o"></i> Editar</a>
                                                 <button type="button" class="btn btn-pequeno btn-vermelho btn-excluir" data-target=".modal-excluir" data-toggle="modal"><i class="fa fa-trash fa-fw"></i> Excluir</button>

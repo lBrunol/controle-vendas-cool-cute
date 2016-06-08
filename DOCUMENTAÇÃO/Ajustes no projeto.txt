@@ -15,9 +15,9 @@
 
 Sistema
 - Back-end das telas de 
-	- Pedido
+	- Pedido - OK - verificar quando os campos estão desabilitados
 	- Anúncio - OK
-	- Entrada
+	- Entrada - OK
 	- Status Pedido - OK
 	- Tipo Avaliações - OK
 	- Usuários - OK
@@ -26,9 +26,9 @@ Sistema
 	- Movimentação - OK
 	- Home
 - Estilização dos relatórios
-- Procedures de select
+- Procedures de select - OK
 - Lógica de sessão dos usuários - OK
-- Implantação das procedures nos DAOS
+- Implantação das procedures nos DAOS - OK
 - Ajustes visuais no menu
 - Ajustes visuais na home (Banner full hd, possibilidade de pausá-lo e boxes responsivos)
 

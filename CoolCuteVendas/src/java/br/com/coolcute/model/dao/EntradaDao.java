@@ -62,12 +62,12 @@ public class EntradaDao {
         
         cs.execute();
         
-        cs = c.prepareCall("{CALL ITENSENTRADA_INSERT (?,?,?,?,?,?)}");        
+        cs = c.prepareCall("{CALL ITENSENTRADA_INSERT (?,?,?,?)}");        
         
         for( ItensEntrada lstItens : entrada.getItensEntrada()){
             new ProdutoDao().atualizaQuantidadeProduto(new Produto(lstItens.getCodigoProduto(),null,0,0,lstItens.getQuantidade()), true);
             cs.setInt(1, lstItens.getCodigoProduto());
-            cs.setInt(2, lstItens.getCodigoEntrada());
+            cs.setInt(2, entrada.getCodigo());
             cs.setFloat(3, lstItens.getQuantidade());
             cs.setFloat(4, lstItens.getValorTotal());            
             cs.execute();
@@ -150,7 +150,7 @@ public class EntradaDao {
         ConexaoBanco conn = new ConexaoBanco();
         c = conn.conectar();
         
-        CallableStatement cs = c.prepareCall("{CALL ENTRADA_SELECT (?,?,?,?,?,?,?,?,?)}");
+        CallableStatement cs = c.prepareCall("{CALL ENTRADA_SELECT (?,?,?,?)}");
             
         cs.setInt(1, entrada.getCodigo());
         cs.setString(2, entrada.getLote());

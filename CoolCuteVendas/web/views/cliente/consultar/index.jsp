@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Consulta de Clientes - Cool & Cute - Vendas</title>
+    <title>Consulta de Cliente - Cool & Cute - Vendas</title>
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
 </head>
@@ -18,12 +18,12 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2>Deseja realmente excluir o cliente?</h2>                            
+                        <h2>Deseja realmente excluir o Cliente?</h2>                            
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <p class="modal-id"><strong>Id: </strong><span></span></p>                        
-                        <p class="modal-descricao"><strong>Nome: </strong><span></span></p>
+                        <p class="modal-descricao"><strong>Descrição: </strong><span></span></p>
                         <form action="/excluirCliente" method="POST">
                             <input type="hidden" name="codigo" id="hdnCodigo" value="" />
                             <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-check"></i> Confirmar</button>
@@ -40,7 +40,7 @@
         <!--BreadCrumbs-->
         <ol class="breadcrumb">
             <li><a href="/">Início</a></li>
-            <li><a href="javascript:;">Clientes</a></li>
+            <li><a href="javascript:;">Cliente</a></li>
             <li class="active">Consultar</li>
         </ol>
         <c:if test="${msg != null }">
@@ -60,15 +60,15 @@
             <div class="row">
                 <div class="col-md-2 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" value="${clienteFiltro.codigo == 0 ? "" : clienteFiltro.codigo}" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Nome" name="nome" value="${clienteFiltro.nome}" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div>
                 <div class="col-md-5 col-sm-12 form-group">
                     <label for="email">E-mail</label>
-                    <input type="text" class="form-control" placeholder="Email" name="email" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Email" name="email" value="${clienteFiltro.email}" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div>  
             </div>
             <div class="row">
@@ -104,7 +104,7 @@
                                 </c:if>
                                 <c:if test="${cliente == null}">
                                     <tr class="no-paginate">
-                                        <td colspan="4">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
+                                        <td colspan="3">Por favor, faça uma pesquisa ou entre com argumentos válidos.</td>
                                     </tr>
                                 </c:if>
                             </tbody>                               
@@ -129,7 +129,7 @@
     <%@include file="/includes/rodape.jsp" %>   
     <script type="text/javascript" src="/js/paginacao.js"></script>
     <script type="text/javascript">
-        $(function () {           
+        $(function () {
             
             //Ação de exclusão
             $('.btn-excluir').click(function(){
@@ -141,15 +141,7 @@
                 $('.modal-excluir #hdnCodigo').val(id);
             });
             
-            
-            $('input[type="radio"]').on('change', function() {
-                $('#txtPesquisa').attr({
-                    name: $('input[type="radio"]:checked').val().toLowerCase(),
-                    placeholder: $('input[type="radio"]:checked').val()
-                }).focus();
-             });
-             
-            paginacao('.table-pagination', '.pagination', 20);
+            paginacao('.table-pagination', '.pagination', 10);
              
         });
     </script>            

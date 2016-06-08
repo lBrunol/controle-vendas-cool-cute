@@ -2,6 +2,7 @@ package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.Cliente;
 import br.com.coolcute.model.dao.ClienteDao;
+import br.com.coolcute.util.ObterId;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.SQLException;
@@ -24,7 +25,6 @@ public class ClienteController {
     private boolean retorno;
     private String msg;
     
-    //Mapeamento dos forms
     @RequestMapping("cliente/criar/")
     public String form() {
         return "cliente/criar/";
@@ -35,7 +35,6 @@ public class ClienteController {
         return "cliente/consultar/";
     }
     
-    //No request verifica se é alteração ou criação
     @RequestMapping("adicionarAlterarCliente")
     public ModelAndView adicionarAlterarCliente (@Valid Cliente cliente, BindingResult result){
         if(cliente.getCodigo() != 0){        
@@ -56,7 +55,8 @@ public class ClienteController {
         }
         
         try {
-            daoCliente.adiciona(cliente);
+            cliente.setCodigo(ObterId.obterId("cliente"));
+            daoCliente.adicionarCliente(cliente);
             retorno = true;
             msg = "Cadastrado com sucesso";
         } catch (SQLException e) {
@@ -64,47 +64,21 @@ public class ClienteController {
             msg = "Ocorreu um erro com o banco de dados ao cadastrar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao cadastrar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("cliente", daoCliente.getClienteItem(cliente.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
-
         
         modelAndView.addObject("retorno", retorno);
         modelAndView.addObject("msg", msg);
         
         return modelAndView;		
-    }
-    
-    @RequestMapping("consultarCliente")
-    public ModelAndView lista(){
-        
-        ModelAndView modelAndView = new ModelAndView("cliente/consultar/");
-        
-        try {            
-            modelAndView.addObject("cliente", daoCliente.getCliente());
-        } catch (SQLException e) {
-            msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
-            modelAndView.addObject("msg", msg);
-        } catch (Exception e){
-            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
-        }
-        
-        return modelAndView;
-    }
-    
-    @RequestMapping("consultarClienteItem/{id}")
-    public ModelAndView listaItem(@PathVariable("id") Long id){
-        
-        ModelAndView modelAndView = new ModelAndView("cliente/criar/");
-        
-        try {            
-            modelAndView.addObject("cliente", daoCliente.getClienteItem(id));
-        } catch (SQLException e) {
-            msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
-            modelAndView.addObject("msg", msg);
-        } catch (Exception e){
-            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
-        }
-        
-        return modelAndView;
     }
     
     @RequestMapping("alterarCliente")
@@ -119,7 +93,7 @@ public class ClienteController {
         }
         
         try {
-            daoCliente.altera(cliente);
+            daoCliente.alterarCliente(cliente);
             retorno = true;
             msg = "Registro alterado com sucesso";
         } catch (SQLException e) {
@@ -127,6 +101,16 @@ public class ClienteController {
             msg = "Ocorreu um erro com o banco de dados ao alterar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao alterar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("cliente", daoCliente.getClienteItem(cliente.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                retorno = false;
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -136,26 +120,27 @@ public class ClienteController {
     }
     
     @RequestMapping("excluirCliente") 
-    public ModelAndView removerCliente(Cliente cliente) {
+    public ModelAndView excluirCliente(Cliente cliente, BindingResult result) {
 
         try {
-           daoCliente.exclui(cliente.getCodigo()); 
+           daoCliente.excluirCliente(cliente.getCodigo()); 
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         
-        return lista();
+        return filtrarCliente(new Cliente(), result);
     }
-	
+    
     @RequestMapping("filtrarCliente")    
     public ModelAndView filtrarCliente(@ModelAttribute("cliente") Cliente cliente, BindingResult result){
         
         ModelAndView modelAndView = new ModelAndView("cliente/consultar/");
         
         try {            
-            modelAndView.addObject("cliente", daoCliente.filterCliente(cliente));
+            modelAndView.addObject("cliente", daoCliente.getCliente(cliente));
+            modelAndView.addObject("clienteFiltro", cliente);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);
@@ -165,7 +150,22 @@ public class ClienteController {
         return modelAndView;
     }
     
-    //Retorna os clientes em formato json para chamadas ajax
+    @RequestMapping("consultarClienteItem/{id}")    
+    public ModelAndView consultarClienteItem(@PathVariable("id") int id){
+        
+        ModelAndView modelAndView = new ModelAndView("cliente/criar/");
+        
+        try {
+            modelAndView.addObject("cliente", daoCliente.getClienteItem(id));
+        } catch (SQLException e) {
+            msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
+            modelAndView.addObject("msg", msg);
+        } catch (Exception e){
+            msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
+        }
+        return modelAndView;
+    }
+    
     @RequestMapping("servicoConsultarCliente")
     @ResponseBody
     public String servicoConsultarCliente() {
@@ -175,7 +175,7 @@ public class ClienteController {
         String jsonValue = null;
         
         try {            
-            lstCli = daoCliente.getCliente();
+            lstCli = daoCliente.getCliente(new Cliente());
             jsonValue = mapper.writeValueAsString(lstCli);
         } catch (SQLException | JsonProcessingException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
@@ -183,5 +183,5 @@ public class ClienteController {
             msg = "Ocorreu um erro ao listar os registros. " + e.getMessage();
         }
         return jsonValue;
-    }    
+    }
 }

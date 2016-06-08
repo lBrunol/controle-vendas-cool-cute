@@ -60,11 +60,11 @@
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" value="${usuarioFiltro.codigo == 0 ? "" : usuarioFiltro.codigo}" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div>
                 <div class="col-md-8 col-sm-12 form-group">
                     <label for="login">Usuário</label>
-                    <input type="text" class="form-control" placeholder="Usuário" name="login" aria-describedby="basic-addon2" id="txtPesquisa" />
+                    <input type="text" class="form-control" placeholder="Usuário" name="login" value="${usuarioFiltro.login}" aria-describedby="basic-addon2" id="txtPesquisa" />
                 </div> 
             </div>
             <div class="row">

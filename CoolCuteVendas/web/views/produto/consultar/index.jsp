@@ -61,21 +61,21 @@
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="codigo">Código</label>
-                    <input type="text" class="form-control" placeholder="Código" name="codigo" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Código" name="codigo" value="${produtoFiltro.codigo == 0 ? "" : produtoFiltro.codigo}" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-8 col-sm-12 form-group">
                     <label for="nome">Nome</label>
-                    <input type="text" class="form-control" placeholder="Nome" name="nome" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Nome" name="nome" value="${produtoFiltro.nome}" aria-describedby="basic-addon2" />
                 </div> 
             </div>
             <div class="row">
                 <div class="col-md-4 col-sm-12 form-group">
                     <label for="preco">Preço</label>
-                    <input type="text" class="form-control" placeholder="Preço" name="preco" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Preço" name="preco" value="<fmt:formatNumber type="currency" value="${produtoFiltro.preco == 0 ? null : produtoFiltro.preco}" />" aria-describedby="basic-addon2" />
                 </div>
                 <div class="col-md-8 col-sm-12 form-group">
                     <label for="quantidade">Quantidade</label>
-                    <input type="text" class="form-control" placeholder="Quantidade" name="quantidade" aria-describedby="basic-addon2" />
+                    <input type="text" class="form-control" placeholder="Quantidade" name="quantidade" value="${produtoFiltro.quantidade == 0 ? "" : produtoFiltro.quantidade}" aria-describedby="basic-addon2" />
                 </div> 
             </div>
             <div class="row">
@@ -101,7 +101,7 @@
                                 <c:if test="${produto != null}">
                                     <c:forEach items="${produto}" var="produto">
                                         <tr>
-                                            <td data-id="${produto.codigo}">${produto.codigo}</td>
+                                            <td data-id="${produto.codigo}"><a href="/consultarProdutoItem/${produto.codigo}">${produto.codigo}</a></td>
                                             <td data-descricao="${produto.nome}">${produto.nome}</td>
                                             <td><fmt:formatNumber type="currency" value="${produto.preco}" /></td>
                                             <td>${produto.estoqueMinimo}</td>

@@ -1,5 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://www.joda.org/joda/time/tags" prefix="joda" %>
 <!DOCTYPE html>
@@ -54,7 +55,7 @@
                 </div>
                 <div class="form-group col-md-6 col-xs-12">
                     <label for="valor">Valor</label>
-                    <input type="text" class="form-control" name="valor" value="${movimentacao.getValor()}" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
+                    <input type="text" class="form-control" name="valor" value="<fmt:formatNumber type="currency" value="${movimentacao.getValor()}" />" onkeypress="return(apenasNumeros(event))" onblur="atribuiTexto($(this),numeroParaMoeda($(this).val()))" />
                 </div>
             </div>
             <div class="row">

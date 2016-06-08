@@ -5,6 +5,8 @@
  */
 package br.com.coolcute.bean;
 
+import org.springframework.format.annotation.NumberFormat;
+
 /**
  *
  * @author Casa
@@ -13,6 +15,7 @@ public class TipoAnuncio {
     
     private int codigo;
     private String descricao;
+    @NumberFormat(style=NumberFormat.Style.PERCENT)
     private float percentual;
 
     

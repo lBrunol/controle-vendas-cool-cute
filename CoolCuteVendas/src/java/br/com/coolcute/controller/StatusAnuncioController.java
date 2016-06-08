@@ -1,7 +1,9 @@
 package br.com.coolcute.controller;
 
 import br.com.coolcute.bean.StatusAnuncio;
+import br.com.coolcute.bean.TipoAnuncio;
 import br.com.coolcute.model.dao.StatusAnuncioDao;
+import br.com.coolcute.util.ObterId;
 import java.sql.SQLException;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +52,7 @@ public class StatusAnuncioController {
         }
         
         try {
+            statusAnuncio.setCodigo(ObterId.obterId("statusAnuncio"));
             daoStatusAnuncio.adicionarStatusAnuncio(statusAnuncio);
             retorno = true;
             msg = "Cadastrado com sucesso";
@@ -58,6 +61,15 @@ public class StatusAnuncioController {
             msg = "Ocorreu um erro com o banco de dados ao cadastrar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao cadastrar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("statusAnuncio", daoStatusAnuncio.getStatusAnuncioItem(statusAnuncio.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -86,6 +98,16 @@ public class StatusAnuncioController {
             msg = "Ocorreu um erro com o banco de dados ao alterar o registro. " + e.getMessage();
         } catch (Exception e){
             msg = "Ocorreu um erro ao alterar os registros. " + e.getMessage();
+        } finally {
+            try {
+                modelAndView.addObject("statusAnuncio", daoStatusAnuncio.getStatusAnuncioItem(statusAnuncio.getCodigo()));
+            } catch (SQLException ex) {
+                retorno = false;
+                msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + ex.getMessage();
+            } catch (Exception ex){
+                retorno = false;
+                msg = "Ocorreu um erro ao listar os registros. " + ex.getMessage();
+            }            
         }
         
         modelAndView.addObject("retorno", retorno);
@@ -115,6 +137,7 @@ public class StatusAnuncioController {
         
         try {            
             modelAndView.addObject("statusAnuncio", daoStatusAnuncio.getStatusAnuncio(statusAnuncio));
+            modelAndView.addObject("statusAnuncioFiltro", statusAnuncio);
         } catch (SQLException e) {
             msg = "Ocorreu um erro com o banco de dados ao listar os registros. " + e.getMessage();
             modelAndView.addObject("msg", msg);

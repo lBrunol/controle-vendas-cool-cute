@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cadastro de Clientes - Cool & Cute - Vendas</title>
+    <title>Cadastro de Cliente - Cool & Cute - Vendas</title>
     <%-- INCLUDE DO TOPO --%>
     <%@include file="/includes/topo.jsp" %>
 </head>
@@ -15,7 +15,7 @@
     <div class="container content">
         <ol class="breadcrumb">
             <li><a href="#">Início</a></li>
-            <li><a href="#">Clientes</a></li>
+            <li><a href="#">Cliente</a></li>
             <li class="active">Criar/Editar</li>
         </ol>
         <c:if test="${retorno != null }">
@@ -33,9 +33,9 @@
                 </div>
             </c:if>
         </c:if>
-        <h2>Cadastrar Clientes</h2>
-        <hr />
-        <form method="post" action="/adicionarAlterarCliente" id="formClientes">
+        <h2>Cadastro de Cliente</h2>
+        <hr>
+        <form method="post" action="/adicionarAlterarCliente" id="formCliente">
             <div class="row">
                 <div class="hidden">
                     <c:choose>
@@ -55,32 +55,32 @@
                     <label for="email">Email</label>
                     <input type="text" id="input-email" class="form-control" name="email" value="${cliente.getEmail()}" />
                 </div>
-            </div>
+            </div> 
             <div class="row margin-std-bottom">
                 <div class="col-md-12">
                     <hr />
                 </div>
-            </div>       
+            </div>
             <div class="row">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>                
+                    <button type="submit" class="btn btn-salvar margin-std-right margin-std-top"><i class="fa fa-fw fa-floppy-o"></i> Salvar</button>
                     <a role="button" href="/cliente/consultar/" class="btn btn-vermelho margin-std-top"><i class="fa fa-fw fa-chevron-left"></i> Voltar</a>
                 </div>
             </div>
         </form>
-   </div>
-    
+    </div>    
     <%-- INCLUDE DO RODAPÉ --%>
-    <%@include file="/includes/rodape.jsp" %>  
+    <%@include file="/includes/rodape.jsp" %>
     <script type="text/javascript">
+        /* Validação dos campos do formulário */
         $(function () {
             /* Validação dos campos do formulário */
-            $("#formClientes").validate({
+            $("#formCliente").validate({
                 errorPlacement: function(error, element) {
                 $( element )
                     .closest( "form" )
                         .find( "label[for='" + element.attr( "name" ) + "']" )
-                            .append( error );                
+                            .append( error );
                 },
                 errorElement: "span",
                 rules: {
@@ -93,6 +93,6 @@
                 }                   
             });            
         });
-    </script>       
+    </script>    
 </body>
 </html>
