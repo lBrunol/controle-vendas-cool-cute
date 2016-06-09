@@ -563,7 +563,7 @@ INSERT INTO PRODUTOANUNCIO VALUES (47,40);
 INSERT INTO PRODUTOANUNCIO VALUES (47,62);
 
 INSERT INTO USUARIO VALUES (0, 'bruno', 'bruno', true, true);
-INSERT INTO USUARIO VALUES (0, 'bruno', 'bruno', true, true);
+INSERT INTO USUARIO VALUES (0, 'thiago', 'thiago', true, true);
 
 -- STATUSPEDIDO
 DROP PROCEDURE IF EXISTS STATUSPEDIDO_INSERT;
@@ -977,7 +977,8 @@ DELIMITER &&
 			CASE	
 				WHEN email = '' OR email IS NULL THEN cliEmail
 				WHEN email <> '' THEN CONCAT('%', email, '%')
-			END;    
+			END
+		ORDER BY cliNome;
 	END
 &&
 
@@ -1305,7 +1306,7 @@ DELIMITER &&
 				WHEN tipoAnuncio <> '' THEN tipoAnuncio
 			END
 			
-		ORDER BY a.anuCodigo;
+		ORDER BY a.anuDescricao;
 	END
 &&
 
