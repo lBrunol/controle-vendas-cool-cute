@@ -1,0 +1,166 @@
+@font-face { font-family: openSansLight; src: url('../fonts/OpenSans-Light.ttf'); }
+@font-face { font-family: openSansRegular; src: url('../fonts/OpenSans-Regular.ttf'); }
+@font-face { font-family: openSansItalic; src: url('../fonts/OpenSans-Italic.ttf'); }
+@font-face { font-family: openSansBold; src: url('../fonts/OpenSans-Bold.ttf'); }
+
+/* DEFINIÇÕES GERAIS */
+* {font-family: openSansRegular;}
+h1 { font-weight: normal; }
+h2 { font-size:24px; }
+h1, h2 { font-family: openSansLight; color:#3fcdc4; }
+h3 { font-size: 20px; margin-bottom: 20px; }
+hr { margin: 15px 0; border-color: #ccc; }
+button,
+input,
+a,
+button:focus,
+input:focus,
+a:focus { outline: 0 !important; }
+textarea { resize: none; }
+/*input[type="date"] { -webkit-appearance: textfield; -moz-appearance: field; }*/
+
+.logo { padding: 15px; }
+
+/* CLASSES PADRÃO */
+.padding-std-top { padding-top: 15px; }
+.padding-std-right { padding-right: 15px; }
+.padding-std-bottom { padding-bottom: 15px; }
+.padding-std-left { padding-left: 15px; }
+
+.margin-std-top { margin-top: 15px; }
+.margin-std-right { margin-right: 15px; }
+.margin-std-bottom { margin-bottom: 15px; }
+.margin-std-left { margin-left: 15px; }
+
+/* DIVS CONTAINER */
+.content { min-height: 970px; margin-bottom: 30px; }
+
+/* MENU */
+.close-menu { display: none; }
+/* SUBMENU */
+.sub-nav-outros ul { padding-left: 20px; list-style: none; }
+.sub-menu { left: 50%; }
+.sub-menu li a { padding: 3px 8px; }
+
+/* FORMULÁRIOS */
+.input-qtde { width: 70px; height: 24px; padding: 2px 6px  }
+input.error ,
+input.error:focus { border: 1px solid #a94442; box-shadow: none; }
+span.error { margin-left: 10px; font-size: 10px; font-style: italic; color: #a94442; }
+
+/* PANELS */
+.panel-filtro { margin-bottom: 25px; background-color: #f8f8f8; border-color: #ccc; }
+
+/* PAGINAÇÃO */
+.pagination-cool >li > a, 
+.pagination-cool >li > span { color: #666; font-weight: bold;}
+
+.pagination-cool >.active > a, 
+.pagination-cool >.active > a:focus, 
+.pagination-cool >.active > a:hover, 
+.pagination-cool >.active > span, 
+.pagination-cool >.active > span:focus, 
+.pagination-cool >.active > span:hover { background-color: #fff; border: 1px solid #ddd; color: #3fcdc4; }
+
+.pagination >li >a:focus, 
+.pagination >li >a:hover, 
+.pagination >li >span:focus, 
+.pagination >li >span:hover { color: #666; }
+
+/* MODAIS */
+.modal h4 { font-family: openSansLight; font-size:18px; color:#3fcdc4; }
+.modal tbody tr { cursor: pointer; }
+.modal tbody .active-tr,
+.modal tbody tr:hover { background-color: #27a199; color:#fff; }
+
+/* TABELAS */
+.tabela-overflow { width: 100%; overflow: auto; max-height: 500px; }
+/* TABELA PAGINAÇÃO */
+.table-pagination tbody tr { display: none; }
+.table-pagination tbody tr.no-paginate { display: block; }
+
+/* BOTÕES */
+.btn-pequeno { padding: 2px 9px; font-size: 12px; }
+.btn-vermelho { background-color: #e54147; color:#fff; }
+.btn-vermelho:hover,
+.btn-vermelho:focus { background-color:#e77f83; color:#fff; transition: all linear 0.2s; }
+.btn-mais,
+.btn-salvar { background-color: #27a199; font-size:14px; color: #fff; transition: all linear 0.2s; }
+.btn-mais:hover,
+.btn-mais:focus,
+.btn-salvar:hover,
+.btn-salvar:focus { background-color: #46efe4; color:#fff; transition: all linear 0.2s; }
+
+/* AJAX */
+.loader-ajax {text-align: center; }
+
+/* LOGIN */
+.container-login { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto; width: 400px; height: 220px; overflow: hidden; }
+ 
+/* ALTERAÇÕES NO BOOTSTRAP */
+.nav > li > a { padding: 15px 10px; }
+.navbar-toggle { border-color: #ddd; }
+.navbar-toggle .icon-bar { background: #27a199; }
+.modal-header .close { top: 5px; right: 10px; position: absolute; }
+.alert { transition: all linear 0.5s; }
+
+/* RODAPÉ */
+.rodape { padding: 15px 0; background-color:#f8f8f8; border-top: 1px solid #e7e7e7; }
+.rodape p { font-family: openSansBold; font-size: 12px; color: #666; }
+
+@media screen and (max-width: 1023px){ 
+    
+}
+
+@media screen and (max-width: 767px) {
+    .navbar-nav .open .dropdown-menu .sub-menu > li > a { padding-left: 35px; }
+    .close-menu { display: block; font-size: 40px!important; float: left; padding: 0 30px; width: 100%; text-align: right; }
+    .navbar-collapse { height: 100%; overflow-y: auto; overflow-x: hidden; transform: scale(1.5); transition: 0.2s all linear; opacity: 0; position: fixed; top: 0; width: 100%; min-height: 100%; z-index: 500; }
+    .navbar-collapse.collapse.in { display: block !important; background-color: rgba(231, 231, 231, 0.9); transform: scale(1); opacity: 1; }
+    .navbar-collapse.collapse.in .nav { clear: both; }
+    .tabela-modal { max-height: 300px; }
+}
+
+@media screen and (min-width: 783px){
+    .logo { padding-left: 0; }
+}
+
+@media screen and (max-width: 600px){
+    .table { width: 600px; }
+}
+
+.divContaineres{ width: 900px; height: 600px; top: 0; position: absolute; margin-left: 224px; margin-top: 30px; z-index: 2;}
+.container-home{ background-color: #f8f8f8;
+width: 300px;
+height: 250px;
+background-color :rgba(23, 43, 41, 0.8);
+border-radius: 30px;
+top:0; 
+text-align: center;
+position: absolute;
+} 	
+
+.container-home h3{ color: rgb(36 , 206 ,195); } 
+.container-home p{ color: #B0CDCB; font-size: 14px; text-align:left; margin-left: 30px; text-shadow: 2px 2px #070707;} 		
+
+/*#containerSaldo{margin-left:800px;}*/
+
+#containerMaisVendidas{top:0;margin-left: 100px;}
+#containerSaldo{top:0; margin-left: -400px;}
+#containerUltimasMovimentacoes{top:0; margin-left: 500px;}
+#containerVendas{top:0; margin-left:500px; margin-top: 300px; }
+
+#jumbotron1{ top: 0; position: absolute; }
+
+.logo_icone { background-image: url(..\Users\ThieBia\Users\ThieBia\Desktop\Projeto da Faculdade\Projeto Cool & Cute\trunk\CoolCuteVendas\web\imagens);  
+ position: absolute;
+ top: 0;
+ width: 120px;
+ height: 120px;
+ background-size: 100%;
+ cursor: pointer;
+ border: 0px solid black;
+ padding: 0px;
+margin: auto;
+float: left; 
+z-index: 3;}

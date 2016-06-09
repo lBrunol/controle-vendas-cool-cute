@@ -3,8 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/login/index.jsp</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/entrada/criar/index.jsp</file>
             <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/controller/PedidoController.java</file>
-            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/util/ConexaoBanco.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/bean/ItensEntrada.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/js/script-geral.js</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/web/views/pedido/criar/index.jsp</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/bean/Pedido.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/controller/EntradaController.java</file>
+            <file>file:/C:/Users/Casa/Documents/Cool%20Vendas/trunk/CoolCuteVendas/src/java/br/com/coolcute/bean/Entrada.java</file>
         </group>
     </open-files>
 </project-private>

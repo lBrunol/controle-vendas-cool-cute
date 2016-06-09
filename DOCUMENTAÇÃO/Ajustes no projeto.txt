@@ -4,11 +4,11 @@
 - Rever algumas datas do cronograma
 	- finalização do projeto no dia 01-06 não no dia 02-06
 	- mudar tarefas do front-end -
-	- extender o modelos e diagramas para 07-04
+	- estender o modelos e diagramas para 07-04
 	- retirar diagrama de sequência
-	- extender prototipação até 20-04
+	- estender prototipação até 20-04
 	- mudar a data de término do protótipo para 20-04
-	- extender front-end até dia 09-05
+	- estender front-end até dia 09-05
 	- rever datas do back-end
 - Rever os testes que serão feitos
 - Implantação ?
