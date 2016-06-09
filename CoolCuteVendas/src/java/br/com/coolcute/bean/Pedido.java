@@ -31,6 +31,7 @@ public class Pedido {
     private DateTime dataPostagem;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private DateTime dataEntrega;
+    @NumberFormat(style=Style.CURRENCY)
     private float valorTotal;
     private String codigoPostagem;
     private String observacao;

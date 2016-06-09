@@ -339,7 +339,7 @@
             serializaItens();
             $('#hdnCliente').val($('#input-cliente').attr('data-id'));
             $('#hdnAnuncio').val($('#input-anuncio').attr('data-id'));
-            $('#hdnValorTotal').val(deVirgulaParaPonto(retiraReal($('.valor-total-entrada').text())));
+            $('#hdnValorTotal').val($('.valor-total-entrada').text());
             
             if ($('.tabela-itens-entrada .no-itens').css('display') == 'table-row' || $('.tabela-itens-entrada tbody tr').length == 0){
                 $('.no-itens td').css('color', '#a94442');

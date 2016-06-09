@@ -343,6 +343,7 @@
            
            //Adiciona os produtos do anúncio no array 
             if($('#hdnCodigo').val() != "0"){
+                taxa = deRealParaFloat($('.tabela-itens-pedido tbody tr').eq(1).find('td').eq(5).text());
                 $('.tabela-itens-pedido tbody tr:not(.no-itens) td:first-child').each(function(){
                     lstCodigosProdutos.push(parseInt($(this).text()));
                 });
@@ -350,10 +351,11 @@
                 if ($('select[name*="statusPedido.codigo"] option:selected').text() != 'À postar'){
                    desabilitaCampos();
                    if ($('select[name*="statusPedido.codigo"] option:selected').text() != 'Em trânsito') {
-                        $('input[name*="dataPostagem"], input[name*="dataEntrega"], input[name*="codigoPostagem"]').attr('disabled','disabled');
+                        $('input[name*="dataPostagem"], input[name*="dataEntrega"], input[name*="codigoPostagem"]').attr('readonly','readonly');
 
                         if ($('select[name*="statusPedido.codigo"] option:selected').text() == 'Cancelada') {
-                            $('select[name*="statusPedido.codigo"], select[name*="tipoAvaliacao.codigo"], textarea[name*="observacao"], #btnSalvar').attr('disabled','disabled');
+                            $('select[name*="statusPedido.codigo"], select[name*="tipoAvaliacao.codigo"], textarea[name*="observacao"]').attr('readonly','readonly');
+                            $('#btnSalvar').attr('disabled','disabled');
                         }
 
                    }
@@ -363,7 +365,8 @@
             }
 
             function desabilitaCampos(){
-                 $('#input-anuncio, #btn-modal-anuncio, #input-cliente, #btn-modal-cliente, input[name*="dataVenda"], input[name*="frete"], #btn-itens-pedido, .input-qtde, .btn-excluir').attr('disabled','disabled');
+                 $('#input-anuncio,  #input-cliente, input[name*="dataVenda"], input[name*="frete"], .input-qtde').attr('readonly','readonly');
+                 $('#btn-modal-anuncio, #btn-modal-cliente, #btn-itens-pedido, .btn-excluir').attr('disabled','disabled');
             }
            
             $('#btn-modal-cliente').on('click', function (){
@@ -731,7 +734,7 @@
             serializaItens();
             $('#hdnCliente').val($('#input-cliente').attr('data-id'));
             $('#hdnAnuncio').val($('#input-anuncio').attr('data-id'));
-            $('#hdnValorTotal').val(deVirgulaParaPonto(retiraReal($('.valor-total-pedido').text())));
+            $('#hdnValorTotal').val($('.valor-total-pedido').text());
             
             if ($('.tabela-itens-pedido .no-itens').css('display') == 'table-row' || $('.tabela-itens-pedido tbody tr').length == 0){
                 $('.no-itens td').css('color', '#a94442');
