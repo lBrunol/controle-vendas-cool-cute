@@ -27,8 +27,8 @@ public class ConexaoBanco {
     }
     
     public ConexaoBanco() {
-        this.senha = "admin";
-        this.usuario = "root";
+        this.senha = "Fanbno022!";
+        this.usuario = "gaia";
     }
    
     /**
@@ -40,13 +40,13 @@ public class ConexaoBanco {
       
         String userName   = this.usuario;
         String passName   = this.senha;
-        String url = "jdbc:mysql://localhost/cool?useUnicode=yes&characterEncoding=UTF-8&characterSetResults=utf8"; 
+        String url = "jdbc:mysql://192.168.1.113:3306/cool?tcpKeepAlive=true&autoReconnect=true&user=gaia&password=Fanbno022!&useSSL=false"; 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             this.c = DriverManager.getConnection(url,userName, passName);            
             connected = true;
         } catch( SQLException e ) {
-            
+            System.out.println(e.getStackTrace().toString());
             connected = false;
         } catch ( ClassNotFoundException e ) {
         	
